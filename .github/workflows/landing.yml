@@ -1,0 +1,47 @@
+name: Regenerate Landing Page
+
+on:
+  push:
+    branches: [main]
+    # Avoid a loop — the workflow's own commits touch index.html, which would
+    # otherwise re-trigger this workflow. Skip when the only change is index.html.
+    paths-ignore:
+      - 'index.html'
+      - '.github/workflows/landing.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: landing-regen
+  cancel-in-progress: false
+
+jobs:
+  regen:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Regenerate index.html
+        run: |
+          python3 .github/scripts/build_landing.py .
+
+      - name: Commit if changed
+        run: |
+          if [ -n "$(git status --porcelain index.html)" ]; then
+            git config user.name "landing-page-bot"
+            git config user.email "landing-page-bot@users.noreply.github.com"
+            git add index.html
+            git commit -m "auto: regenerate landing page [skip ci]"
+            git push
+          else
+            echo "No changes to index.html"
+          fi
