@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="dark">
-<title>Bench Sheets Plan — Feedback</title>
+<title>Bench Sheets Plan — Feedback (PM)</title>
 <style>
   :root {
     --bg: #0b0d10;
@@ -27,7 +27,7 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
   body {
-    font: 15px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    font: 15.5px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
   }
@@ -36,7 +36,6 @@
   pre { background: var(--bg-elev); padding: 0.9rem 1rem; border-radius: 6px; overflow-x: auto; font-size: 0.85em; line-height: 1.5; }
   a { color: var(--accent); }
 
-  /* Sticky header */
   header.app {
     position: sticky;
     top: 0;
@@ -161,7 +160,7 @@
     padding: 0.4rem 1.15rem 0.9rem;
     color: var(--fg);
     font-size: 0.95rem;
-    line-height: 1.6;
+    line-height: 1.65;
   }
   .chunk-body h4 {
     margin: 1rem 0 0.4rem;
@@ -172,7 +171,7 @@
   .chunk-body h4:first-child { margin-top: 0.5rem; }
   .chunk-body p { margin: 0 0 0.6rem; }
   .chunk-body ul, .chunk-body ol { margin: 0.3rem 0 0.7rem; padding-left: 1.4rem; }
-  .chunk-body li { margin-bottom: 0.25rem; }
+  .chunk-body li { margin-bottom: 0.3rem; }
   .chunk-body strong { color: var(--fg); }
   .chunk-body em { color: var(--fg-dim); }
 
@@ -203,7 +202,6 @@
     color: var(--fg-dim);
     padding: 0.3rem 0.65rem;
     border-radius: 999px;
-    font-size: 0.78rem;
     font: inherit;
     font-size: 0.78rem;
     transition: all 0.12s;
@@ -244,7 +242,6 @@
   }
   .chunk-feedback textarea::placeholder { color: var(--fg-muted); }
 
-  /* Modal */
   .modal-backdrop {
     position: fixed;
     inset: 0;
@@ -338,7 +335,6 @@
     transform: translateX(-50%) translateY(0);
   }
 
-  /* Floating bottom bar */
   .floatbar {
     position: fixed;
     bottom: 1rem;
@@ -364,7 +360,7 @@
   <div class="row">
     <div>
       <h1>Cannabinoid Bench Sheets + Batch Results QC — Plan Review</h1>
-      <p class="sub">authored 2026-05-06 · 19 sections · feedback persists locally</p>
+      <p class="sub">PM-readable rewrite · 19 sections · feedback persists locally</p>
     </div>
     <span class="spacer"></span>
     <span class="progress">reviewed: <strong id="progressCount">0</strong> / <strong id="progressTotal">19</strong></span>
@@ -375,32 +371,32 @@
 <main>
 
 <div class="intro">
-  <p><strong>How to use.</strong> Read each section. For each one, set a status (LGTM / Inline edit / Rework) and optionally drop notes. When done, click <strong>Compile feedback</strong> at the top, copy the markdown, and paste it back into the Claude Code session.</p>
-  <p>Sections marked <strong>Inline edit</strong> get the textarea rendered as a regular note. <strong>Rework</strong> means you want the design rethought before code. <strong>LGTM</strong> means proceed as written.</p>
-  <p>Source: <code>C:\KONDO\BENCH_SHEETS_PLAN.md</code> · all data stays in your browser (localStorage) · nothing is sent anywhere.</p>
+  <p><strong>How to use.</strong> Read each section. Set a verdict (LGTM / Inline edit / Rework) and optionally drop notes. When done, click <strong>Compile feedback</strong>, copy the markdown, paste it back in the Claude Code session.</p>
+  <p><strong>Inline edit</strong> = small change inside the section. <strong>Rework</strong> = the design needs rethinking. <strong>LGTM</strong> = proceed as written. Empty = haven't decided yet.</p>
+  <p>Source: <code>C:\KONDO\BENCH_SHEETS_PLAN.md</code> · feedback stays in your browser only.</p>
 </div>
 
-<!-- ============ CHUNK 1: Header / Hard Gates ============ -->
+<!-- ============ 01 ============ -->
 <section class="chunk" id="c01-gates" data-chunk-id="c01-gates">
   <div class="chunk-head">
     <span class="chunk-tag">01 / Framing</span>
-    <h2 class="chunk-title">Status &amp; Hard Gates</h2>
+    <h2 class="chunk-title">Status &amp; hard gates</h2>
     <a class="chunk-anchor" href="#c01-gates">#</a>
   </div>
   <div class="chunk-body">
-    <p><strong>Status:</strong> Plan, ready for approval. Replaces the planning seed of the same name. Authored 2026-05-06 after preflight, workbook survey of 50 Ohio bench sheets, and <code>/outsource</code> peer review (Gemini returned; Codex over-ran the 5-minute budget without committing positions, so the synthesis is Gemini + grounded code reads).</p>
-    <p><strong>Hard gates (Adam, 2026-05-06):</strong></p>
+    <p><strong>Status:</strong> Plan, ready for approval. Written after a survey of 50 Ohio bench-sheet workbooks plus a peer-review pass.</p>
+    <p><strong>Hard gates (you set these on 5/6):</strong></p>
     <ul>
-      <li>The bench-sheet slice and the Batch Results / QC ingest slice ship <strong>independently</strong>. Do not bundle.</li>
-      <li>Ohio first (<code>LabId = 1001</code>). Michigan deferred. Same staggered-release pattern as Pearson&rsquo;s OhMic-V2.</li>
-      <li>Schema-only commits do not need a deploy; UX commits do (per the standing rule). DB changes go to <code>NCLimsProjectKondo_A</code> first.</li>
-      <li>No code lands until this plan is approved.</li>
+      <li>The two slices ship <strong>independently</strong>. Don't bundle them.</li>
+      <li>Ohio first. Michigan deferred — same staggered-release pattern as Pearson&rsquo;s micro work.</li>
+      <li>Database changes go to the <code>NCLimsProjectKondo_A</code> dev DB first.</li>
+      <li>No code starts until this plan is approved.</li>
     </ul>
   </div>
   <div class="chunk-feedback"></div>
 </section>
 
-<!-- ============ CHUNK 2: Scope ============ -->
+<!-- ============ 02 ============ -->
 <section class="chunk" id="c02-scope" data-chunk-id="c02-scope">
   <div class="chunk-head">
     <span class="chunk-tag">02 / Scope</span>
@@ -408,112 +404,110 @@
     <a class="chunk-anchor" href="#c02-scope">#</a>
   </div>
   <div class="chunk-body">
-    <p>Two coupled slices, dependency-ordered:</p>
+    <p>Two pieces of work, in order:</p>
     <ol>
-      <li><strong>Cannabinoid Bench-Sheet Workflow (Ohio).</strong> Replace the 50-workbook Excel pipeline with a Razor surface that captures the canonical bench-sheet schema (PrepBatch metadata + per-row weights/DFs/EVs) at point-of-prep. Operational flex: any of weighed / extracted / diluted / analyzed can be a different analyst.</li>
-      <li><strong>Batch Results QC Visibility + Ingest Wire-up.</strong> Surface the new injection-grain in the existing chem-QC UI on <code>/batchworkflow</code>, wire <code>InstrumentRunInjection</code> writes into the file-ingest path, and connect the existing <code>QcSummaryBlock</code> to the new <code>/workflow/qc-run-validation/{labBatchId}</code> page that today&rsquo;s session already shipped as a route shell.</li>
+      <li><strong>Cannabinoid Bench-Sheet Workflow (Ohio).</strong> Replace the bench-sheet Excel workbooks with a LIMS page that captures the same data — prep batch header (matrix, equipment, analyst per step) and per-sample rows (weight, dilution factor, extraction volume) — at the moment of prep.</li>
+      <li><strong>Batch Results QC Visibility + Ingest Wire-up.</strong> When raw instrument files come in, capture each injection as its own database row. Surface that detail on the existing chem-QC summary box, and finish wiring the new QC Run Validation page (the empty page shell shipped this morning).</li>
     </ol>
-    <p>Slice 1 is upstream because the bench-sheet workflow is the only path that produces accurate DOF (sample weight &times; extraction volume &times; dilution factor) data at point-of-prep. Backfill / from-memory entry is the failure mode the workflow is designed to prevent.</p>
+    <p>Slice 1 is upstream because the bench-sheet workflow is the <em>only</em> place we capture accurate weights / dilutions / extraction volumes at the moment of prep. Filling them in later (or "from memory") is the failure mode this is designed to prevent.</p>
   </div>
   <div class="chunk-feedback"></div>
 </section>
 
-<!-- ============ CHUNK 3: D1 ============ -->
+<!-- ============ 03 ============ -->
 <section class="chunk" id="c03-d1" data-chunk-id="c03-d1">
   <div class="chunk-head">
     <span class="chunk-tag">03 / Decision D1</span>
-    <h2 class="chunk-title">D1 — InstrumentRunInjection write site</h2>
+    <h2 class="chunk-title">D1 — Where to capture each instrument injection</h2>
     <a class="chunk-anchor" href="#c03-d1">#</a>
   </div>
   <div class="chunk-body">
-    <p><strong>Decision:</strong> New method <code>ResolveOrCreateInstrumentRunInjectionAsync</code> on <code>RawDataService</code>, called from two places:</p>
+    <p><strong>Decision:</strong> When a raw instrument file is saved to the database, also save one row per injection into <code>InstrumentRunInjection</code>, linked back to that file.</p>
     <ul>
-      <li><code>FilerController.ProcessQcControlFileAsync</code> between the existing <code>CreateQcRawResultsAsync</code> (line 514) and the <code>Processed = true</code> mark (line 518).</li>
-      <li><code>RawDataService.ProcessRawDataFiles</code> (the customer-sample path) at the equivalent point.</li>
+      <li>Applies to both QC files (LCS, blanks, controls) and customer-sample files.</li>
+      <li>The right moment in the pipeline is <em>after</em> QC results are calculated and the BatchControl link is set, but <em>before</em> the file is flagged "processed".</li>
+      <li>Right after that save, the classifier (figures out which injection is which sample / standard / blank) and the rush-bracket detector run, in the same pass.</li>
+      <li>If anything in the chain fails, the whole save rolls back together. No half-finished rows.</li>
     </ul>
-    <p>The method (a) resolves or creates the parent <code>InstrumentRun</code> row by <code>(LabBatchId, InstrumentTypeId, AcquisitionDate-of-run)</code> clustering, (b) inserts an <code>InstrumentRunInjection</code> keyed off the just-saved <code>RawDataFile.Id</code>, (c) returns the injection so the caller can decide whether to run downstream classification.</p>
-    <p><code>RunAssemblerService.ClassifyAsync</code> and <code>RushBracketDetector</code> run <strong>synchronously</strong> at the end of the QC-eval pass (after <code>EvaluateQcFromRawResultsAsync</code> finishes), since they read both the new injection rows and the BCAR rows.</p>
-    <p><strong>Why not the alternatives.</strong> Putting the write inside <code>EvaluateQcFromRawResultsAsync</code> (option 1c) couples it to QC-only files; putting it before <code>CreateQcRawResultsAsync</code> (1b) requires <code>BatchControl</code> resolution that hasn&rsquo;t happened yet (<code>InstrumentRunInjection.BatchControlId</code> is the FK that needs <code>TryStampBatchControlForTypedQcAsync</code> at line 508 to have run first).</p>
-    <p><strong>Idempotency.</strong> Insertion is upsert on <code>RawDataFile.Id</code> (one injection per file). The existing <code>TransactionScope</code> around lines 406+ rolls everything back together if any step fails.</p>
+    <p><strong>Why not earlier.</strong> Earlier in the pipeline, the BatchControl link doesn&rsquo;t exist yet — we&rsquo;d save the injection row missing its connection to the control material, then have to come back and patch it. <strong>Why not later.</strong> Later (only inside the QC-eval routine) would skip customer-sample files entirely. The point we picked is the moment when both sides of the linkage are present.</p>
   </div>
   <div class="chunk-feedback"></div>
 </section>
 
-<!-- ============ CHUNK 4: D2 ============ -->
+<!-- ============ 04 ============ -->
 <section class="chunk" id="c04-d2" data-chunk-id="c04-d2">
   <div class="chunk-head">
     <span class="chunk-tag">04 / Decision D2</span>
-    <h2 class="chunk-title">D2 — Bench-sheet data on PrepBatch + new PrepBatchSampleEntry, not LBSP</h2>
+    <h2 class="chunk-title">D2 — Where bench-sheet data lives in the database</h2>
     <a class="chunk-anchor" href="#c04-d2">#</a>
   </div>
   <div class="chunk-body">
-    <p><strong>Decision:</strong> Use the new schema (option 2b). Keep LBSP untouched.</p>
-    <p>The Ohio bench-sheet workbooks unambiguously capture per-step (analyst, date) at the <strong>batch level</strong> &mdash; there is no per-sample initial cell. So <code>PrepBatch.{Prepared,Weighed,Extracted,Diluted,Analyzed}ByUserId</code> is the correct grain for analyst stamps. Per-sample rows (Sample ID, Sample Type, Weight g, DF, EV L, Comments, Seeds?) need their own home &mdash; a new <code>PrepBatchSampleEntry</code> entity.</p>
-    <p>Rationale, in priority order:</p>
+    <p><strong>Decision:</strong> Per-step analyst stamps go on <code>PrepBatch</code> (the batch-level record). Per-sample weights / DFs / EVs go in a new table called <code>PrepBatchSampleEntry</code>. Don&rsquo;t touch <code>LBSP</code>.</p>
+    <p>Why:</p>
     <ol>
-      <li><strong>SOP-140 §3.6 fidelity.</strong> Per-step user is a property of the prep event, not the sample.</li>
-      <li><strong>Cross-instrument prep splits.</strong> Per <code>PrepBatch.cs:11&ndash;15</code>, one prep batch can yield results across multiple analysis batches. Storing weight/EV/DF on LBSP would force replication across analysis batches and a denormalization invariant.</li>
-      <li><strong>Replicate convention is already on LBSP.</strong> Each replicate is its own LBSP row (unique index at <code>EntityMaps.cs:346</code> includes <code>SampleRepNumber</code>). PrepBatchSampleEntry mirrors this &mdash; three reps = three entries. The link from entry to LBSP is established when LIMS samples flow from prep into the analysis batch.</li>
-      <li><strong>Bench-sheet → Analysis projection cost is low.</strong> The existing Analysis tab reads from <code>LabBatchSampleView2</code>; the view is updated to JOIN <code>PrepBatchSampleEntry</code> on <code>Sample.PrepBatchId</code>. No LBSP schema churn.</li>
+      <li>The Ohio workbooks capture analyst initials per <em>step</em> (Weighed by, Extracted by, Diluted by, Analyzed by) at the <strong>batch</strong> level — there&rsquo;s no per-sample initial cell. So that&rsquo;s the right grain.</li>
+      <li>One prep batch can feed multiple analysis batches. If we crammed sample-level data onto LBSP, we&rsquo;d duplicate it across analysis batches and have to keep the copies in sync by hand — a known failure mode.</li>
+      <li>Replicates are already first-class on LBSP (each rep is its own row). <code>PrepBatchSampleEntry</code> follows the same convention — three reps = three entries.</li>
+      <li>The Analysis tab can pick up bench-sheet data via a small change to its existing SQL view. No LBSP schema churn.</li>
     </ol>
-    <p><strong>Why not &ldquo;both&rdquo; (2c).</strong> A denormalization invariant we have to maintain by hand is the failure mode that bit Pearson&rsquo;s micro flow when fields drifted. Skip it.</p>
+    <p><strong>Why not "do both" / duplicate it.</strong> A duplicate-data trap we&rsquo;d have to keep in sync manually is the exact pattern that bit Pearson&rsquo;s micro work when fields drifted. Skip it.</p>
   </div>
   <div class="chunk-feedback"></div>
 </section>
 
-<!-- ============ CHUNK 5: D3 ============ -->
+<!-- ============ 05 ============ -->
 <section class="chunk" id="c05-d3" data-chunk-id="c05-d3">
   <div class="chunk-head">
     <span class="chunk-tag">05 / Decision D3</span>
-    <h2 class="chunk-title">D3 — Run Validation deep-link is a SECOND command on QcSummaryBlock</h2>
+    <h2 class="chunk-title">D3 — Two named surfaces on the QC summary box</h2>
     <a class="chunk-anchor" href="#c05-d3">#</a>
   </div>
   <div class="chunk-body">
-    <p><strong>Decision:</strong> Keep the existing <code>OnReview</code> → <code>ReviewChecklistDialog</code> modal (it&rsquo;s an SOP-checklist review surface, useful, low-burden). Add a SECOND command — &ldquo;Run Validation&rdquo; — that navigates to <code>/workflow/qc-run-validation/{labBatchId}</code>. Two named surfaces:</p>
+    <p><strong>Decision:</strong> Keep the existing "Review" button (it opens a checklist popup that&rsquo;s useful and low-effort). Add a <em>second</em> button — "Run Validation" — that opens the new QC Run Validation page.</p>
+    <p>Two surfaces, two purposes:</p>
     <ul>
-      <li><strong>Review (modal):</strong> SOP-driven checklist review, scoped to method/sub-method. Existing.</li>
-      <li><strong>Run Validation (page):</strong> Injection-grain detail, override workflow, frozen Decision Package, secondary-review sign-off. New.</li>
+      <li><strong>Review (popup):</strong> SOP checklist, scoped to the method. Already exists, in daily use.</li>
+      <li><strong>Run Validation (page):</strong> Per-injection detail, override workflow, frozen Decision Package, secondary-review sign-off. New.</li>
     </ul>
-    <p>The &ldquo;Review&rdquo; name stays; the new button reads &ldquo;Run Validation&rdquo; (or &ldquo;QC Sign-Off&rdquo; — TBD, see open question §A1 below). Both render in the <code>QcSummaryBlock</code> group-header surface.</p>
-    <p><strong>Why not extend the Analysis tab inline (3a).</strong> UI Scope Lock rule. The 2026-04-19 chem-QC UI ships in production; analysts use it daily; the new override workflow is too much UI to fold in without restructuring.</p>
-    <p><strong>Why not collapse Review into the new page.</strong> SOP checklist is per-method and form-shaped; injection-grain validation is per-run and grid-shaped. Different mental models. Single surface is a UX smell.</p>
+    <p><strong>Why not fold it into the Analysis tab inline.</strong> The chem-QC UI has been live since mid-April; analysts use it daily. The new override workflow is too much to wedge in without restructuring — and we have a UI Scope Lock rule against drive-by restructures.</p>
+    <p><strong>Why not collapse the popup into the page.</strong> SOP checklist is per-method and form-shaped. Run validation is per-run and grid-shaped. Different mental models. One surface forced to do both is a UX smell.</p>
   </div>
   <div class="chunk-feedback"></div>
 </section>
 
-<!-- ============ CHUNK 6: D4 ============ -->
+<!-- ============ 06 ============ -->
 <section class="chunk" id="c06-d4" data-chunk-id="c06-d4">
   <div class="chunk-head">
     <span class="chunk-tag">06 / Decision D4</span>
-    <h2 class="chunk-title">D4 — What&rsquo;s already there vs. what we have to add</h2>
+    <h2 class="chunk-title">D4 — What we reuse vs. what we add</h2>
     <a class="chunk-anchor" href="#c06-d4">#</a>
   </div>
   <div class="chunk-body">
-    <h4>Already present, reuse without modification</h4>
+    <h4>Already there, reuse as-is</h4>
     <ul>
-      <li><strong><code>AssaySampleTypePrep</code></strong> (<code>EntityMaps.cs:1332</code>) — the FlwrPrep &ldquo;Settings&rdquo; sheet matrix-defaults table already exists, keyed on <code>(AssayId, ItemCategoryId)</code> with <code>SampleWeightG</code>, <code>ExtractionVolumeMl</code>, <code>DilutionFactor</code>. The bench-sheet UI reads this for default seeding.</li>
-      <li><strong>LBSP rep uniqueness</strong> at <code>EntityMaps.cs:346</code> — three reps = three LBSPs; matches PPPrep <code>Rep #</code> and FlwrPrep <code>-a/-b</code> patterns.</li>
-      <li><strong><code>LabBatchPrepBatch</code></strong> — M:N junction is correct for the PPPrep &ldquo;1 AN ↔ 3 PR&rdquo; packing.</li>
-      <li><strong><code>QcSummaryBlock</code> + <code>ReviewChecklistDialog</code></strong> — already in place at <code>AnalysisBatch.razor:186/545</code>.</li>
-      <li><strong><code>PrepSyncNotifier</code> + <code>QcStateNotifier</code></strong> — singleton pub/sub pattern; reuse, don&rsquo;t add a third notifier yet.</li>
+      <li>The matrix-defaults table (<code>AssaySampleTypePrep</code>) that stores default weight / DF / EV per (assay × item category). Bench-sheet UI reads this to seed defaults when a sample is added.</li>
+      <li>LBSP&rsquo;s replicate convention (three reps = three rows). <code>PrepBatchSampleEntry</code> follows the same shape.</li>
+      <li>The <code>LabBatchPrepBatch</code> junction. Already correct for "one analysis batch can pull from multiple prep batches and vice versa".</li>
+      <li>The QC summary box and the Review checklist popup.</li>
+      <li>Existing notifiers that broadcast prep / QC state changes. Reuse — don&rsquo;t add a third.</li>
     </ul>
-    <h4>Has to be added in slice 1</h4>
+    <h4>Add in slice 1</h4>
     <ul>
-      <li><strong>PrepBatch fields:</strong> <code>Status</code> enum (<code>InProcess</code> / <code>ReadyForAnalysis</code> / <code>SentToAnalysis</code>), per-step <code>*OnUtc</code> dates (<code>WeighedOnUtc</code>, <code>ExtractedOnUtc</code>, <code>DilutedOnUtc</code>, <code>AnalyzedByUserId</code> + <code>AnalyzedOnUtc</code>), 4 equipment FKs (<code>BalanceLabAssetId</code>, <code>BottleTopLabAssetId</code>, <code>RepeaterLabAssetId</code>, <code>PipetteLabAssetId</code>), and an <code>AnalyticalBatchId</code> nullable FK to <code>LabBatch</code> (the PPPrep <code>AN######</code> pointer; redundant with <code>LabBatchPrepBatch</code> but cheap and helpful for the bench-sheet header).</li>
-      <li><strong><code>PrepBatchSampleEntry</code></strong> entity (see D2).</li>
-      <li><strong><code>PrepBatchSecondaryReviewedByUserId</code></strong> + <code>*OnUtc</code> — captures the workbooks&rsquo; <code>&quot;Secondary reviewed MW 4/28/2026&quot;</code> free-text into structured data.</li>
+      <li>New <code>PrepBatch</code> fields: status (In Process / Ready for Analysis / Sent to Analysis), per-step UTC dates, four equipment FKs (balance, bottle-top, repeater, pipette), and a nullable pointer to the analytical batch.</li>
+      <li>New <code>PrepBatchSampleEntry</code> table — one row per sample-replicate.</li>
+      <li>Secondary-review fields on <code>PrepBatch</code>. Captures the "secondary reviewed MW 4/28" handwriting from the workbooks into structured data.</li>
     </ul>
-    <h4>Has to be added in slice 2</h4>
+    <h4>Add in slice 2</h4>
     <ul>
-      <li>New <code>RawDataService.ResolveOrCreateInstrumentRunInjectionAsync</code> (D1).</li>
-      <li><code>QcSummaryBlock</code> second command + navigation.</li>
-      <li><code>LabBatchSampleView2</code> JOIN to <code>PrepBatchSampleEntry</code> so weight/DF/EV surfaces in the Analysis tab.</li>
+      <li>A new spot in the file-ingest pipeline that creates the <code>InstrumentRunInjection</code> rows (D1).</li>
+      <li>A second button on the QC summary box (D3).</li>
+      <li>A small change to the Analysis tab&rsquo;s SQL view so weight / DF / EV can show up there.</li>
     </ul>
   </div>
   <div class="chunk-feedback"></div>
 </section>
 
-<!-- ============ CHUNK 7: Slice 1 - Nav placement ============ -->
+<!-- ============ 07 ============ -->
 <section class="chunk" id="c07-s1-nav" data-chunk-id="c07-s1-nav">
   <div class="chunk-head">
     <span class="chunk-tag">07 / Slice 1</span>
@@ -521,32 +515,32 @@
     <a class="chunk-anchor" href="#c07-s1-nav">#</a>
   </div>
   <div class="chunk-body">
-    <p>New top-level nav item: <strong>&ldquo;Cannabinoid Bench Sheets&rdquo;</strong> → <code>@page &quot;/cannabinoids/bench-sheets&quot;</code>. Sibling to the existing &ldquo;Batch Workflow&rdquo; item.</p>
+    <p>New top-level nav item: <strong>"Cannabinoid Bench Sheets"</strong> at <code>/cannabinoids/bench-sheets</code>. Sibling to the existing "Batch Workflow" item.</p>
     <ul>
-      <li><strong>Not</strong> under <code>/microbials/batch-workflow</code> (different lab process).</li>
-      <li><strong>Not</strong> folded into <code>/batchworkflow</code> (the assay multi-select would force cannabinoids into a generic shape that doesn&rsquo;t fit the bench-sheet UX).</li>
+      <li><strong>Not</strong> under microbial batch workflow (different lab process).</li>
+      <li><strong>Not</strong> folded into the generic batch-workflow page — its multi-assay shape doesn&rsquo;t fit the bench-sheet UX.</li>
     </ul>
   </div>
   <div class="chunk-feedback"></div>
 </section>
 
-<!-- ============ CHUNK 8: Slice 1 - Page layout ============ -->
+<!-- ============ 08 ============ -->
 <section class="chunk" id="c08-s1-layout" data-chunk-id="c08-s1-layout">
   <div class="chunk-head">
     <span class="chunk-tag">08 / Slice 1</span>
-    <h2 class="chunk-title">Slice 1 — Page layout (two-pane Razor + tabs)</h2>
+    <h2 class="chunk-title">Slice 1 — Page layout</h2>
     <a class="chunk-anchor" href="#c08-s1-layout">#</a>
   </div>
   <div class="chunk-body">
-    <p>Two-pane Razor:</p>
+    <p>Two-pane layout:</p>
     <ul>
-      <li><strong>Left (sidebar):</strong> list of PrepBatches, default filter &ldquo;Today + In-Process&rdquo;. Toggle for &ldquo;Show All&rdquo; / per-status filter.</li>
-      <li><strong>Right (workspace):</strong> the active PrepBatch. Tabbed:
+      <li><strong>Left (sidebar):</strong> list of prep batches. Default filter is "Today + In Process". Toggle for "Show All" or per-status.</li>
+      <li><strong>Right (workspace):</strong> the prep batch you&rsquo;ve selected, in tabs:
         <ul>
-          <li><strong>Header / Setup tab</strong> — PrepBatch fields (matrix, lead analyst, equipment FKs, reagent lots, status). Editable until status flips to <code>SentToAnalysis</code>.</li>
-          <li><strong>Bench Sheet tab</strong> — Telerik grid of PrepBatchSampleEntry rows. Columns: ordinal, Sample ID, replicate index, Sample Type code (LCB / LCS / Sample / Confirmation), Weight g, DF, EV L, Seeds, Comments, source-PR (for borrowed-slot rush rows). LCB and LCS rows auto-seeded at PrepBatch open. <strong>Add Samples</strong> opens a dialog driven by the LIMS Sample Queue (per FlwrPrep <code>LIMSImport</code> tab pattern) — analyst picks samples from &ldquo;Not Batched&rdquo; pool, system creates the entry rows.</li>
-          <li><strong>Confirmations tab</strong> — separate intake for re-runs from prior PrepBatches (per FlwrPrep <code>Confirmations</code> tab). Picker of <code>(Sample, originating PrepBatchId)</code> pairs; on add, creates a PrepBatchSampleEntry tagged with <code>SourcePrepBatchIdInLims</code>.</li>
-          <li><strong>Sign-Off tab</strong> — per-step (analyst, date) commit buttons. Each step reads the page&rsquo;s logged-in user and writes the FK + UTC date to PrepBatch. Different analyst per step is supported by re-logging-in (or by the lead analyst keying initials — open question §A2).</li>
+          <li><strong>Header / Setup tab</strong> — prep batch fields: matrix, lead analyst, equipment, reagent lots, status. Editable until status flips to "Sent to Analysis".</li>
+          <li><strong>Bench Sheet tab</strong> — table of per-sample rows. Columns: ordinal, Sample ID, replicate index, sample type code (LCB / LCS / Sample / Confirmation), weight, DF, EV, seeds?, comments, source-PR (when a row is borrowed from another batch). LCB and LCS rows auto-seed when the batch is opened. <strong>Add Samples</strong> opens a picker that pulls from the LIMS Sample Queue (per the existing <code>LIMSImport</code> tab in the Excel templates) — analyst picks not-yet-batched samples; the system creates the rows.</li>
+          <li><strong>Confirmations tab</strong> — separate intake for re-runs from prior prep batches (per the <code>Confirmations</code> tab in the Excel templates). Picker of (Sample, originating PrepBatch) pairs.</li>
+          <li><strong>Sign-Off tab</strong> — per-step commit buttons (Weighed by, Extracted by, Diluted by, Analyzed by). Each button reads who&rsquo;s logged in and stamps the user + UTC date. Different analyst per step is supported by re-logging-in (or by lead analyst keying initials — open question §A2).</li>
         </ul>
       </li>
     </ul>
@@ -554,33 +548,33 @@
   <div class="chunk-feedback"></div>
 </section>
 
-<!-- ============ CHUNK 9: Slice 1 - Mechanics combined ============ -->
+<!-- ============ 09 ============ -->
 <section class="chunk" id="c09-s1-mechanics" data-chunk-id="c09-s1-mechanics">
   <div class="chunk-head">
     <span class="chunk-tag">09 / Slice 1</span>
-    <h2 class="chunk-title">Slice 1 — Commit semantics, status machine, replicates, confirmations</h2>
+    <h2 class="chunk-title">Slice 1 — How saving, status, replicates, and confirmations work</h2>
     <a class="chunk-anchor" href="#c09-s1-mechanics">#</a>
   </div>
   <div class="chunk-body">
-    <h4>Commit semantics</h4>
-    <p><strong>Explicit-button commits per row, autosave on cell-blur for the active row.</strong> Mirrors <code>MicroPrepTab</code>&rsquo;s pattern (PrepStepService methods called on commit) and matches analyst expectations from the workbook era (Excel autosaved). Mid-prep crash recovery: the active PrepBatch has a <code>RecoveryToken</code> cookie so a refresh restores the unsaved cell, and committed rows are durable.</p>
+    <h4>How saving works</h4>
+    <p>Per-row commit buttons, plus autosave when you tab out of the active row. Same pattern as the microbial prep tab. Matches the Excel-era expectation that you don&rsquo;t lose work if you walk away. If you refresh mid-prep, the active row&rsquo;s unsaved cell restores; committed rows are durable.</p>
     <h4>Status state machine</h4>
-    <p><code>PrepBatchStatus</code> enum with three values mirroring the FlwrPrep <code>BatchID!B6</code> field:</p>
+    <p>Three values, mirrors the Excel templates&rsquo; status field:</p>
     <ul>
-      <li><code>InProcess</code> — default at PrepBatch creation. Editable.</li>
-      <li><code>ReadyForAnalysis</code> — bench sheet complete, lead analyst signed off. Read-only except for the lead analyst (or supervisor).</li>
-      <li><code>SentToAnalysis</code> — claimed by an Analysis batch via <code>LabBatchPrepBatch</code>. Read-only.</li>
+      <li><strong>In Process</strong> — created, editable.</li>
+      <li><strong>Ready for Analysis</strong> — bench sheet complete, lead analyst signed off. Read-only except for the lead analyst (or supervisor).</li>
+      <li><strong>Sent to Analysis</strong> — claimed by an analysis batch. Read-only.</li>
     </ul>
-    <p>Transition <code>ReadyForAnalysis → SentToAnalysis</code> is automatic on first <code>LabBatchPrepBatch</code> insert.</p>
-    <h4>Replicate handling</h4>
-    <p>PrepBatchSampleEntry has <code>ReplicateIndex</code> (int, 1-based). Both PPPrep &ldquo;Rep #&rdquo; and FlwrPrep &ldquo;-a/-b&rdquo; map to this — display formatter chooses the surface notation by lab/template preference. Three reps = three rows, all valid.</p>
+    <p>"Ready for Analysis" → "Sent to Analysis" transitions automatically when the prep batch first gets pulled into an analysis batch.</p>
+    <h4>Replicates</h4>
+    <p><code>PrepBatchSampleEntry</code> has a 1-based replicate index. PPPrep "Rep #" and FlwrPrep "-a/-b" both map to this — the page picks the display notation by lab/template. Three reps = three rows, all valid.</p>
     <h4>Confirmation re-runs</h4>
-    <p>PrepBatchSampleEntry has nullable <code>SourcePrepBatchIdInLims</code> (FK to PrepBatch). Set when the row is a re-run from a prior batch (FlwrPrep <code>Confirmations</code> tab pattern, or the &ldquo;Curaleaf Rush — PR141038 in LIMS&rdquo; mid-batch insert from PPPrep). Comments column carries free-text rush notes.</p>
+    <p><code>PrepBatchSampleEntry</code> has a nullable "source prep batch" pointer. Set when a row is a re-run from a prior batch (the Confirmations tab pattern in the Excel templates, or a "Curaleaf Rush — PR141038 in LIMS" mid-batch insert). The Comments column carries the rush note.</p>
   </div>
   <div class="chunk-feedback"></div>
 </section>
 
-<!-- ============ CHUNK 10: Slice 1 - Out of scope ============ -->
+<!-- ============ 10 ============ -->
 <section class="chunk" id="c10-s1-out" data-chunk-id="c10-s1-out">
   <div class="chunk-head">
     <span class="chunk-tag">10 / Slice 1</span>
@@ -589,36 +583,36 @@
   </div>
   <div class="chunk-body">
     <ul>
-      <li>No retroactive backfill of historical workbooks. Prospective only. Adam&rsquo;s instinct from the seed: do not pretend court-quality reconstruction we can&rsquo;t deliver.</li>
-      <li>No Michigan. (<code>LabId = 1001</code> filter on the page.)</li>
-      <li>No automatic <code>RunValidationDecision</code> link — that&rsquo;s slice 2.</li>
-      <li>No live multi-circuit edit conflict resolution beyond <code>PrepSyncNotifier.PublishBatchRefresh</code> (single-analyst-per-PrepBatch is the working assumption).</li>
+      <li>No backfill of historical workbooks. Prospective only. Not faking a court-quality reconstruction we can&rsquo;t deliver.</li>
+      <li>No Michigan. (The page filters to Ohio.)</li>
+      <li>No automatic link from a bench-sheet row to a Run Validation Decision — that&rsquo;s slice 2.</li>
+      <li>No live concurrent-edit conflict resolution. Working assumption: one analyst per prep batch at a time.</li>
     </ul>
   </div>
   <div class="chunk-feedback"></div>
 </section>
 
-<!-- ============ CHUNK 11: Slice 2 - Wires ============ -->
+<!-- ============ 11 ============ -->
 <section class="chunk" id="c11-s2-wires" data-chunk-id="c11-s2-wires">
   <div class="chunk-head">
     <span class="chunk-tag">11 / Slice 2</span>
-    <h2 class="chunk-title">Slice 2 — All four wires (ingest write, deep-link, view JOIN, page binding)</h2>
+    <h2 class="chunk-title">Slice 2 — Four wires</h2>
     <a class="chunk-anchor" href="#c11-s2-wires">#</a>
   </div>
   <div class="chunk-body">
-    <h4>Wire 1 — InstrumentRunInjection write (D1)</h4>
-    <p>New method on <code>RawDataService</code>. Called from <code>FilerController.ProcessQcControlFileAsync</code> between L514 and L518, and from the customer-sample sweeper at the equivalent point. Resolves or creates the parent <code>InstrumentRun</code>, inserts the injection, returns it. After the call site&rsquo;s existing <code>EvaluateQcFromRawResultsAsync</code>, run <code>RunAssemblerService.ClassifyAsync</code> + <code>RushBracketDetector</code> synchronously.</p>
-    <h4>Wire 2 — Run Validation deep-link (D3)</h4>
-    <p><code>QcSummaryBlock</code> gets a second command: a &ldquo;Run Validation&rdquo; anchor that navigates to <code>/workflow/qc-run-validation/{labBatchId}</code>. The existing <code>OnReview</code> callback + <code>ReviewChecklistDialog</code> stay. Two surfaces, two names.</p>
-    <h4>Wire 3 — Surface bench-sheet weights in the Analysis tab</h4>
-    <p><code>LabBatchSampleView2</code> (the SQL view the Analysis tab reads) gets a LEFT JOIN onto <code>PrepBatchSampleEntry</code> via <code>Sample.PrepBatchId</code>. Per-sample <code>WeightG</code> / <code>DilutionFactor</code> / <code>ExtractionVolumeL</code> surface as additional columns on the existing grid. Hidden by default in the Analysis tab UI (column-chooser opt-in) so the existing analyst experience is not perturbed.</p>
-    <h4>Wire 4 — QcRunValidation page hookup</h4>
-    <p>The route shell at <code>/workflow/qc-run-validation/{labBatchId}</code> (already shipped today as an empty Razor page) gets its grid bound to the new injection-grain projection. Override workflow (already in <code>QcOverrideService</code>) and secondary-review sign-off (already in <code>RunValidationDecisionService</code>) are wired through via DI. Frozen Decision Package generation hooks on sign-off.</p>
+    <h4>Wire 1 — Capture each instrument injection</h4>
+    <p>When a raw file is ingested (both QC and customer-sample paths), we now also save an <code>InstrumentRunInjection</code> row tied to that file. Right after, the classifier figures out what each injection is (sample / standard / blank / etc.), and the rush-bracket detector flags any rush-window patterns.</p>
+    <h4>Wire 2 — "Run Validation" button</h4>
+    <p>A second button next to the existing "Review" on the QC summary box. Opens <code>/workflow/qc-run-validation/{labBatchId}</code>. The Review popup stays as-is.</p>
+    <h4>Wire 3 — Bench-sheet weights show up in the Analysis tab</h4>
+    <p>The SQL view that powers the Analysis tab gets a small change so it can pull from <code>PrepBatchSampleEntry</code>. Per-sample weight / DF / EV become available as new columns. <strong>Hidden by default</strong> — you have to opt in via the column chooser — so the existing analyst experience doesn&rsquo;t change.</p>
+    <h4>Wire 4 — Wire up the QC Run Validation page</h4>
+    <p>The empty page shell shipped this morning gets its grid populated with the new per-injection detail. Override workflow and secondary-review sign-off connect to their existing services. The frozen Decision Package generates when sign-off lands.</p>
   </div>
   <div class="chunk-feedback"></div>
 </section>
 
-<!-- ============ CHUNK 12: Slice 2 - Out of scope ============ -->
+<!-- ============ 12 ============ -->
 <section class="chunk" id="c12-s2-out" data-chunk-id="c12-s2-out">
   <div class="chunk-head">
     <span class="chunk-tag">12 / Slice 2</span>
@@ -627,180 +621,162 @@
   </div>
   <div class="chunk-body">
     <ul>
-      <li>No retroactive backfill of historical instrument runs into <code>InstrumentRunInjection</code>. Prospective only. The schema is already in place; runs prior to slice 2&rsquo;s deploy carry only their existing <code>BatchControl</code>-grained representation.</li>
-      <li>No control-charts data wiring on <code>/qc/control-charts</code> — that page stays a skeleton until a separate slice. Trending is below the bar for either of these two slices.</li>
+      <li>No backfill of historical instrument runs into the new injection table. Prospective only. The schema is already in place; pre-existing runs keep their existing batch-control-grained representation.</li>
+      <li>No control-charts data wiring on <code>/qc/control-charts</code>. That page stays a skeleton until a separate slice. Trending is below the bar for either of these two.</li>
     </ul>
   </div>
   <div class="chunk-feedback"></div>
 </section>
 
-<!-- ============ CHUNK 13: §A1 ============ -->
+<!-- ============ 13 ============ -->
 <section class="chunk" id="c13-a1" data-chunk-id="c13-a1">
   <div class="chunk-head">
     <span class="chunk-tag">13 / Question §A1</span>
-    <h2 class="chunk-title">§A1 — Button label on QcSummaryBlock</h2>
+    <h2 class="chunk-title">§A1 — Button label</h2>
     <a class="chunk-anchor" href="#c13-a1">#</a>
   </div>
   <div class="chunk-body">
-    <p><strong>Question:</strong> &ldquo;Run Validation&rdquo; vs &ldquo;QC Sign-Off&rdquo;?</p>
-    <p><strong>Default:</strong> &ldquo;Run Validation&rdquo; (matches the route).</p>
-    <p><em>Use feedback box to override. &ldquo;LGTM&rdquo; = accept the default.</em></p>
+    <p><strong>Question:</strong> "Run Validation" or "QC Sign-Off" for the new button on the QC summary box?</p>
+    <p><strong>Default:</strong> "Run Validation" (matches the route name).</p>
+    <p><em>Use the notes box to override. LGTM = accept the default.</em></p>
   </div>
   <div class="chunk-feedback"></div>
 </section>
 
-<!-- ============ CHUNK 14: §A2 ============ -->
+<!-- ============ 14 ============ -->
 <section class="chunk" id="c14-a2" data-chunk-id="c14-a2">
   <div class="chunk-head">
     <span class="chunk-tag">14 / Question §A2</span>
-    <h2 class="chunk-title">§A2 — Multi-analyst per-step commit on Sign-Off tab</h2>
+    <h2 class="chunk-title">§A2 — Multi-analyst sign-off</h2>
     <a class="chunk-anchor" href="#c14-a2">#</a>
   </div>
   <div class="chunk-body">
-    <p><strong>Question:</strong> Does the lead analyst key initials for the other three steps, or does each analyst log in and click their own step&rsquo;s commit button?</p>
-    <p><strong>Default:</strong> each analyst logs in and commits their own step. Lead-analyst-keys-initials is a workflow regression vs. real signature accountability.</p>
+    <p><strong>Question:</strong> When different analysts work different steps, does the lead analyst key everyone&rsquo;s initials, or does each analyst log in and click their own step&rsquo;s commit button?</p>
+    <p><strong>Default:</strong> each analyst logs in and commits their own step. Lead-analyst-keys-initials is a regression vs. real signature accountability.</p>
   </div>
   <div class="chunk-feedback"></div>
 </section>
 
-<!-- ============ CHUNK 15: §A3 ============ -->
+<!-- ============ 15 ============ -->
 <section class="chunk" id="c15-a3" data-chunk-id="c15-a3">
   <div class="chunk-head">
     <span class="chunk-tag">15 / Question §A3</span>
-    <h2 class="chunk-title">§A3 — PrepBatch ID generation</h2>
+    <h2 class="chunk-title">§A3 — PrepBatch ID (PR######)</h2>
     <a class="chunk-anchor" href="#c15-a3">#</a>
   </div>
   <div class="chunk-body">
-    <p><strong>Question:</strong> Is <code>PR######</code> analyst-typed (workbook convention) or system-generated?</p>
-    <p><strong>Default:</strong> system-generated, sequential, with the typed <code>PR######</code> displayed as a label. Eliminates collisions; matches existing <code>LabBatchNr</code> convention.</p>
+    <p><strong>Question:</strong> Is the PR###### number analyst-typed (workbook convention) or system-generated?</p>
+    <p><strong>Default:</strong> system-generated, sequential, with the typed PR###### kept as a label. Eliminates collisions; matches the existing LabBatch number convention.</p>
   </div>
   <div class="chunk-feedback"></div>
 </section>
 
-<!-- ============ CHUNK 16: §A4 ============ -->
+<!-- ============ 16 ============ -->
 <section class="chunk" id="c16-a4" data-chunk-id="c16-a4">
   <div class="chunk-head">
     <span class="chunk-tag">16 / Question §A4</span>
-    <h2 class="chunk-title">§A4 — Bench-sheet PDF generation</h2>
+    <h2 class="chunk-title">§A4 — PDF generation</h2>
     <a class="chunk-anchor" href="#c16-a4">#</a>
   </div>
   <div class="chunk-body">
-    <p><strong>Question:</strong> Do we need a printable artifact for compliance, since the workbooks were printed and wet-signed?</p>
-    <p><strong>Default:</strong> yes, generate a print-friendly view at sign-off; wet signature optional. Skip the analyst-signature digital surface for now.</p>
+    <p><strong>Question:</strong> Do we generate a printable PDF at sign-off, since the workbooks were printed and wet-signed?</p>
+    <p><strong>Default:</strong> yes — a print-friendly view at sign-off, wet signature optional. Skip the digital-signature surface for now.</p>
   </div>
   <div class="chunk-feedback"></div>
 </section>
 
-<!-- ============ CHUNK 17: §A5 ============ -->
+<!-- ============ 17 ============ -->
 <section class="chunk" id="c17-a5" data-chunk-id="c17-a5">
   <div class="chunk-head">
     <span class="chunk-tag">17 / Question §A5</span>
-    <h2 class="chunk-title">§A5 — Cannabinoid Bench Sheets nav placement parent</h2>
+    <h2 class="chunk-title">§A5 — Nav parent</h2>
     <a class="chunk-anchor" href="#c17-a5">#</a>
   </div>
   <div class="chunk-body">
-    <p><strong>Question:</strong> Top-level (sibling of &ldquo;Batch Workflow&rdquo;) or under a new &ldquo;Cannabinoids&rdquo; parent?</p>
-    <p><strong>Default:</strong> top-level, with future room for a &ldquo;Cannabinoids&rdquo; parent if/when multiple cannabinoid-specific pages cluster.</p>
+    <p><strong>Question:</strong> Top-level (sibling of "Batch Workflow") or under a new "Cannabinoids" parent?</p>
+    <p><strong>Default:</strong> top-level, with future room for a "Cannabinoids" parent if/when more cannabinoid-specific pages cluster.</p>
   </div>
   <div class="chunk-feedback"></div>
 </section>
 
-<!-- ============ CHUNK 18: Verification ============ -->
+<!-- ============ 18 ============ -->
 <section class="chunk" id="c18-verify" data-chunk-id="c18-verify">
   <div class="chunk-head">
     <span class="chunk-tag">18 / Verification</span>
-    <h2 class="chunk-title">Verification ladder — what Adam clicks per slice</h2>
+    <h2 class="chunk-title">Verification ladder — what you click per slice</h2>
     <a class="chunk-anchor" href="#c18-verify">#</a>
   </div>
   <div class="chunk-body">
     <h4>Slice 1</h4>
     <ul>
-      <li>Navigate to <code>/cannabinoids/bench-sheets</code>. Sidebar shows today&rsquo;s PrepBatches.</li>
-      <li>Click &ldquo;+ New PrepBatch&rdquo; → header tab opens, status = <code>InProcess</code>. Set matrix to Flower, lead analyst to self, balance to one of the calibrated balances. Save.</li>
-      <li>Switch to Bench Sheet tab. Click &ldquo;Add Samples&rdquo; → see Sample Queue picker. Pick 5 not-batched cannabinoid samples. Confirm. 5 rows appear with default weight/EV/DF from <code>AssaySampleTypePrep</code>.</li>
-      <li>Edit a row&rsquo;s weight; tab out. Confirm autosave (no Save button click). Refresh the page; the weight persists.</li>
-      <li>Add three rows for the same Sample ID with <code>ReplicateIndex</code> 1, 2, 3. Confirm three rows persist.</li>
-      <li>Click sign-off tab; commit Weigh step. Confirm <code>PrepBatch.WeighedByUserId</code> and <code>WeighedOnUtc</code> populated in DB.</li>
-      <li>Status flip to <code>ReadyForAnalysis</code>. Header tab now read-only.</li>
-      <li>DB assertion: <code>SELECT * FROM PrepBatch WHERE Id = &lt;new&gt;; SELECT * FROM PrepBatchSampleEntry WHERE PrepBatchId = &lt;new&gt;;</code> shows the captured rows.</li>
+      <li>Go to <code>/cannabinoids/bench-sheets</code>. Sidebar lists today&rsquo;s prep batches.</li>
+      <li>Click "+ New PrepBatch" → header opens, status = In Process. Pick matrix (Flower), pick yourself as lead analyst, pick a calibrated balance. Save.</li>
+      <li>Switch to Bench Sheet tab. Click "Add Samples" → picker opens. Pick 5 not-batched cannabinoid samples. Five rows appear, default weight / EV / DF seeded.</li>
+      <li>Edit a weight; tab out. Confirm autosave (no Save click). Refresh; weight persists.</li>
+      <li>Add three rows for one Sample ID with replicate indexes 1, 2, 3. All three persist.</li>
+      <li>Sign-Off tab → click Weigh step. Confirm Weighed-by-user and Weighed-on-date are populated.</li>
+      <li>Status flips to "Ready for Analysis". Header tab is read-only.</li>
+      <li>DB spot-check: query <code>PrepBatch</code> and <code>PrepBatchSampleEntry</code>; row counts and stamps match what you just did.</li>
     </ul>
     <h4>Slice 2</h4>
     <ul>
-      <li>Drop a Shimadzu QC file into the dev sweeper inbox. Watch the file get ingested.</li>
-      <li>DB assertion: <code>SELECT * FROM InstrumentRunInjection WHERE FileStorageId = (file just landed);</code> returns one row, with non-null <code>InstrumentRunId</code> and <code>BatchControlId</code>.</li>
-      <li>Navigate to <code>/batchworkflow</code>, find the batch the file landed in. Confirm <code>QcSummaryBlock</code> renders. Confirm a &ldquo;Run Validation&rdquo; anchor appears alongside the existing Review modal trigger.</li>
-      <li>Click &ldquo;Run Validation&rdquo; → navigates to <code>/workflow/qc-run-validation/{labBatchId}</code>. Page renders with injection-grain grid populated.</li>
-      <li>(Existing) click &ldquo;Review&rdquo; → <code>ReviewChecklistDialog</code> modal opens as before. Confirm both surfaces are independent.</li>
-      <li>Confirm the Analysis tab grid now exposes (via column chooser) <code>WeightG</code>, <code>DilutionFactor</code>, <code>ExtractionVolumeL</code> per sample, sourced from <code>PrepBatchSampleEntry</code>.</li>
+      <li>Drop a Shimadzu QC file into the dev sweeper inbox. File ingests.</li>
+      <li>DB spot-check: one new <code>InstrumentRunInjection</code> row tied to the file, with the parent run and batch control filled in.</li>
+      <li>Go to <code>/batchworkflow</code>, find that batch. Confirm the QC summary box renders. Confirm a "Run Validation" button appears next to the existing Review trigger.</li>
+      <li>Click "Run Validation" → page opens with a populated per-injection grid.</li>
+      <li>Click "Review" → checklist popup opens as before. Both surfaces work independently.</li>
+      <li>On the Analysis tab, open the column chooser; Weight / DF / EV are available, sourced from <code>PrepBatchSampleEntry</code>.</li>
     </ul>
   </div>
   <div class="chunk-feedback"></div>
 </section>
 
-<!-- ============ CHUNK 19: Commits + Memory + Execution Appendix ============ -->
+<!-- ============ 19 ============ -->
 <section class="chunk" id="c19-appendix" data-chunk-id="c19-appendix">
   <div class="chunk-head">
     <span class="chunk-tag">19 / Appendix</span>
-    <h2 class="chunk-title">Commit slicing, memory updates, execution appendix</h2>
+    <h2 class="chunk-title">Commit slicing &amp; memory updates</h2>
     <a class="chunk-anchor" href="#c19-appendix">#</a>
   </div>
   <div class="chunk-body">
-    <h4>Slicing for commits</h4>
-    <p>Both slices are PR-shippable independently. Within each slice, the natural commit boundary is one entity / migration / page per commit. Pre-commit reminder: <code>git restore --staged NCLims.PlaywrightTests/testsettings.local.json deploy.zip</code>.</p>
-    <p><strong>Slice 1 sub-commits (in order):</strong></p>
+    <p>Both slices ship as independently shippable PRs. Within each, the natural commit boundary is one entity / migration / page per commit, so reviewers can audit each piece in isolation.</p>
+    <h4>Slice 1 commits, in order</h4>
     <ol>
-      <li>EF migration: <code>AddPrepBatchStatusAndPerStepDates</code> + <code>AddPrepBatchEquipmentFks</code> + <code>AddPrepBatchSecondaryReview</code> (one commit, one migration — three logical changes are too tightly coupled to split).</li>
-      <li>EF migration: <code>AddPrepBatchSampleEntry</code> (entity + indexes + EntityMaps.cs).</li>
-      <li>Razor page shell: <code>Pages/Cannabinoids/BenchSheets.razor</code> + nav menu update + empty tabs.</li>
-      <li>Setup tab + PrepBatch CRUD wiring.</li>
-      <li>Bench Sheet tab + PrepBatchSampleEntry grid + Add Samples dialog.</li>
+      <li>Database migration: <code>PrepBatch</code> field additions (status + per-step dates + equipment + secondary review).</li>
+      <li>Database migration: <code>PrepBatchSampleEntry</code> table.</li>
+      <li>Empty page shell + nav menu update + tab placeholders.</li>
+      <li>Header / Setup tab.</li>
+      <li>Bench Sheet tab + Add Samples picker.</li>
       <li>Confirmations tab.</li>
       <li>Sign-Off tab + status transitions.</li>
-      <li><code>LabBatchSampleView2</code> SQL update (slice-1 prerequisite for slice 2 wire 3).</li>
+      <li>Analysis-tab SQL view update (prereq for slice 2 wire 3).</li>
     </ol>
-    <p><strong>Slice 2 sub-commits:</strong></p>
+    <h4>Slice 2 commits, in order</h4>
     <ol>
-      <li><code>RawDataService.ResolveOrCreateInstrumentRunInjectionAsync</code> + <code>FilerController</code> insertion + <code>RawDataService.ProcessRawDataFiles</code> parallel insertion.</li>
-      <li>RunAssemblerService + RushBracketDetector synchronous invocation hook.</li>
-      <li><code>QcSummaryBlock</code> second command (Run Validation deep-link).</li>
-      <li><code>/workflow/qc-run-validation/{lbId}</code> page bound to injection grid + override service.</li>
-      <li>Decision-Package freeze on sign-off.</li>
-      <li>Analysis-tab column-chooser exposure of weight/DF/EV (after slice 1 view update).</li>
+      <li>The new injection-capture step in the file-ingest pipeline (called from both QC-file path and customer-sample path).</li>
+      <li>Run the classifier + rush-bracket detector right after.</li>
+      <li>Add the "Run Validation" button to the QC summary box.</li>
+      <li>Wire up the QC Run Validation page (grid + override + sign-off services).</li>
+      <li>Frozen Decision Package generation on sign-off.</li>
+      <li>Expose Weight / DF / EV in the Analysis tab via the column chooser.</li>
     </ol>
     <h4>Memory updates after approval</h4>
     <ul>
-      <li><code>project_cannabinoid_bench_sheet_workflow.md</code> (new) — slice 1 overview + entity model.</li>
-      <li><code>project_qc_workstream_shipped.md</code> (update) — extend with slice 2 ingest wire-up + injection grain visibility.</li>
-      <li><code>feedback_prepbatch_perstep_grain.md</code> (new) — for cannabinoids, per-step user/date is batch-level; do NOT mirror Pearson&rsquo;s per-sample LBSP pattern. Reason: SOP-140 §3.6 and the Ohio bench-sheet workbooks both capture per-step at the batch level.</li>
+      <li>New note for the cannabinoid bench-sheet workflow — overview + entity model.</li>
+      <li>Extension of the "QC workstream shipped" note to cover ingest wire-up and per-injection visibility.</li>
+      <li>New rule: for cannabinoids, per-step user/date is captured at the <em>batch</em> level (not per-sample). Reason: the workbooks and SOP both capture per-step at the batch level; mirroring Pearson&rsquo;s per-sample LBSP pattern would be wrong here.</li>
     </ul>
-    <h4>Execution appendix (file paths)</h4>
-    <ul>
-      <li>New entity: <code>NCLims.Models/PrepBatchSampleEntry.cs</code>. Composite-uniq on <code>(PrepBatchId, SampleId, ReplicateIndex)</code> filtered <code>Deleted = 0</code>. FK to <code>LabBatchSamplePanel</code> nullable. FK to <code>Sample</code> non-null. FK to <code>PrepBatch</code> non-null.</li>
-      <li>New enum: <code>NCLims.Models/PrepBatchStatus.cs</code> — <code>InProcess</code> / <code>ReadyForAnalysis</code> / <code>SentToAnalysis</code>.</li>
-      <li>Modified entity: <code>NCLims.Models/PrepBatch.cs</code> — add <code>Status</code>, <code>WeighedOnUtc</code>, <code>ExtractedOnUtc</code>, <code>DilutedOnUtc</code>, <code>AnalyzedByUserId</code>, <code>AnalyzedOnUtc</code>, <code>BalanceLabAssetId</code>, <code>BottleTopLabAssetId</code>, <code>RepeaterLabAssetId</code>, <code>PipetteLabAssetId</code>, <code>SecondaryReviewedByUserId</code>, <code>SecondaryReviewedOnUtc</code>, <code>AnalyticalBatchLabBatchId</code> nullable.</li>
-      <li>New page: <code>NCLims.App/Pages/Cannabinoids/BenchSheets.razor</code> + <code>BenchSheets.razor.cs</code> + <code>BenchSheetsCb.cs</code>.</li>
-      <li>New service: <code>NCLims.Business/Services/Cannabinoids/PrepBatchService.cs</code>.</li>
-      <li>Modified controller: <code>NCLims.App/Controllers/FilerController.cs:514–518</code> — call <code>_rawDataService.ResolveOrCreateInstrumentRunInjectionAsync(rawfile)</code>.</li>
-      <li>Modified service: <code>NCLims.Business/RawDataService.cs::ProcessRawDataFiles</code> — equivalent insertion at the customer-sample path.</li>
-      <li>New service method: <code>NCLims.Business/RawDataService.cs::ResolveOrCreateInstrumentRunInjectionAsync</code> + <code>ResolveOrCreateInstrumentRunAsync</code> private helper.</li>
-      <li>Modified component: <code>NCLims.App/Pages/Workflow/Qc/QcSummaryBlock.razor</code> — add second command + <code>OnRunValidation</code> callback parameter. Wire from <code>AnalysisBatch.razor:188</code>.</li>
-      <li>Modified SQL view: <code>LabBatchSampleView2</code> — LEFT JOIN onto <code>PrepBatchSampleEntry</code> via <code>Sample.PrepBatchId</code>, project <code>WeightG</code>, <code>DilutionFactor</code>, <code>ExtractionVolumeL</code> as new columns. View update script at <code>scripts/RebuildLabBatchSampleView2.sql</code>.</li>
-      <li>Already-shipped route, needs binding: <code>NCLims.App/Pages/Workflow/QcRunValidation/RunValidation.razor</code> — bind grid to <code>_qcOverrideService</code> + <code>_runValidationDecisionService</code> + new injection projection.</li>
-    </ul>
-    <p><code>POST_DEPLOYMENT_CHECKLIST.md</code> gets new entries for each migration, view rebuild, and seed script. Update in the same commits.</p>
   </div>
   <div class="chunk-feedback"></div>
 </section>
 
 </main>
 
-<!-- Floating actions -->
 <div class="floatbar">
   <button class="ghost" id="btnReset" title="Clear all feedback (cannot undo)">Reset</button>
   <button class="primary" id="btnCompileBottom">Compile feedback</button>
 </div>
 
-<!-- Modal -->
 <div class="modal-backdrop" id="modal" data-open="false">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-head">
@@ -833,7 +809,6 @@
     { value: 'rework', label: '↻ Rework' }
   ];
 
-  // ---- Persistence ----
   function loadState() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -848,7 +823,6 @@
 
   let state = loadState();
 
-  // ---- Build feedback widgets per chunk ----
   const chunks = Array.from(document.querySelectorAll('.chunk'));
   document.getElementById('progressTotal').textContent = chunks.length;
 
@@ -873,7 +847,7 @@
       btn.textContent = s.label;
       btn.addEventListener('click', function () {
         const cur = (state[id] && state[id].status) || null;
-        const next = (cur === s.value) ? null : s.value; // toggle off
+        const next = (cur === s.value) ? null : s.value;
         state[id] = state[id] || {};
         state[id].status = next;
         saveState(state);
@@ -921,7 +895,6 @@
   }
   updateProgress();
 
-  // ---- Compile to markdown ----
   function statusLabel(v) {
     if (v === 'lgtm') return 'LGTM';
     if (v === 'inline') return 'INLINE EDIT';
@@ -937,7 +910,6 @@
     lines.push('Reviewed: ' + new Date().toISOString());
     lines.push('');
 
-    // Summary table
     const verdicts = { lgtm: [], inline: [], rework: [], none: [] };
     chunks.forEach(function (c) {
       const id = c.dataset.chunkId;
@@ -957,7 +929,6 @@
     lines.push('| No verdict | ' + verdicts.none.length + ' |');
     lines.push('');
 
-    // Per-section detail (only sections with status or notes)
     lines.push('## Per-section feedback');
     lines.push('');
     let any = false;
@@ -988,7 +959,6 @@
       lines.push('');
     }
 
-    // Sections with no verdict, listed for tracking
     if (verdicts.none.length > 0) {
       lines.push('## Sections without a verdict');
       lines.push('');
@@ -1001,7 +971,6 @@
     return lines.join('\n');
   }
 
-  // ---- Modal ----
   const modal = document.getElementById('modal');
   const modalOutput = document.getElementById('modalOutput');
 
@@ -1024,7 +993,6 @@
     if (e.key === 'Escape' && modal.dataset.open === 'true') closeModal();
   });
 
-  // ---- Toast helper ----
   const toast = document.getElementById('toast');
   let toastTimer = null;
   function showToast(msg) {
@@ -1034,7 +1002,6 @@
     toastTimer = setTimeout(function () { toast.dataset.show = 'false'; }, 2200);
   }
 
-  // ---- Copy + Download ----
   document.getElementById('btnCopy').addEventListener('click', function () {
     const text = modalOutput.textContent;
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1074,7 +1041,6 @@
     showToast('Downloaded');
   });
 
-  // ---- Reset ----
   document.getElementById('btnReset').addEventListener('click', function () {
     if (!confirm('Clear all feedback for all sections? This cannot be undone.')) return;
     state = {};
