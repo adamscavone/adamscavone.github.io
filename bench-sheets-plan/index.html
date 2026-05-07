@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="dark">
+<title>Bench Sheets Plan v2 — Delta Review</title>
+<style>
+  :root {
+    --bg: #0b0d10;
+    --bg-card: #14181d;
+    --bg-card-2: #1a1e24;
+    --bg-elev: #1f242b;
+    --fg: #e6e8eb;
+    --fg-dim: #9aa0a6;
+    --fg-muted: #6b7075;
+    --accent: #8ab4f8;
+    --accent-fg: #0b0d10;
+    --green: #6cc46c;
+    --amber: #e8b76a;
+    --red: #ef6f6f;
+    --border: #2d3239;
+    --border-strong: #3b4047;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font: 15.5px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  code, pre, kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  code { background: var(--bg-elev); padding: 0.1em 0.35em; border-radius: 3px; font-size: 0.9em; }
+  pre { background: var(--bg-elev); padding: 0.9rem 1rem; border-radius: 6px; overflow-x: auto; font-size: 0.85em; line-height: 1.5; }
+  a { color: var(--accent); }
+  table { border-collapse: collapse; margin: 0.6rem 0; font-size: 0.92rem; }
+  table th, table td { border: 1px solid var(--border); padding: 0.4rem 0.7rem; text-align: left; vertical-align: top; }
+  table th { background: var(--bg-elev); color: var(--fg-dim); font-weight: 700; }
+
+  header.app {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(11, 13, 16, 0.92);
+    backdrop-filter: saturate(180%) blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.85rem 1rem;
+  }
+  header.app .row {
+    max-width: 920px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  header.app h1 { margin: 0; font-size: 1rem; font-weight: 700; }
+  header.app .sub { color: var(--fg-dim); font-size: 0.8rem; margin: 0; }
+  header.app .spacer { flex: 1; }
+  header.app .progress { color: var(--fg-dim); font-size: 0.8rem; font-family: ui-monospace, monospace; }
+  header.app .progress strong { color: var(--fg); }
+
+  button.primary, button.ghost {
+    font: inherit;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 0.45rem 0.9rem;
+    transition: background 0.12s, border-color 0.12s, transform 0.08s;
+  }
+  button.primary { background: var(--accent); color: var(--accent-fg); border: 1px solid var(--accent); font-weight: 600; }
+  button.primary:hover { background: #a3c5fa; border-color: #a3c5fa; }
+  button.primary:active { transform: scale(0.985); }
+  button.ghost { background: transparent; color: var(--fg); border: 1px solid var(--border-strong); }
+  button.ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  main { max-width: 920px; margin: 0 auto; padding: 1.5rem 1rem 6rem; }
+
+  .intro {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.15rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.92rem;
+    color: var(--fg-dim);
+  }
+  .intro p { margin: 0 0 0.55rem; }
+  .intro p:last-child { margin-bottom: 0; }
+  .intro strong { color: var(--fg); }
+
+  details.skip {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.55rem 1rem;
+    margin-bottom: 1.2rem;
+    font-size: 0.88rem;
+    color: var(--fg-dim);
+  }
+  details.skip summary {
+    cursor: pointer;
+    color: var(--fg);
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 0.35rem 0;
+  }
+  details.skip[open] summary { margin-bottom: 0.5rem; }
+  details.skip ul { margin: 0.4rem 0 0.6rem; padding-left: 1.4rem; }
+  details.skip li { margin-bottom: 0.25rem; }
+  details.skip code { font-size: 0.85em; }
+
+  .chunk {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: border-color 0.12s;
+  }
+  .chunk[data-status="lgtm"]    { border-color: rgba(108, 196, 108, 0.45); }
+  .chunk[data-status="inline"]  { border-color: rgba(232, 183, 106, 0.45); }
+  .chunk[data-status="rework"]  { border-color: rgba(239, 111, 111, 0.55); }
+
+  .chunk-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    padding: 0.85rem 1.15rem 0.4rem;
+    flex-wrap: wrap;
+  }
+  .chunk-tag {
+    color: var(--fg-muted);
+    font-size: 0.72rem;
+    font-family: ui-monospace, monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .chunk-kind {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .chunk-kind[data-kind="new"]      { background: rgba(108, 196, 108, 0.16); color: var(--green); border: 1px solid rgba(108,196,108,0.45); }
+  .chunk-kind[data-kind="revised"]  { background: rgba(138, 180, 248, 0.16); color: var(--accent); border: 1px solid rgba(138,180,248,0.45); }
+  .chunk-kind[data-kind="resolved"] { background: rgba(232, 183, 106, 0.16); color: var(--amber); border: 1px solid rgba(232,183,106,0.45); }
+  .chunk-title { margin: 0; font-size: 1.05rem; font-weight: 700; flex: 1; line-height: 1.3; min-width: 200px; }
+  .chunk-anchor {
+    color: var(--fg-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    opacity: 0;
+    transition: opacity 0.15s, color 0.15s;
+  }
+  .chunk:hover .chunk-anchor { opacity: 1; }
+  .chunk-anchor:hover { color: var(--accent); }
+
+  .chunk-body {
+    padding: 0.4rem 1.15rem 0.9rem;
+    color: var(--fg);
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+  .chunk-body h4 { margin: 1rem 0 0.4rem; font-size: 0.95rem; color: var(--fg); font-weight: 700; }
+  .chunk-body h4:first-child { margin-top: 0.5rem; }
+  .chunk-body p { margin: 0 0 0.6rem; }
+  .chunk-body ul, .chunk-body ol { margin: 0.3rem 0 0.7rem; padding-left: 1.4rem; }
+  .chunk-body li { margin-bottom: 0.3rem; }
+  .chunk-body strong { color: var(--fg); }
+  .chunk-body em { color: var(--fg-dim); }
+  .v1note {
+    border-left: 3px solid var(--border-strong);
+    padding: 0.25rem 0 0.25rem 0.7rem;
+    color: var(--fg-dim);
+    font-size: 0.88rem;
+    margin: 0.6rem 0 0.8rem;
+  }
+  .v1note strong { color: var(--fg); }
+
+  .chunk-feedback {
+    background: var(--bg-card-2);
+    padding: 0.85rem 1.15rem 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .chunk-feedback .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.55rem;
+    align-items: center;
+  }
+  .chunk-feedback .label {
+    font-size: 0.75rem;
+    color: var(--fg-muted);
+    margin-right: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .status-pill {
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    color: var(--fg-dim);
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    font: inherit;
+    font-size: 0.78rem;
+    transition: all 0.12s;
+  }
+  .status-pill:hover { border-color: var(--accent); color: var(--fg); }
+  .status-pill[data-active="true"][data-value="lgtm"]   { background: rgba(108, 196, 108, 0.16); border-color: var(--green); color: var(--green); }
+  .status-pill[data-active="true"][data-value="inline"] { background: rgba(232, 183, 106, 0.16); border-color: var(--amber); color: var(--amber); }
+  .status-pill[data-active="true"][data-value="rework"] { background: rgba(239, 111, 111, 0.16); border-color: var(--red); color: var(--red); }
+  .chunk-feedback textarea {
+    width: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.55rem 0.7rem;
+    font: inherit;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    resize: vertical;
+    min-height: 56px;
+    transition: border-color 0.12s;
+  }
+  .chunk-feedback textarea:focus { outline: none; border-color: var(--accent); }
+  .chunk-feedback textarea::placeholder { color: var(--fg-muted); }
+
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .modal-backdrop[data-open="true"] { display: flex; }
+  .modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 820px;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .modal-head { padding: 0.9rem 1.15rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.7rem; }
+  .modal-head h2 { margin: 0; font-size: 1.05rem; flex: 1; }
+  .modal-head .close { background: transparent; color: var(--fg-dim); border: none; font-size: 1.4rem; cursor: pointer; line-height: 1; padding: 0.2rem 0.45rem; border-radius: 4px; }
+  .modal-head .close:hover { color: var(--fg); background: var(--bg-elev); }
+  .modal-body { padding: 0; overflow: auto; flex: 1; display: flex; flex-direction: column; }
+  .modal-toolbar { padding: 0.7rem 1.15rem; border-bottom: 1px solid var(--border); display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .modal-output { flex: 1; overflow: auto; }
+  .modal-output pre { margin: 0; border-radius: 0; background: var(--bg); padding: 1rem 1.15rem; white-space: pre-wrap; word-wrap: break-word; font-size: 0.82rem; line-height: 1.55; color: var(--fg); }
+
+  .toast {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--bg-elev);
+    border: 1px solid var(--border-strong);
+    color: var(--fg);
+    padding: 0.55rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    opacity: 0;
+    transition: all 0.2s;
+    pointer-events: none;
+    z-index: 200;
+  }
+  .toast[data-show="true"] { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .floatbar { position: fixed; bottom: 1rem; right: 1rem; display: flex; gap: 0.5rem; z-index: 40; }
+  .floatbar button { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5); }
+
+  @media (max-width: 600px) {
+    header.app h1 { font-size: 0.92rem; }
+    header.app .sub { display: none; }
+    .floatbar { bottom: 0.5rem; right: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="app">
+  <div class="row">
+    <div>
+      <h1>Bench Sheets Plan v2 — Delta Review</h1>
+      <p class="sub">only the items new/revised since v1 · skipping what you already accepted</p>
+    </div>
+    <span class="spacer"></span>
+    <span class="progress">reviewed: <strong id="progressCount">0</strong> / <strong id="progressTotal">17</strong></span>
+    <button class="primary" id="btnCompile">Compile feedback</button>
+  </div>
+</header>
+
+<main>
+
+<div class="intro">
+  <p><strong>Why this is shorter than v1.</strong> You LGTM&rsquo;d most of v1 already. v2 is mostly a rework of D3, plus consequences of the factual corrections you flagged. This page surfaces only the items that are <strong>new</strong> or <strong>revised</strong> since v1 review. Items you accepted in v1 that didn&rsquo;t change in v2 aren&rsquo;t re-shown.</p>
+  <p>Each chunk has a colored badge: <span style="color:var(--green);font-weight:600">NEW</span> = new in v2, <span style="color:var(--accent);font-weight:600">REVISED</span> = was LGTM but the design changed, <span style="color:var(--amber);font-weight:600">RESOLVED</span> = your v1 REWORK landed; here&rsquo;s what it became.</p>
+</div>
+
+<details class="skip">
+  <summary>Skipped from this page (LGTM in v1, unchanged in v2) — expand if you want to confirm</summary>
+  <ul>
+    <li><strong>v1 §01 — Hard gates.</strong> Same as v1. Two slices ship independently, Ohio first, DB to <code>NCLimsProjectKondo_A</code>, no code until plan approved.</li>
+    <li><strong>v1 §03 — D1 InstrumentRunInjection write site.</strong> Unchanged. Capture each injection right after BatchControl resolution and before file is flagged "processed."</li>
+    <li><strong>v1 §07 — Slice 1 Nav placement.</strong> Unchanged. <code>"Cannabinoid Bench Sheets"</code> at <code>/cannabinoids/bench-sheets</code>, sibling of "Batch Workflow."</li>
+    <li><strong>v1 §10 — Slice 1 NOT-in.</strong> Unchanged (your back-link note is folded into slice 2 wire 4 — see resolved chunk below).</li>
+    <li><strong>v1 §12 — Slice 2 NOT-in.</strong> Unchanged. No backfill of historical instrument runs; no control-charts wiring.</li>
+    <li><strong>v1 §A2 — multi-analyst sign-off.</strong> Confirmed: each analyst logs in and commits their own step. (Pencil-whipping mitigation now tracked separately — see new <strong>§A10</strong>.)</li>
+    <li><strong>v1 §A3 — PrepBatch ID.</strong> Confirmed: system-generated, sequential, reusing existing "Create Prep Batch" code path.</li>
+    <li><strong>v1 §A5 — Nav parent.</strong> Confirmed: top-level.</li>
+    <li><strong>v1 §19 — Commit slicing &amp; memory updates.</strong> Same shape; numbering adjusted for the new commits in slice 1 and slice 2.</li>
+  </ul>
+</details>
+
+<!-- ============ 01 ============ -->
+<section class="chunk" id="c01-facts" data-chunk-id="c01-facts">
+  <div class="chunk-head">
+    <span class="chunk-tag">01 / Framing</span>
+    <span class="chunk-kind" data-kind="new">NEW</span>
+    <h2 class="chunk-title">Three factual corrections from v1</h2>
+    <a class="chunk-anchor" href="#c01-facts">#</a>
+  </div>
+  <div class="chunk-body">
+    <p>v1 made three claims that were wrong; v2 corrects them and a lot of design downstream depends on the corrections:</p>
+    <ol>
+      <li><strong>"Chem-QC UI ships in production; analysts use it daily."</strong> Wrong. The QC UI commits (<code>e4f5f899</code>, <code>364da123</code>, <code>372cc9d5</code>, <code>1b99e776</code>) live on <code>kondo/wave-1</code> only — none on <code>origin/main</code>. Deployed only to the Kondo test env. No production analyst is using it.</li>
+      <li><strong>"<code>RunValidation.razor</code> shipped today as an empty route shell."</strong> Wrong. It&rsquo;s an <em>uncommitted</em> scaffold (untracked in git), and it isn&rsquo;t empty — it already has the per-injection grid, auto-computed dispositions, override queue, and a sign-off blocker that gates on "every disposition Releasable or ReleasableViaOverride." So the auto-validation pivot is an extension, not a rebuild.</li>
+      <li><strong>"Most of slice 1 needs new fields on PrepBatch."</strong> Wrong. <code>PrepBatch</code> already has lead-analyst + per-step user FKs, four lot FKs, matrix grouping. Granular DOF (analyst × step × equipment × file × lot × timestamp) lives in two existing entities — <code>BatchControlProvenance</code> and <code>SampleAssayProvenance</code> — keyed off the <code>ProvenanceRole</code> enum (14 values across 4 blocks). Slice 1 is much less new schema than v1 implied.</li>
+    </ol>
+    <p>The factual fix shifts the leverage point: slice 1 is smaller; D3 is wide-open because no production analyst is locked into the existing checklist surface.</p>
+  </div>
+  <div class="chunk-feedback"></div>
+</section>
+
+<!-- ============ 02 ============ -->
+<section class="chunk" id="c02-d2" data-chunk-id="c02-d2">
+  <div class="chunk-head">
+    <span class="chunk-tag">02 / D2 revised</span>
+    <span class="chunk-kind" data-kind="revised">REVISED</span>
+    <h2 class="chunk-title">Bench-sheet data lives on PrepBatch + new entry table + existing Provenance entities</h2>
+    <a class="chunk-anchor" href="#c02-d2">#</a>
+  </div>
+  <div class="chunk-body">
+    <p class="v1note"><strong>v1 said:</strong> add a bunch of denormalized columns to PrepBatch (per-step UTC dates, equipment FKs, secondary review). You LGTM&rsquo;d that. <strong>v2 changes the approach</strong> because BatchControlProvenance / SampleAssayProvenance already exist as the canonical capture — denormalizing onto PrepBatch would be a duplicate-data trap.</p>
+    <ul>
+      <li><strong>Header-level facts</strong> (matrix, primary reviewer, prep date, batch-level lots, equipment defaults) → PrepBatch columns. Most are already there; a few additions for status / Transferred / Analyzed / reviewers.</li>
+      <li><strong>Per-sample-replicate rows</strong> (weight, DF, EV, comments, replicate index) → new <code>PrepBatchSampleEntry</code> table.</li>
+      <li><strong>Granular DOF</strong> (who weighed <em>this specific</em> control on <em>which balance</em> with <em>which calibration cert file</em> at <em>what time</em>) → existing <code>BatchControlProvenance</code> / <code>SampleAssayProvenance</code> rows, keyed by <code>ProvenanceRole</code>.</li>
+    </ul>
+    <p>Don&rsquo;t touch LBSP. Don&rsquo;t add denormalized columns mirroring provenance rows — that's the dual-write trap that bit Pearson&rsquo;s micro flow.</p>
+  </div>
+  <div class="chunk-feedback"></div>
+</section>
+
+<!-- ============ 03 ============ -->
+<section class="chunk" id="c03-d3" data-chunk-id="c03-d3">
+  <div class="chunk-head">
+    <span class="chunk-tag">03 / D3 revised</span>
+    <span class="chunk-kind" data-kind="revised">REVISED</span>
+    <h2 class="chunk-title">D3 — single auto-validation surface (the big rework)</h2>
+    <a class="chunk-anchor" href="#c03-d3">#</a>
+  </div>
+  <div class="chunk-body">
+    <p class="v1note"><strong>v1 said:</strong> keep the manual SOP checklist (ReviewChecklistDialog) as a popup, add a SECOND button to the Run Validation page. Two named surfaces. <strong>You called this out as wrong</strong> — auto-checks should replace manual checklist work where data already exists.</p>
+    <p><strong>v2 says:</strong> drop <code>ReviewChecklistDialog</code> as a UI surface entirely. The Run Validation page becomes the single sign-off surface. It runs an auto-validation panel that grades the run against existing data; only solicits the genuinely-non-derivable inputs.</p>
+    <ul>
+      <li>The "Review" button on <code>QcSummaryBlock</code> renames to <strong>"Validate Run"</strong> and navigates to the Run Validation page.</li>
+      <li><code>ReviewChecklistDialog</code> is no longer rendered anywhere. The backend <code>AnalyticalReviewChecklist</code> entity stays in the database for any legacy data; it just isn&rsquo;t surfaced.</li>
+      <li>Safe to do now: the chem-QC UI never shipped to production. No analyst is locked into the existing checklist habit. Replacing it before it goes wide is much cheaper than after.</li>
+    </ul>
+    <p>The Run Validation page already has the bones (auto-computed dispositions, sign-off blocker). v2 extends them with an explicit auto-check panel and a targeted analyst-attestation form.</p>
+  </div>
+  <div class="chunk-feedback"></div>
+</section>
+
+<!-- ============ 04 ============ -->
+<section class="chunk" id="c04-leverage" data-chunk-id="c04-leverage">
+  <div class="chunk-head">
+    <span class="chunk-tag">04 / D4 revised</span>
+    <span class="chunk-kind" data-kind="revised">REVISED</span>
+    <h2 class="chunk-title">"What we already have" — leverage from prior work</h2>
+    <a class="chunk-anchor" href="#c04-leverage">#</a>
+  </div>
+  <div class="chunk-body">
+    <p class="v1note"><strong>v1 said:</strong> a short "reuse" list mostly. v2 expands it because the factual corrections shifted what's actually pre-built vs. what's new.</p>
+    <h4>Already in place (reuse, don&rsquo;t recreate)</h4>
+    <ul>
+      <li><strong>PrepBatch entity</strong> — lead analyst, per-step user FKs (Weighed/Extracted/Diluted), four lot FKs (LCS / ISTD / mobile phase / extraction solvent), matrix grouping.</li>
+      <li><strong>BatchControlProvenance + SampleAssayProvenance</strong> — court-quality per-event DOF capture, keyed on <code>ProvenanceRole</code> (14 values: analyst-by-step 1–6, equipment 20–23, files 40–41, fallback lots 60–63).</li>
+      <li><strong>AssaySampleTypePrep</strong> — matrix-default weight / EV / DF per (assay × item category). Missing <code>DefaultReplicateCount</code> (see §A6).</li>
+      <li><strong>BatchControl</strong> — control-row entity with ExpectedLow/High, ObservedResult, Passed, RPD, FileStorageId, InstrumentRunId, InjectionOrder.</li>
+      <li><strong>InstrumentRunInjection</strong> — per-injection grain with AcquiredOnUtc, BatchControlId XOR SampleAssayId, IsOperative, CcvKind/CcvKindAuto/CcvKindSource.</li>
+      <li><strong>RunValidation.razor</strong> (uncommitted scaffold) — per-injection grid, dispositions auto-computed, override queue, sign-off blocker.</li>
+      <li><strong>QcSummaryBlock</strong> (kondo/wave-1) — inline pill row in the AnalysisBatch group header.</li>
+    </ul>
+    <h4>Add in slice 1</h4>
+    <ul>
+      <li>PrepBatch additions: status enum + <code>TransferredByUserId</code> + <code>AnalyzedByUserId</code> + <code>PrimaryReviewedByUserId</code> + <code>SecondaryReviewedByUserId</code>, paired <code>*OnUtc</code> fields, AnalyticalBatchLabBatchId convenience FK.</li>
+      <li>New <code>PrepBatchSampleEntry</code> table.</li>
+      <li><code>ProvenanceRole</code> enum additions: <code>TransferredByAnalyst (7)</code>, <code>SecondaryReviewer (8)</code>. Optional rename of <code>ReviewedByAnalyst (6)</code> → <code>PrimaryReviewer</code> (see §A8).</li>
+      <li><code>AssaySampleTypePrep.DefaultReplicateCount</code> (see §A6).</li>
+    </ul>
+    <h4>Add in slice 2</h4>
+    <ul>
+      <li>Instrument-injection capture step in the file-ingest pipeline.</li>
+      <li>"Validate Run" button replaces "Review" on <code>QcSummaryBlock</code>.</li>
+      <li>Auto-validation panel + analyst-attestation form on the Run Validation page.</li>
+      <li>"View Bench Sheet" back-link on Run Validation page (resolves your v1 §10 note).</li>
+      <li>Wide/tall toggle (resolves your v1 §02 ask) — see §A9.</li>
+      <li>Small SQL view change for Analysis-tab column-chooser exposure of weight/DF/EV.</li>
+    </ul>
+  </div>
+  <div class="chunk-feedback"></div>
+</section>
+
+<!-- ============ 05 ============ -->
+<section class="chunk" id="c05-roles" data-chunk-id="c05-roles">
+  <div class="chunk-head">
+    <span class="chunk-tag">05 / Role model</span>
+    <span class="chunk-kind" data-kind="resolved">RESOLVED</span>
+    <h2 class="chunk-title">Role model — 5 prep steps + 2 reviews via existing ProvenanceRole</h2>
+    <a class="chunk-anchor" href="#c05-roles">#</a>
+  </div>
+  <div class="chunk-body">
+    <p class="v1note"><strong>v1 §08:</strong> you flagged that "Lead Analyst" is too coarse — need explicit roles for weigher / diluter / transfer-person / chemist (the one who runs the instrument after instrument <em>conditioning</em>) / primary reviewer / secondary reviewer. <strong>v2 resolution:</strong></p>
+    <ul>
+      <li><strong>Weighed by</strong> — already in <code>ProvenanceRole.WeighedByAnalyst (1)</code> + <code>PrepBatch.WeighedByUserId</code>.</li>
+      <li><strong>Extracted by</strong> — already in <code>ProvenanceRole.ExtractedByAnalyst (2)</code> + <code>PrepBatch.ExtractedByUserId</code>.</li>
+      <li><strong>Diluted by</strong> — already in <code>ProvenanceRole.DilutedByAnalyst (3)</code> + <code>PrepBatch.DilutedByUserId</code>.</li>
+      <li><strong>Transferred by</strong> (50 mL conical → HPLC vial) — <strong>add <code>ProvenanceRole.TransferredByAnalyst (7)</code></strong> + <code>PrepBatch.TransferredByUserId</code>.</li>
+      <li><strong>Analyzed by</strong> (chemist who runs instrument after <em>conditioning</em>) — already in <code>ProvenanceRole.AnalyzedByAnalyst (4)</code>. Add convenience FK <code>PrepBatch.AnalyzedByUserId</code>. UI/SOP copy uses "conditioning," not "warming up."</li>
+      <li><strong>Primary Reviewer</strong> — repurpose existing <code>ProvenanceRole.ReviewedByAnalyst (6)</code> (or rename — see §A8) + <code>PrepBatch.PrimaryReviewedByUserId</code>.</li>
+      <li><strong>Secondary Reviewer</strong> — <strong>add <code>ProvenanceRole.SecondaryReviewer (8)</code></strong> + <code>PrepBatch.SecondaryReviewedByUserId</code>.</li>
+    </ul>
+    <p>"Lead Analyst" terminology retired everywhere in UI labels in favor of <strong>"Primary Reviewer."</strong> Per your note: by convention the chemist <em>is</em> the Primary Reviewer; FK-distinct so the system can record it differently when assignments differ.</p>
+  </div>
+  <div class="chunk-feedback"></div>
+</section>
+
+<!-- ============ 06 ============ -->
+<section class="chunk" id="c06-confirmations" data-chunk-id="c06-confirmations">
+  <div class="chunk-head">
+    <span class="chunk-tag">06 / Confirmations</span>
+    <span class="chunk-kind" data-kind="resolved">RESOLVED</span>
+    <h2 class="chunk-title">Drop the Confirmations tab + source-prep-batch pointer entirely</h2>
+    <a class="chunk-anchor" href="#c06-confirmations">#</a>
+  </div>
+  <div class="chunk-body">
+    <p class="v1note"><strong>v1 §09:</strong> "Bench sheet = prep sheet by definition; every row = de novo prep. Re-running already-extracted sample without de novo prep is future-scope, not current." <strong>v2 resolution:</strong></p>
+    <ul>
+      <li>No Confirmations tab on the page.</li>
+      <li>No nullable "source prep batch" pointer on <code>PrepBatchSampleEntry</code>.</li>
+      <li>If a customer requests a confirmation re-run, the analyst preps the sample again from scratch and adds it as a normal row on the next bench sheet. The Comments column carries the rush note ("Confirmation per CS request" / "Curaleaf rush"). No special UI surface, no special FK.</li>
+      <li>Re-running already-extracted sample without de novo prep is a future-scope workflow. Not in this slice; not noted in current docs.</li>
+    </ul>
+  </div>
+  <div class="chunk-feedback"></div>
+</section>
+
+<!-- ============ 07 ============ -->
+<section class="chunk" id="c07-replicates" data-chunk-id="c07-replicates">
+  <div class="chunk-head">
+    <span class="chunk-tag">07 / Add Replicates</span>
+    <span class="chunk-kind" data-kind="resolved">RESOLVED</span>
+    <h2 class="chunk-title">"Add Replicates" picker — sample is parent, replicate is child</h2>
+    <a class="chunk-anchor" href="#c07-replicates">#</a>
+  </div>
+  <div class="chunk-body">
+    <p class="v1note"><strong>v1 §18:</strong> "&lsquo;Add Samples&rsquo; should really be &lsquo;Add Replicates&rsquo; because sample is a parent when the context is prep batches and analysis batches (replicates are the children). This is fundamentally important to our design and curing our &lsquo;original sins&rsquo;." <strong>v2 resolution:</strong></p>
+    <ul>
+      <li>Button label: <strong>"Add Replicates"</strong>.</li>
+      <li>Picker shows un-batched samples in the LIMS Sample Queue (parent grain).</li>
+      <li>Analyst selects N samples and a per-sample replicate count K (default from <code>AssaySampleTypePrep.DefaultReplicateCount</code>; see §A6).</li>
+      <li>System creates N × K rows in <code>PrepBatchSampleEntry</code>.</li>
+      <li>Replicate count is editable per sample after creation.</li>
+    </ul>
+    <p>Auto-populate ancillary info (balance calibration cert, active reagent lots, default replicate count, instrument identity) on prep batch creation — pulls from current system state, only solicits the genuine gaps.</p>
+  </div>
+  <div class="chunk-feedback"></div>
+</section>
+
+<!-- ============ 08 ============ -->
+<section class="chunk" id="c08-slice2" data-chunk-id="c08-slice2">
+  <div class="chunk-head">
+    <span class="chunk-tag">08 / Slice 2 wires</span>
+    <span class="chunk-kind" data-kind="revised">REVISED</span>
+    <h2 class="chunk-title">Slice 2 — five wires (was four), reorganized around auto-validation</h2>
+    <a class="chunk-anchor" href="#c08-slice2">#</a>
+  </div>
+  <div class="chunk-body">
+    <p class="v1note"><strong>v1 said:</strong> four wires (instrument capture, deep-link button, view JOIN, page binding). <strong>v2 changes:</strong> wire 2 becomes a button rename instead of a second-button add; wire 4 absorbs the auto-validation panel work; new wire 4 splits out the wide/tall toggle + back-link; wire 5 takes the Analysis-tab view update.</p>
+    <ol>
+      <li><strong>Wire 1 — Capture each instrument injection.</strong> Unchanged from v1.</li>
+      <li><strong>Wire 2 — Replace "Review" with "Validate Run."</strong> The button on <code>QcSummaryBlock</code> renames; navigates to the Run Validation page. <code>ReviewChecklistDialog</code> stops being rendered.</li>
+      <li><strong>Wire 3 — Auto-validation panel + analyst attestation form on Run Validation page.</strong> The page&rsquo;s existing scaffold (per-injection grid, dispositions, override queue, sign-off blocker) is preserved; auto-validation goes <em>above</em> them as the new top section, attestation form right below it.</li>
+      <li><strong>Wire 4 — Wide/tall toggle + bench-sheet back-link.</strong> Toggle on the per-injection grid AND the Analysis tab grid (resolves your v1 §02 ask). "View Bench Sheet" link in the page header (resolves your v1 §10 note). If the run pulls from multiple prep batches, the link is a dropdown.</li>
+      <li><strong>Wire 5 — Surface bench-sheet data in Analysis tab.</strong> Same as v1&rsquo;s wire 3 — small SQL view change so weight/DF/EV are column-chooser opt-in.</li>
+    </ol>
+  </div>
+  <div class="chunk-feedback"></div>
+</section>
+
+<!-- ============ 09 ============ -->
+<section class="chunk" id="c09-autochecks" data-chunk-id="c09-autochecks">
+  <div class="chunk-head">
+    <span class="chunk-tag">09 / Auto-checks</span>
+    <span class="chunk-kind" data-kind="new">NEW</span>
+    <h2 class="chunk-title">The 14 auto-checks the panel runs</h2>
+    <a class="chunk-anchor" href="#c09-autochecks">#</a>
+  </div>
+  <div class="chunk-body">
+    <p>What the auto-validation panel grades, against existing data only. Each is auto-derivable — no analyst input needed for any of them.</p>
+    <h4>Scientific QC validity</h4>
+    <ol>
+      <li><strong>LCS recovery in spec</strong> — <code>BatchControl.ObservedResult</code> for control type LCS vs. <code>BatchControl.ExpectedLow</code>/<code>ExpectedHigh</code>. Fail if outside.</li>
+      <li><strong>Method blank cleanliness</strong> — BatchControl rows where ControlType = MB. Fail if any target analyte exceeds the reporting limit (or ½ RL, per SOP).</li>
+      <li><strong>Matrix spike recovery</strong> — BatchControl ObservedResult for ControlType = MS / LFM vs. limits. Fail if outside.</li>
+      <li><strong>Duplicate precision (RPD)</strong> — <code>BatchControl.RPD</code> for paired duplicates vs. method max. Fail if exceeded.</li>
+      <li><strong>CCV bracketing complete</strong> — <code>InstrumentRunInjection</code> rows with <code>CcvKind</code> set; verify max-customer-injections-between-passing-CCVs ≤ SOP threshold (10 per SOP-140).</li>
+      <li><strong>All controls evaluated</strong> — <code>BatchControl.Passed</code> non-null for every control row. Null = not yet evaluated; blocks sign-off.</li>
+    </ol>
+    <h4>Audit trail / data-model integrity</h4>
+    <ol start="7">
+      <li><strong>Every injection resolves to one owner</strong> — <code>InstrumentRunInjection.BatchControlId</code> XOR <code>SampleAssayId</code> (exactly one set, never both, never neither).</li>
+      <li><strong>Every released sample traces back to a bench sheet</strong> — for each released sample, <code>Sample.PrepBatchId</code> is non-null and the prep batch is Ready or Sent.</li>
+      <li><strong>Per-sample provenance complete</strong> — for every reportable SampleAssay, SampleAssayProvenance rows exist for required ProvenanceRoles (Weighed/Extracted/Diluted/Transferred/Analyzed).</li>
+      <li><strong>Per-control provenance complete</strong> — same shape for BatchControlProvenance.</li>
+      <li><strong>Lot traceability</strong> — PrepBatch has the four batch-level lot FKs populated, OR row-level Provenance overrides cover them.</li>
+      <li><strong>Equipment calibration valid at prep time</strong> — for each LabAsset referenced via Provenance, <code>LabAsset.Expiration</code> &gt; <code>PrepBatch.PrepDate</code>.</li>
+    </ol>
+    <h4>Workflow gates (already exist; surfaced into the panel)</h4>
+    <ol start="13">
+      <li><strong>Every disposition is resolved</strong> — no Blocked or AwaitingClose left.</li>
+      <li><strong>No pending overrides</strong> — no QcOverrideRequest in state Proposed at sign-off.</li>
+    </ol>
+    <p><em>Note:</em> we can phase rollout — start with the most critical 6–8, expand later.</p>
+  </div>
+  <div class="chunk-feedback"></div>
+</section>
+
+<!-- ============ 10 ============ -->
+<section class="chunk" id="c10-solicit" data-chunk-id="c10-solicit">
+  <div class="chunk-head">
+    <span class="chunk-tag">10 / Solicited inputs</span>
+    <span class="chunk-kind" data-kind="new">NEW</span>
+    <h2 class="chunk-title">The 5 things the analyst must attest (truly non-derivable)</h2>
+    <a class="chunk-anchor" href="#c10-solicit">#</a>
+  </div>
+  <div class="chunk-body">
+    <p>Things no entity captures; the analyst attests:</p>
+    <ol>
+      <li><strong>Sample physical condition / handling anomaly.</strong> Phase separation, clogging, viscosity, leakage, foaming. Pass/fail with mandatory note on fail.</li>
+      <li><strong>Reason an injection was excluded or marked non-operative.</strong> The system records the <em>what</em>; the analyst records the <em>why</em> (carryover, vial crash, autosampler miss, conditioning).</li>
+      <li><strong>Instrument conditioning acceptable.</strong> Per your §08 note — the chemist runs the instrument <em>after conditioning</em>. No entity captures conditioning acceptability; analyst attests.</li>
+      <li><strong>Override justification narrative.</strong> System detects an override is needed; only the analyst can write the scientific rationale.</li>
+      <li><strong>Approved-deviation rationale.</strong> Auto-validation may flag a missing expected provenance row or an off-template prep parameter. If permissible, the analyst states why.</li>
+    </ol>
+    <p>The attestation form is empty-when-derived — if all 14 auto-checks pass and no exclusions/overrides exist, no prompts are shown.</p>
+  </div>
+  <div class="chunk-feedback"></div>
+</section>
+
+<!-- ============ 11 ============ -->
+<section class="chunk" id="c11-a1" data-chunk-id="c11-a1">
+  <div class="chunk-head">
+    <span class="chunk-tag">11 / §A1 revised</span>
+    <span class="chunk-kind" data-kind="revised">REVISED</span>
+    <h2 class="chunk-title">§A1 — Button label, default revised</h2>
+    <a class="chunk-anchor" href="#c11-a1">#</a>
+  </div>
+  <div class="chunk-body">
+    <p class="v1note"><strong>v1:</strong> default was "Run Validation" (matches the route). You LGTM&rsquo;d. <strong>v2 changes:</strong> with D3 collapsed to a single surface (no separate Review modal), the action becomes "validate the run" rather than navigating to a page named "Run Validation."</p>
+    <p><strong>New default:</strong> <strong>"Validate Run"</strong> — verb-first, action-shaped, makes clear it&rsquo;s the sign-off entry point. Confirm or override.</p>
+  </div>
+  <div class="chunk-feedback"></div>
+</section>
+
+<!-- ============ 12 ============ -->
+<section class="chunk" id="c12-a4" data-chunk-id="c12-a4">
+  <div class="chunk-head">
+    <span class="chunk-tag">12 / §A4 revised</span>
+    <span class="chunk-kind" data-kind="revised">REVISED</span>
+    <h2 class="chunk-title">§A4 — PDF generation, Adobe context resolved</h2>
+    <a class="chunk-anchor" href="#c12-a4">#</a>
+  </div>
+  <div class="chunk-body">
+    <p class="v1note"><strong>v1 default:</strong> "Yes, generate a print-friendly view at sign-off; wet signature optional." You corrected: workbooks were never wet-signed — they were converted to PDF and Adobe-signed (electronic). <strong>v2 resolution:</strong></p>
+    <ul>
+      <li>PDF generation at sign-off: <strong>in scope</strong>. Print-friendly view auto-generated when sign-off lands.</li>
+      <li>Replacing Adobe with secure/indelible signing: <strong>out of scope for this slice.</strong> Future-scope item.</li>
+      <li>Analysts can continue Adobe-signing the PDF externally if a signed copy is needed for compliance; the LIMS sign-off itself is the system&rsquo;s source-of-truth for who signed when.</li>
+    </ul>
+  </div>
+  <div class="chunk-feedback"></div>
+</section>
+
+<!-- ============ 13 ============ -->
+<section class="chunk" id="c13-a6" data-chunk-id="c13-a6">
+  <div class="chunk-head">
+    <span class="chunk-tag">13 / §A6 NEW</span>
+    <span class="chunk-kind" data-kind="new">NEW</span>
+    <h2 class="chunk-title">§A6 — Default replicate count: where does it come from?</h2>
+    <a class="chunk-anchor" href="#c13-a6">#</a>
+  </div>
+  <div class="chunk-body">
+    <p>"Add Replicates" needs a source for the per-sample default count. Options:</p>
+    <ul>
+      <li><strong>(a)</strong> Hardcode 3 for cannabinoid POT, analyst overrides per sample. Simplest. Fragile if SOP changes.</li>
+      <li><strong>(b)</strong> Add <code>DefaultReplicateCount</code> column to <code>AssaySampleTypePrep</code>. Per (assay × item category). Aligns with how weight/EV/DF defaults already work. Schema change but small.</li>
+      <li><strong>(c)</strong> Pull from an existing SOP-config table. Need to identify which one — none surveyed yet matches.</li>
+    </ul>
+    <p><strong>Recommended default: (b)</strong> — add the column, default = 3 for cannabinoid POT. Symmetry with existing matrix-defaults. Confirm or override.</p>
+    <p>Both peer reviewers (Gemini + Codex) flagged this independently as a hole — without a source-of-truth field, "Add Replicates" can&rsquo;t enforce the SOP-correct count.</p>
+  </div>
+  <div class="chunk-feedback"></div>
+</section>
+
+<!-- ============ 14 ============ -->
+<section class="chunk" id="c14-a7" data-chunk-id="c14-a7">
+  <div class="chunk-head">
+    <span class="chunk-tag">14 / §A7 NEW</span>
+    <span class="chunk-kind" data-kind="new">NEW</span>
+    <h2 class="chunk-title">§A7 — Revalidation rules after sign-off (Codex flagged as biggest risk)</h2>
+    <a class="chunk-anchor" href="#c14-a7">#</a>
+  </div>
+  <div class="chunk-body">
+    <p>What happens when something underlying a Validated run changes <em>after</em> sign-off? Examples:</p>
+    <ul>
+      <li>A late injection arrives and gets ingested for the same lab batch.</li>
+      <li>An override gets approved or rejected after sign-off.</li>
+      <li>A control gets reclassified (e.g., CCV kind changed).</li>
+      <li>The originating bench sheet gets edited.</li>
+    </ul>
+    <p>v1 didn&rsquo;t address this. Codex called it out as the single biggest risk: a "Validated" run whose underlying evidence has since changed is an audit problem.</p>
+    <p>Three options:</p>
+    <ul>
+      <li><strong>(a) Auto-invalidate</strong> the Decision when underlying data changes. Status flips to "Pending re-sign-off." Cleanest audit; most operational friction.</li>
+      <li><strong>(b) Version-bump</strong> the <code>RunValidationDecision</code> (the entity already has a Version field). v1 stays as-is, v2 starts as Pending, analyst signs off again. Audit trail preserved.</li>
+      <li><strong>(c) Freeze a snapshot at sign-off</strong> and ignore subsequent changes for that decision version. Decision Package is immutable. Simplest mental model; loses cross-evidence reconciliation.</li>
+    </ul>
+    <p><strong>Recommended default: (b) version-bump.</strong> The Version field is already there; matches what most LIMS analytics workflows expect; preserves history. Confirm or pick another.</p>
+  </div>
+  <div class="chunk-feedback"></div>
+</section>
+
+<!-- ============ 15 ============ -->
+<section class="chunk" id="c15-a8" data-chunk-id="c15-a8">
+  <div class="chunk-head">
+    <span class="chunk-tag">15 / §A8 NEW</span>
+    <span class="chunk-kind" data-kind="new">NEW</span>
+    <h2 class="chunk-title">§A8 — Rename ProvenanceRole.ReviewedByAnalyst → PrimaryReviewer?</h2>
+    <a class="chunk-anchor" href="#c15-a8">#</a>
+  </div>
+  <div class="chunk-body">
+    <p>The existing enum has <code>ReviewedByAnalyst (6)</code>. The new role model has Primary + Secondary reviewers.</p>
+    <ul>
+      <li><strong>(a)</strong> Rename <code>ReviewedByAnalyst</code> → <code>PrimaryReviewer</code> for clarity. One-line code change, but touches any seed data referencing the symbol.</li>
+      <li><strong>(b)</strong> Leave the value name; document the convention "value 6 means primary review." Less code churn; symbol-name doesn&rsquo;t match concept.</li>
+    </ul>
+    <p><strong>Recommended default: (a) rename.</strong> Better than living with a misleading symbol. Confirm or override.</p>
+  </div>
+  <div class="chunk-feedback"></div>
+</section>
+
+<!-- ============ 16 ============ -->
+<section class="chunk" id="c16-a9" data-chunk-id="c16-a9">
+  <div class="chunk-head">
+    <span class="chunk-tag">16 / §A9 NEW</span>
+    <span class="chunk-kind" data-kind="new">NEW</span>
+    <h2 class="chunk-title">§A9 — Wide/tall toggle: which surfaces, persist how?</h2>
+    <a class="chunk-anchor" href="#c16-a9">#</a>
+  </div>
+  <div class="chunk-body">
+    <p>Per your v1 §02 ask. v2 default:</p>
+    <ul>
+      <li>Toggle appears on <strong>both</strong> the Analysis tab grid AND the Run Validation per-injection grid.</li>
+      <li>Both views read the same data; "Wide" is samples-as-rows / analytes-as-columns; "Tall" is sample×analyte-as-rows.</li>
+      <li>Analyst preference persists per-user (so each analyst sees their preferred default).</li>
+    </ul>
+    <p>Confirm or narrow (e.g., "just Analysis tab, not Run Validation").</p>
+  </div>
+  <div class="chunk-feedback"></div>
+</section>
+
+<!-- ============ 17 ============ -->
+<section class="chunk" id="c17-a10" data-chunk-id="c17-a10">
+  <div class="chunk-head">
+    <span class="chunk-tag">17 / §A10 NEW</span>
+    <span class="chunk-kind" data-kind="new">NEW</span>
+    <h2 class="chunk-title">§A10 — Pencil-whipping mitigation on the Sign-Off tab (Gemini&rsquo;s catch)</h2>
+    <a class="chunk-anchor" href="#c17-a10">#</a>
+  </div>
+  <div class="chunk-body">
+    <p>Granular per-step roles + multi-analyst sign-off = real audit trail, but also creates friction. If a single analyst really did all five prep steps + primary review, asking them to click five buttons each captures the same fact and tempts them to fake-attest the others to save time.</p>
+    <p><strong>Recommended default: shortcuts on each per-step commit button.</strong></p>
+    <ul>
+      <li><strong>"Same as previous step"</strong> — pre-fills the user from the prior committed step. Analyst confirms once.</li>
+      <li><strong>"Bulk apply (me, all unsigned steps)"</strong> — single click stamps all remaining unsigned steps with the current analyst.</li>
+    </ul>
+    <p>Both shortcuts log explicitly as bulk-attestation in the audit (so it&rsquo;s clear it was one click, not five separate confirmations) — preserves traceability without faking distinct events.</p>
+    <p>Confirm or revise.</p>
+  </div>
+  <div class="chunk-feedback"></div>
+</section>
+
+</main>
+
+<div class="floatbar">
+  <button class="ghost" id="btnReset" title="Clear all feedback (cannot undo)">Reset</button>
+  <button class="primary" id="btnCompileBottom">Compile feedback</button>
+</div>
+
+<div class="modal-backdrop" id="modal" data-open="false">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <h2 id="modalTitle">Compiled feedback (paste into Claude Code)</h2>
+      <button class="close" id="modalClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-toolbar">
+        <button class="primary" id="btnCopy">Copy to clipboard</button>
+        <button class="ghost" id="btnDownload">Download .md</button>
+        <button class="ghost" id="btnCloseFooter">Close</button>
+      </div>
+      <div class="modal-output">
+        <pre id="modalOutput"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" data-show="false"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  const STORAGE_KEY = 'bench-sheets-plan-v2-feedback';
+  const STATUSES = [
+    { value: 'lgtm',   label: '✓ LGTM' },
+    { value: 'inline', label: '✏ Inline edit' },
+    { value: 'rework', label: '↻ Rework' }
+  ];
+
+  function loadState() {
+    try { const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : {}; }
+    catch (e) { return {}; }
+  }
+  function saveState(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  let state = loadState();
+
+  const chunks = Array.from(document.querySelectorAll('.chunk'));
+  document.getElementById('progressTotal').textContent = chunks.length;
+
+  chunks.forEach(function (chunk) {
+    const id = chunk.dataset.chunkId;
+    const fb = chunk.querySelector('.chunk-feedback');
+    if (!fb) return;
+
+    const row = document.createElement('div');
+    row.className = 'row';
+    const lbl = document.createElement('span');
+    lbl.className = 'label';
+    lbl.textContent = 'verdict:';
+    row.appendChild(lbl);
+
+    STATUSES.forEach(function (s) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'status-pill';
+      btn.dataset.value = s.value;
+      btn.dataset.active = 'false';
+      btn.textContent = s.label;
+      btn.addEventListener('click', function () {
+        const cur = (state[id] && state[id].status) || null;
+        const next = (cur === s.value) ? null : s.value;
+        state[id] = state[id] || {};
+        state[id].status = next;
+        saveState(state);
+        applyChunkState(chunk);
+        updateProgress();
+      });
+      row.appendChild(btn);
+    });
+    fb.appendChild(row);
+
+    const ta = document.createElement('textarea');
+    ta.placeholder = 'Optional notes (kept locally; included in compiled markdown)…';
+    ta.rows = 2;
+    ta.spellcheck = true;
+    ta.addEventListener('input', function () {
+      state[id] = state[id] || {};
+      state[id].notes = ta.value;
+      saveState(state);
+      updateProgress();
+    });
+    fb.appendChild(ta);
+
+    applyChunkState(chunk);
+  });
+
+  function applyChunkState(chunk) {
+    const id = chunk.dataset.chunkId;
+    const s = state[id] || {};
+    chunk.dataset.status = s.status || '';
+    chunk.querySelectorAll('.status-pill').forEach(function (p) {
+      p.dataset.active = (p.dataset.value === s.status) ? 'true' : 'false';
+    });
+    const ta = chunk.querySelector('textarea');
+    if (ta && typeof s.notes === 'string' && ta.value !== s.notes) ta.value = s.notes;
+  }
+
+  function updateProgress() {
+    let n = 0;
+    chunks.forEach(function (c) {
+      const id = c.dataset.chunkId;
+      const s = state[id] || {};
+      if (s.status || (s.notes && s.notes.trim())) n++;
+    });
+    document.getElementById('progressCount').textContent = n;
+  }
+  updateProgress();
+
+  function statusLabel(v) {
+    if (v === 'lgtm') return 'LGTM';
+    if (v === 'inline') return 'INLINE EDIT';
+    if (v === 'rework') return 'REWORK';
+    return 'NO VERDICT';
+  }
+
+  function compileMarkdown() {
+    const lines = [];
+    lines.push('# Bench Sheets Plan v2 — Delta Feedback');
+    lines.push('');
+    lines.push('Source: `C:\\KONDO\\BENCH_SHEETS_PLAN.md` (v2)');
+    lines.push('Reviewed: ' + new Date().toISOString());
+    lines.push('');
+
+    const verdicts = { lgtm: [], inline: [], rework: [], none: [] };
+    chunks.forEach(function (c) {
+      const id = c.dataset.chunkId;
+      const title = c.querySelector('.chunk-title').textContent.trim();
+      const tag = c.querySelector('.chunk-tag').textContent.trim();
+      const s = (state[id] && state[id].status) || 'none';
+      verdicts[s].push({ id: id, tag: tag, title: title });
+    });
+
+    lines.push('## Summary');
+    lines.push('');
+    lines.push('| Verdict | Count |');
+    lines.push('|---------|------:|');
+    lines.push('| LGTM | ' + verdicts.lgtm.length + ' |');
+    lines.push('| Inline edit | ' + verdicts.inline.length + ' |');
+    lines.push('| Rework | ' + verdicts.rework.length + ' |');
+    lines.push('| No verdict | ' + verdicts.none.length + ' |');
+    lines.push('');
+
+    lines.push('## Per-section feedback');
+    lines.push('');
+    let any = false;
+    chunks.forEach(function (c) {
+      const id = c.dataset.chunkId;
+      const title = c.querySelector('.chunk-title').textContent.trim();
+      const tag = c.querySelector('.chunk-tag').textContent.trim();
+      const s = state[id] || {};
+      const hasStatus = !!s.status;
+      const hasNotes = s.notes && s.notes.trim();
+      if (!hasStatus && !hasNotes) return;
+      any = true;
+      lines.push('### ' + tag + ' — ' + title);
+      lines.push('');
+      lines.push('**Verdict:** ' + statusLabel(s.status));
+      if (hasNotes) {
+        lines.push('');
+        lines.push('**Notes:**');
+        lines.push('');
+        s.notes.trim().split(/\r?\n/).forEach(function (ln) {
+          lines.push('> ' + ln);
+        });
+      }
+      lines.push('');
+    });
+    if (!any) {
+      lines.push('_No sections marked yet._');
+      lines.push('');
+    }
+
+    if (verdicts.none.length > 0) {
+      lines.push('## Sections without a verdict');
+      lines.push('');
+      verdicts.none.forEach(function (v) {
+        lines.push('- ' + v.tag + ' — ' + v.title);
+      });
+      lines.push('');
+    }
+
+    return lines.join('\n');
+  }
+
+  const modal = document.getElementById('modal');
+  const modalOutput = document.getElementById('modalOutput');
+
+  function openModal() {
+    modalOutput.textContent = compileMarkdown();
+    modal.dataset.open = 'true';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    modal.dataset.open = 'false';
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('btnCompile').addEventListener('click', openModal);
+  document.getElementById('btnCompileBottom').addEventListener('click', openModal);
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.getElementById('btnCloseFooter').addEventListener('click', closeModal);
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.dataset.open === 'true') closeModal();
+  });
+
+  const toast = document.getElementById('toast');
+  let toastTimer = null;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.dataset.show = 'true';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.dataset.show = 'false'; }, 2200);
+  }
+
+  document.getElementById('btnCopy').addEventListener('click', function () {
+    const text = modalOutput.textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        function () { showToast('Copied to clipboard'); },
+        function () { fallbackCopy(text); }
+      );
+    } else { fallbackCopy(text); }
+  });
+
+  function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); showToast('Copied to clipboard'); }
+    catch (e) { showToast('Copy failed — select manually'); }
+    document.body.removeChild(ta);
+  }
+
+  document.getElementById('btnDownload').addEventListener('click', function () {
+    const text = compileMarkdown();
+    const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const ts = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+    a.href = url; a.download = 'bench-sheets-v2-feedback-' + ts + '.md';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 500);
+    showToast('Downloaded');
+  });
+
+  document.getElementById('btnReset').addEventListener('click', function () {
+    if (!confirm('Clear all feedback for all sections? This cannot be undone.')) return;
+    state = {}; saveState(state);
+    chunks.forEach(applyChunkState);
+    updateProgress();
+    showToast('All feedback cleared');
+  });
+})();
+</script>
+
+</body>
+</html>
