@@ -27,7 +27,7 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
   body {
-    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
   }
@@ -55,64 +55,49 @@
   #lock h1 { margin: 0 0 0.4rem; font-size: 1.05rem; }
   #lock p { color: var(--fg-dim); font-size: 0.9rem; margin: 0 0 1rem; }
   #lock input[type="password"] {
-    width: 100%;
-    background: var(--bg);
-    color: var(--fg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 0.65rem 0.8rem;
-    font: inherit;
-    font-size: 1rem;
+    width: 100%; background: var(--bg); color: var(--fg);
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 0.65rem 0.8rem; font: inherit; font-size: 1rem;
     margin-bottom: 0.75rem;
   }
   #lock input[type="password"]:focus { outline: none; border-color: var(--accent); }
   #lock button {
-    background: var(--accent);
-    color: var(--accent-fg);
-    border: 1px solid var(--accent);
-    border-radius: 6px;
-    padding: 0.6rem 1rem;
-    font: inherit;
-    font-weight: 600;
-    cursor: pointer;
-    width: 100%;
+    background: var(--accent); color: var(--accent-fg);
+    border: 1px solid var(--accent); border-radius: 6px;
+    padding: 0.6rem 1rem; font: inherit; font-weight: 600;
+    cursor: pointer; width: 100%;
   }
   #lock .err {
-    color: var(--red);
-    font-size: 0.82rem;
-    margin-top: 0.5rem;
-    min-height: 1.1em;
+    color: var(--red); font-size: 0.82rem;
+    margin-top: 0.5rem; min-height: 1.1em;
   }
   body[data-unlocked="true"] #lock { display: none; }
   body:not([data-unlocked="true"]) #content { display: none; }
 
   header.app {
-    position: sticky;
-    top: 0;
-    z-index: 50;
+    position: sticky; top: 0; z-index: 50;
     background: rgba(11, 13, 16, 0.92);
     backdrop-filter: saturate(180%) blur(8px);
     border-bottom: 1px solid var(--border);
     padding: 0.85rem 1rem;
   }
   header.app .row {
-    max-width: 900px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
+    max-width: 880px; margin: 0 auto;
+    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
   }
   header.app h1 { margin: 0; font-size: 1.05rem; font-weight: 700; }
   header.app .sub { color: var(--fg-dim); font-size: 0.82rem; margin: 0; }
   header.app .spacer { flex: 1; }
-  header.app .progress { color: var(--fg-dim); font-size: 0.82rem; font-family: ui-monospace, monospace; }
-  header.app .progress strong { color: var(--fg); }
+  header.app nav { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  header.app nav a {
+    color: var(--fg-dim); text-decoration: none; font-size: 0.82rem;
+    padding: 0.3rem 0.6rem; border-radius: 4px;
+    transition: background 0.12s, color 0.12s;
+  }
+  header.app nav a:hover { background: var(--bg-elev); color: var(--accent); }
 
   button.primary, button.ghost, button.small {
-    font: inherit;
-    cursor: pointer;
-    border-radius: 6px;
+    font: inherit; cursor: pointer; border-radius: 6px;
     transition: background 0.12s, border-color 0.12s, transform 0.08s;
   }
   button.primary { padding: 0.5rem 0.95rem; background: var(--accent); color: var(--accent-fg); border: 1px solid var(--accent); font-weight: 600; }
@@ -123,225 +108,171 @@
   button.small { padding: 0.35rem 0.7rem; font-size: 0.85rem; background: var(--bg-elev); color: var(--fg); border: 1px solid var(--border-strong); }
   button.small:hover { border-color: var(--accent); color: var(--accent); }
 
-  main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 6rem; }
+  main { max-width: 880px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
 
   .hero {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 1.25rem 1.5rem;
+    padding: 1.35rem 1.6rem;
     margin-bottom: 1.5rem;
   }
-  .hero h2 { margin: 0 0 0.5rem; font-size: 1.2rem; }
-  .hero p { margin: 0 0 0.7rem; color: var(--fg-dim); }
-  .hero p:last-child { margin-bottom: 0; }
-  .hero strong { color: var(--fg); }
   .hero .tag {
     display: inline-block;
     background: rgba(108, 196, 108, 0.15);
     color: var(--green);
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.15rem 0.55rem;
+    font-size: 0.72rem; font-weight: 700;
+    padding: 0.18rem 0.6rem;
     border-radius: 999px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 0.5rem;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    margin-bottom: 0.7rem;
   }
-
-  .section-title {
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--fg-muted);
-    margin: 2rem 0 0.7rem;
-    font-weight: 700;
-  }
-  .section-title:first-child { margin-top: 0; }
-
-  .doc-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1rem 1.25rem;
-    margin-bottom: 0.8rem;
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  .doc-card .doc-meta { flex: 1; min-width: 250px; }
-  .doc-card .doc-meta h3 {
-    margin: 0 0 0.3rem;
-    font-size: 1rem;
-    color: var(--fg);
-  }
-  .doc-card .doc-meta h3 .order {
-    display: inline-block;
-    background: var(--bg-elev);
-    color: var(--fg-dim);
-    font-size: 0.7rem;
-    padding: 0.1rem 0.45rem;
-    border-radius: 4px;
-    margin-right: 0.4rem;
-    font-family: ui-monospace, monospace;
-    letter-spacing: 0.05em;
-  }
-  .doc-card .doc-meta p {
-    margin: 0;
-    color: var(--fg-dim);
-    font-size: 0.9rem;
-    line-height: 1.5;
-  }
-  .doc-card .doc-actions {
-    display: flex;
-    gap: 0.4rem;
-    flex-wrap: wrap;
-    align-items: center;
-  }
+  .hero h2 { margin: 0 0 0.6rem; font-size: 1.25rem; line-height: 1.35; }
+  .hero p { margin: 0 0 0.7rem; color: var(--fg-dim); }
+  .hero p:last-child { margin-bottom: 0; }
+  .hero strong { color: var(--fg); }
 
   .bootstrap-card {
-    background: var(--bg-card);
+    background: linear-gradient(135deg, rgba(138, 180, 248, 0.08), rgba(138, 180, 248, 0.03));
     border: 1px solid var(--accent);
     border-radius: 10px;
     padding: 1.25rem 1.5rem;
-    margin-bottom: 1.5rem;
+    margin: 1.5rem 0;
   }
   .bootstrap-card h3 { margin: 0 0 0.5rem; font-size: 1.05rem; color: var(--accent); }
-  .bootstrap-card p { margin: 0 0 0.7rem; color: var(--fg-dim); font-size: 0.92rem; }
+  .bootstrap-card p { margin: 0 0 0.85rem; color: var(--fg-dim); font-size: 0.93rem; }
+  .bootstrap-card p:last-of-type { margin-bottom: 0.85rem; }
   .bootstrap-card .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .bootstrap-card code { color: var(--fg); background: var(--bg-elev); padding: 0.05rem 0.35rem; border-radius: 3px; font-size: 0.88em; }
 
-  .settled {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1rem 1.25rem;
-    margin-bottom: 1.5rem;
-    font-size: 0.93rem;
-    color: var(--fg-dim);
-  }
-  .settled h3 {
-    margin: 0 0 0.55rem;
-    font-size: 0.95rem;
-    color: var(--fg);
-    font-weight: 700;
-  }
-  .settled p { margin: 0 0 0.6rem; }
-  .settled p:last-child { margin-bottom: 0; }
-  .settled strong { color: var(--fg); }
-
-  .decision {
+  .doc-section {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 10px;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.4rem;
     overflow: hidden;
-    transition: border-color 0.15s;
   }
-  .decision[data-answered="true"] {
-    border-color: rgba(108, 196, 108, 0.5);
-  }
-
-  .decision-head { padding: 1rem 1.25rem 0.4rem; }
-  .decision-num {
-    display: inline-block;
-    color: var(--fg-muted);
-    font-size: 0.75rem;
-    font-family: ui-monospace, monospace;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: 0.3rem;
-  }
-  .decision-head h2 {
+  .doc-section > h2.section-title {
     margin: 0;
-    font-size: 1.15rem;
+    padding: 0.95rem 1.5rem;
+    font-size: 1.05rem;
     font-weight: 700;
-    line-height: 1.3;
     color: var(--fg);
-  }
-  .decision-body {
-    padding: 0 1.25rem 0.4rem;
-    color: var(--fg);
-    font-size: 0.95rem;
-    line-height: 1.6;
-  }
-  .decision-body p { margin: 0 0 0.6rem; }
-  .decision-body strong { color: var(--fg); }
-  .decision-body em { color: var(--fg-dim); }
-  .options { padding: 0.4rem 1.25rem 0.4rem; }
-  .opt {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.7rem;
-    padding: 0.6rem 0.8rem;
-    margin-bottom: 0.4rem;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    cursor: pointer;
     background: var(--bg-card-2);
-    transition: border-color 0.12s, background 0.12s;
-    line-height: 1.5;
-    font-size: 0.94rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
   }
-  .opt:hover { border-color: var(--accent); }
-  .opt input[type="radio"] {
-    margin-top: 0.25rem;
-    accent-color: var(--accent);
-    flex-shrink: 0;
-    width: 16px;
-    height: 16px;
-  }
-  .opt-text { flex: 1; }
-  .opt-text strong { color: var(--fg); }
-  .opt input[type="radio"]:checked + .opt-text strong { color: var(--accent); }
-  .opt:has(input[type="radio"]:checked) {
-    border-color: var(--accent);
-    background: rgba(138, 180, 248, 0.08);
-  }
-  .rec {
-    color: var(--green);
-    font-weight: 600;
-    font-size: 0.78rem;
-    margin-right: 0.45rem;
-    text-transform: uppercase;
+  .doc-section > h2.section-title .order {
+    color: var(--fg-muted);
+    font-family: ui-monospace, monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
     letter-spacing: 0.04em;
   }
-  .notes-wrap { padding: 0 1.25rem 1rem; }
-  .notes-wrap label {
-    display: block;
-    font-size: 0.78rem;
+  .doc-section > h2.section-title .approx-read {
     color: var(--fg-muted);
-    margin-bottom: 0.3rem;
+    font-size: 0.78rem;
+    font-weight: 400;
+    margin-left: auto;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
-  .notes-wrap textarea {
-    width: 100%;
-    background: var(--bg);
+  .doc-section .doc-content {
+    padding: 1rem 1.6rem 1.4rem;
     color: var(--fg);
+    font-size: 0.96rem;
+    line-height: 1.65;
+  }
+  .doc-section .doc-content.loading {
+    color: var(--fg-muted);
+    font-style: italic;
+  }
+
+  /* Markdown-rendered content styles */
+  .doc-content h1, .doc-content h2, .doc-content h3, .doc-content h4, .doc-content h5 {
+    color: var(--fg); line-height: 1.35; font-weight: 700;
+    margin: 1.6rem 0 0.5rem;
+  }
+  .doc-content > h1:first-child, .doc-content > h2:first-child,
+  .doc-content > h3:first-child { margin-top: 0; }
+  .doc-content h1 { font-size: 1.25rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+  .doc-content h2 { font-size: 1.1rem; }
+  .doc-content h3 { font-size: 1rem; color: var(--accent); }
+  .doc-content h4 { font-size: 0.95rem; color: var(--fg-dim); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 1.1rem; }
+  .doc-content p { margin: 0 0 0.85rem; }
+  .doc-content strong { color: var(--fg); font-weight: 700; }
+  .doc-content em { color: var(--fg-dim); font-style: italic; }
+  .doc-content a { color: var(--accent); text-decoration: underline; text-decoration-color: rgba(138, 180, 248, 0.4); text-underline-offset: 2px; }
+  .doc-content a:hover { text-decoration-color: var(--accent); }
+  .doc-content code {
+    background: var(--bg-elev);
+    color: var(--fg);
+    padding: 0.08rem 0.35rem;
+    border-radius: 3px;
+    font-size: 0.88em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  .doc-content pre {
+    background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 0.6rem 0.75rem;
-    font: inherit;
-    font-size: 0.92rem;
+    padding: 0.85rem 1rem;
+    overflow-x: auto;
+    margin: 0.6rem 0 1rem;
     line-height: 1.5;
-    resize: vertical;
-    min-height: 56px;
-    transition: border-color 0.12s;
   }
-  .notes-wrap textarea:focus { outline: none; border-color: var(--accent); }
-  .notes-wrap textarea::placeholder { color: var(--fg-muted); }
+  .doc-content pre code {
+    background: transparent;
+    padding: 0;
+    font-size: 0.85rem;
+    color: var(--fg);
+  }
+  .doc-content blockquote {
+    border-left: 3px solid var(--accent);
+    background: rgba(138, 180, 248, 0.04);
+    padding: 0.55rem 1rem;
+    margin: 0.6rem 0 0.9rem;
+    color: var(--fg-dim);
+  }
+  .doc-content blockquote p { margin: 0; }
+  .doc-content ul, .doc-content ol { margin: 0.4rem 0 0.9rem; padding-left: 1.5rem; }
+  .doc-content li { margin-bottom: 0.3rem; }
+  .doc-content li > ul, .doc-content li > ol { margin: 0.3rem 0; }
+  .doc-content hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 1.3rem 0;
+  }
+  .doc-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.7rem 0 1.1rem;
+    font-size: 0.9rem;
+  }
+  .doc-content th, .doc-content td {
+    text-align: left;
+    padding: 0.5rem 0.7rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .doc-content th {
+    background: var(--bg-card-2);
+    color: var(--fg);
+    font-weight: 700;
+    border-bottom-color: var(--border-strong);
+  }
+  .doc-content tr:last-child td { border-bottom: none; }
+  .doc-content tbody tr:hover { background: rgba(138, 180, 248, 0.03); }
 
-  /* Modal */
+  /* Modal — kept lean, used only for the bootstrap prompt full-screen */
   .modal-backdrop {
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(4px);
-    z-index: 100;
-    display: none;
-    align-items: center;
-    justify-content: center;
+    z-index: 100; display: none;
+    align-items: center; justify-content: center;
     padding: 1rem;
   }
   .modal-backdrop[data-open="true"] { display: flex; }
@@ -349,12 +280,8 @@
     background: var(--bg-card);
     border: 1px solid var(--border-strong);
     border-radius: 10px;
-    width: 100%;
-    max-width: 820px;
-    max-height: 88vh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    width: 100%; max-width: 820px; max-height: 88vh;
+    display: flex; flex-direction: column; overflow: hidden;
   }
   .modal-head { padding: 0.9rem 1.15rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.7rem; }
   .modal-head h2 { margin: 0; font-size: 1.05rem; flex: 1; }
@@ -371,32 +298,48 @@
   }
 
   .toast {
-    position: fixed;
-    bottom: 1.5rem;
-    left: 50%;
+    position: fixed; bottom: 1.5rem; left: 50%;
     transform: translateX(-50%) translateY(20px);
     background: var(--bg-elev);
     border: 1px solid var(--border-strong);
-    color: var(--fg);
-    padding: 0.55rem 0.9rem;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    opacity: 0;
-    transition: all 0.2s;
-    pointer-events: none;
-    z-index: 200;
+    color: var(--fg); padding: 0.55rem 0.9rem;
+    border-radius: 6px; font-size: 0.85rem;
+    opacity: 0; transition: all 0.2s;
+    pointer-events: none; z-index: 200;
   }
   .toast[data-show="true"] { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  .floatbar { position: fixed; bottom: 1rem; right: 1rem; display: flex; gap: 0.5rem; z-index: 40; }
-  .floatbar button { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5); }
+  .downloads-footer {
+    margin-top: 2.5rem;
+    padding: 1.2rem 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--fg-dim);
+  }
+  .downloads-footer h3 { margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--fg); }
+  .downloads-footer p { margin: 0 0 0.85rem; font-size: 0.9rem; }
+  .downloads-footer .dl-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .downloads-footer .dl-list a {
+    color: var(--fg-dim); text-decoration: none;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 5px;
+    font-size: 0.85rem;
+    background: var(--bg-elev);
+    transition: border-color 0.12s, color 0.12s;
+  }
+  .downloads-footer .dl-list a:hover { border-color: var(--accent); color: var(--accent); }
 
   @media (max-width: 600px) {
     header.app h1 { font-size: 0.95rem; }
     header.app .sub { display: none; }
-    .floatbar { bottom: 0.5rem; right: 0.5rem; }
-    .doc-card { flex-direction: column; }
-    .doc-card .doc-actions { width: 100%; }
+    header.app nav { display: none; }
+    main { padding: 1rem 0.7rem 4rem; }
+    .doc-section > h2.section-title { padding: 0.85rem 1.1rem; font-size: 1rem; }
+    .doc-section > h2.section-title .approx-read { display: none; }
+    .doc-section .doc-content { padding: 0.8rem 1.1rem 1.1rem; }
+    .hero, .bootstrap-card { padding: 1rem 1.15rem; }
   }
 </style>
 </head>
@@ -418,259 +361,90 @@
   <div class="row">
     <div>
       <h1>CoA Backfill — Project Handoff</h1>
-      <p class="sub">handoff packet for David Kohn · 6 documents · 6 stakeholder decisions</p>
+      <p class="sub">read top-to-bottom · ~30 minutes · then copy the prompt at the bottom</p>
     </div>
     <span class="spacer"></span>
-    <span class="progress">decisions: <strong id="progressCount">0</strong> / <strong id="progressTotal">6</strong></span>
-    <button class="primary" id="btnCompile">Compile decisions</button>
+    <nav>
+      <a href="#sec-orientation">1. Orient</a>
+      <a href="#sec-storage">2. Storage</a>
+      <a href="#sec-plan">3. Plan</a>
+      <a href="#sec-setup">4. Setup</a>
+      <a href="#sec-cc-api">5. CC API</a>
+      <a href="#sec-bootstrap">▶ Start</a>
+    </nav>
   </div>
 </header>
 
 <main>
 
 <div class="hero">
-  <span class="tag">Handoff in progress</span>
+  <span class="tag">Handoff to David Kohn</span>
   <h2>Pull every CoA NCTL has issued out of Confident Cannabis and into NCTL's own archive.</h2>
   <p>North Coast Testing Laboratories generates Certificates of Analysis and currently depends on Confident Cannabis as the authoritative archive. We're closing that gap: every of-record CoA goes into NCTL's own Azure Files share, with cryptographic integrity and per-file provenance. After this ships, NCTL's internal LIMS becomes the system of record.</p>
   <p><strong>This project is independent of the in-flight Kondo branch of the NCLims codebase.</strong> It reads production read-only, talks to Confident's API, writes to the existing Azure Files share, and keeps its bookkeeping in its own isolated ledger. <strong>No NCLims source-code changes required.</strong> Pearson's microbials release is untouched.</p>
+  <p>Read all five sections below in order. They go from "what this project is" through "how the existing system works" to "the engineering plan, access requirements, and the API protocol." At the end, copy the bootstrap prompt and paste it into a fresh Claude Code session — that's how you start.</p>
 </div>
 
-<div class="bootstrap-card">
-  <h3>👋 Your first move: paste the bootstrap prompt into Claude Code</h3>
-  <p>Copy the prompt below, open a fresh Claude Code session in whatever directory you'll work in, and paste it as your first message. Claude will read the docs in order, verify your access, and scaffold the project per the plan.</p>
+<section class="doc-section" id="sec-orientation">
+  <h2 class="section-title"><span class="order">01</span>Orientation — start here<span class="approx-read">~5 min</span></h2>
+  <div class="doc-content loading" data-doc="HANDOFF.md">Loading orientation…</div>
+</section>
+
+<section class="doc-section" id="sec-storage">
+  <h2 class="section-title"><span class="order">02</span>How NCTL stores CoAs today<span class="approx-read">~15 min + hands-on</span></h2>
+  <div class="doc-content loading" data-doc="STORAGE_PRIMER.md">Loading storage primer…</div>
+</section>
+
+<section class="doc-section" id="sec-plan">
+  <h2 class="section-title"><span class="order">03</span>The engineering plan<span class="approx-read">~10 min</span></h2>
+  <div class="doc-content loading" data-doc="PLAN.md">Loading plan…</div>
+</section>
+
+<section class="doc-section" id="sec-setup">
+  <h2 class="section-title"><span class="order">04</span>Access &amp; setup requirements<span class="approx-read">~5 min</span></h2>
+  <div class="doc-content loading" data-doc="SETUP.md">Loading setup…</div>
+</section>
+
+<section class="doc-section" id="sec-cc-api">
+  <h2 class="section-title"><span class="order">05</span>Confident Cannabis API protocol<span class="approx-read">~8 min</span></h2>
+  <div class="doc-content loading" data-doc="CC_API_REFERENCE.md">Loading API reference…</div>
+</section>
+
+<div class="bootstrap-card" id="sec-bootstrap">
+  <h3>▶ Start your Claude Code session</h3>
+  <p>Open a fresh Claude Code session in whatever directory you'll work in. Paste the prompt below as your first message. Claude will read these docs back via fetch (they live at the same URLs), verify your Azure access, and scaffold the project per the plan.</p>
+  <p>Domain expert: <strong>Adam Scavone</strong> (<code>ascavone@nctl.com</code>). Escalate product / domain questions to him; handle pure-engineering decisions yourself.</p>
   <div class="actions">
     <button class="primary" id="btnCopyBootstrap">Copy bootstrap prompt</button>
-    <button class="ghost" id="btnViewBootstrap">View prompt</button>
-    <button class="ghost" id="btnDownloadBootstrap">Download .md</button>
+    <button class="ghost" id="btnViewBootstrap">View prompt full-screen</button>
   </div>
 </div>
 
-<div class="section-title">Reading order — start at the top, work down</div>
-
-<div class="doc-card">
-  <div class="doc-meta">
-    <h3><span class="order">01</span>HANDOFF.md</h3>
-    <p>Orientation. Why the project exists, what's already decided, what's deferred, who the domain expert is. Start here for the 5-minute overview.</p>
-  </div>
-  <div class="doc-actions">
-    <button class="small" data-doc="HANDOFF.md" data-action="view">View</button>
-    <button class="small" data-doc="HANDOFF.md" data-action="copy">Copy</button>
-    <button class="small" data-doc="HANDOFF.md" data-action="download">Download</button>
-  </div>
-</div>
-
-<div class="doc-card">
-  <div class="doc-meta">
-    <h3><span class="order">02</span>STORAGE_PRIMER.md</h3>
-    <p>Guided tour of NCTL's current CoA storage. The Azure Portal walkthrough, the GUID lookup pattern, how to verify chain-of-custody for any sample, the "raw URL doesn't open" gotcha, version history examples. Read before touching anything.</p>
-  </div>
-  <div class="doc-actions">
-    <button class="small" data-doc="STORAGE_PRIMER.md" data-action="view">View</button>
-    <button class="small" data-doc="STORAGE_PRIMER.md" data-action="copy">Copy</button>
-    <button class="small" data-doc="STORAGE_PRIMER.md" data-action="download">Download</button>
+<div class="downloads-footer">
+  <h3>Want offline copies?</h3>
+  <p>Each section above is rendered from its source markdown file. You can download any of them individually if it helps to read offline or pipe into other tooling.</p>
+  <div class="dl-list">
+    <a href="HANDOFF.md" download>HANDOFF.md</a>
+    <a href="STORAGE_PRIMER.md" download>STORAGE_PRIMER.md</a>
+    <a href="PLAN.md" download>PLAN.md</a>
+    <a href="SETUP.md" download>SETUP.md</a>
+    <a href="CC_API_REFERENCE.md" download>CC_API_REFERENCE.md</a>
+    <a href="BOOTSTRAP.md" download>BOOTSTRAP.md</a>
   </div>
 </div>
-
-<div class="doc-card">
-  <div class="doc-meta">
-    <h3><span class="order">03</span>PLAN.md</h3>
-    <p>Engineering plan. Architecture, why we use Confident's per-file identifier (not byte hashing) as the reconciliation key, backfill orchestration, ledger schema, the going-forward incremental sync (no NCLims code changes), verification protocol. This is the spec.</p>
-  </div>
-  <div class="doc-actions">
-    <button class="small" data-doc="PLAN.md" data-action="view">View</button>
-    <button class="small" data-doc="PLAN.md" data-action="copy">Copy</button>
-    <button class="small" data-doc="PLAN.md" data-action="download">Download</button>
-  </div>
-</div>
-
-<div class="doc-card">
-  <div class="doc-meta">
-    <h3><span class="order">04</span>SETUP.md</h3>
-    <p>Access requirements: Azure RBAC roles, Key Vault secrets, Confident API credentials, tooling, repo hosting choices. Get the access listed here before you can run anything.</p>
-  </div>
-  <div class="doc-actions">
-    <button class="small" data-doc="SETUP.md" data-action="view">View</button>
-    <button class="small" data-doc="SETUP.md" data-action="copy">Copy</button>
-    <button class="small" data-doc="SETUP.md" data-action="download">Download</button>
-  </div>
-</div>
-
-<div class="doc-card">
-  <div class="doc-meta">
-    <h3><span class="order">05</span>CC_API_REFERENCE.md</h3>
-    <p>Confident Cannabis API protocol. HMAC-SHA256 request signing, endpoint catalog, response shape for the sample endpoint, known bugs in the existing NCLims client that you should NOT replicate. Don't go to production without reading this.</p>
-  </div>
-  <div class="doc-actions">
-    <button class="small" data-doc="CC_API_REFERENCE.md" data-action="view">View</button>
-    <button class="small" data-doc="CC_API_REFERENCE.md" data-action="copy">Copy</button>
-    <button class="small" data-doc="CC_API_REFERENCE.md" data-action="download">Download</button>
-  </div>
-</div>
-
-<div class="doc-card">
-  <div class="doc-meta">
-    <h3><span class="order">06</span>BOOTSTRAP.md</h3>
-    <p>The prompt to paste into your Claude Code session as message #1. Tells Claude where to find these docs, what to read first, what NOT to assume, and what your first concrete deliverable should be.</p>
-  </div>
-  <div class="doc-actions">
-    <button class="small" data-doc="BOOTSTRAP.md" data-action="view">View</button>
-    <button class="small" data-doc="BOOTSTRAP.md" data-action="copy">Copy</button>
-    <button class="small" data-doc="BOOTSTRAP.md" data-action="download">Download</button>
-  </div>
-</div>
-
-<div class="section-title">Stakeholder decisions — Adam's section</div>
-
-<div class="settled">
-  <h3>What this section is for</h3>
-  <p>Six product-level decisions about the rollout. Already-recommended (★) defaults shown — most stakeholders can scan, pick the recommended option, and move on. Adam will compile responses and hand David the chosen options separately from the docs above.</p>
-  <p><strong>David doesn't need these answered before starting the project</strong> — the smoke test + ledger work is independent of these calls. Decisions 1, 2, 5 affect the rollout itself; decisions 3, 4, 6 affect scope outside the core flow.</p>
-</div>
-
-<!-- ============ Decision 1 ============ -->
-<section class="decision" id="d1" data-decision-id="d1">
-  <div class="decision-head">
-    <span class="decision-num">Decision 1 of 6</span>
-    <h2>Which lab gets backfilled first?</h2>
-  </div>
-  <div class="decision-body">
-    <p>The backfill pulls hundreds of thousands of CoAs from Confident — Ohio (NCTL) and Michigan (NCTLM) combined. We can run them concurrently, or stagger them so we validate the pipeline on one lab before pointing it at the other.</p>
-  </div>
-  <div class="options">
-    <label class="opt"><input type="radio" name="d1" value="ohio_first"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Ohio first, then Michigan.</strong> Validate the pipeline on the lab with the larger sample volume. Michigan starts ~3 days behind once Ohio is humming.</span></label>
-    <label class="opt"><input type="radio" name="d1" value="michigan_first"><span class="opt-text"><strong>Michigan first, then Ohio.</strong> Smaller corpus = faster to validate end-to-end.</span></label>
-    <label class="opt"><input type="radio" name="d1" value="both"><span class="opt-text"><strong>Both labs concurrently.</strong> Doubles the API load against Confident, but cuts wall-clock time roughly in half. Higher risk of Confident throttling.</span></label>
-    <label class="opt"><input type="radio" name="d1" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
-  </div>
-  <div class="notes-wrap">
-    <label>Notes (optional)</label>
-    <textarea placeholder=""></textarea>
-  </div>
-</section>
-
-<!-- ============ Decision 2 ============ -->
-<section class="decision" id="d2" data-decision-id="d2">
-  <div class="decision-head">
-    <span class="decision-num">Decision 2 of 6</span>
-    <h2>How fast should the backfill run?</h2>
-  </div>
-  <div class="decision-body">
-    <p>Confident has no bulk-download endpoint — we have to ask for each sample one at a time. Roughly 400,000 network calls for the historical corpus. Pace determines wall-clock time and risk of Confident's API rate-limiting us.</p>
-  </div>
-  <div class="options">
-    <label class="opt"><input type="radio" name="d2" value="fast"><span class="opt-text"><strong>Fast — ~2 to 3 days.</strong> ~1 request/second. Highest risk of throttling.</span></label>
-    <label class="opt"><input type="radio" name="d2" value="balanced"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Balanced — ~5 to 7 days.</strong> ~0.5 request/second. Throttling unlikely; completes within a sprint.</span></label>
-    <label class="opt"><input type="radio" name="d2" value="slow"><span class="opt-text"><strong>Slow — ~2 to 3 weeks.</strong> ~0.25 request/second. Gentlest pace; longest gap before archive is complete.</span></label>
-    <label class="opt"><input type="radio" name="d2" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
-  </div>
-  <div class="notes-wrap">
-    <label>Notes (optional)</label>
-    <textarea placeholder=""></textarea>
-  </div>
-</section>
-
-<!-- ============ Decision 3 ============ -->
-<section class="decision" id="d3" data-decision-id="d3">
-  <div class="decision-head">
-    <span class="decision-num">Decision 3 of 6</span>
-    <h2>When Confident has multiple CoA files for one sample, what do we do?</h2>
-  </div>
-  <div class="decision-body">
-    <p>Confident's data model holds a primary CoA per sample <em>plus</em> a list called "CoA additions" — additional file references attached to the same sample. We don't yet know empirically what these are: amendment history, supplemental documents (method addendums, accreditation letters), or something else. Sample 217848 (our one documented historical amendment) is our gold test case.</p>
-  </div>
-  <div class="options">
-    <label class="opt"><input type="radio" name="d3" value="auto_import"><span class="opt-text"><strong>Auto-import all of them</strong> as historical versions. Most complete archive; risks misclassifying non-CoA documents.</span></label>
-    <label class="opt"><input type="radio" name="d3" value="flag"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Import them, but flag each for human review.</strong> Bytes saved; don't become "official" until someone confirms what they are.</span></label>
-    <label class="opt"><input type="radio" name="d3" value="skip"><span class="opt-text"><strong>Skip them entirely</strong> until we understand what they are.</span></label>
-    <label class="opt"><input type="radio" name="d3" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
-  </div>
-  <div class="notes-wrap">
-    <label>Notes (optional)</label>
-    <textarea placeholder=""></textarea>
-  </div>
-</section>
-
-<!-- ============ Decision 4 ============ -->
-<section class="decision" id="d4" data-decision-id="d4">
-  <div class="decision-head">
-    <span class="decision-num">Decision 4 of 6</span>
-    <h2>What about samples that exist in Confident but have no matching LIMS record?</h2>
-  </div>
-  <div class="decision-body">
-    <p>After the backfill imports everything Confident has for samples LIMS knows about, there will likely be CoAs in Confident that don't map to any LIMS sample. Usually side-channel work: 9999-prefixed placeholder manifests, outsourced testing, special-projects samples.</p>
-  </div>
-  <div class="options">
-    <label class="opt"><input type="radio" name="d4" value="surface_v1"><span class="opt-text"><strong>Surface them in v1.</strong> Secondary "orphan crawl" against Confident; build a CS review queue.</span></label>
-    <label class="opt"><input type="radio" name="d4" value="defer_v2"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Defer to v2.</strong> Capture as known follow-up; pair with the amendment UX initiative.</span></label>
-    <label class="opt"><input type="radio" name="d4" value="never"><span class="opt-text"><strong>Don't enumerate them at all.</strong></span></label>
-    <label class="opt"><input type="radio" name="d4" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
-  </div>
-  <div class="notes-wrap">
-    <label>Notes (optional)</label>
-    <textarea placeholder=""></textarea>
-  </div>
-</section>
-
-<!-- ============ Decision 5 ============ -->
-<section class="decision" id="d5" data-decision-id="d5">
-  <div class="decision-head">
-    <span class="decision-num">Decision 5 of 6</span>
-    <h2>What happens if someone regenerates a backfilled CoA?</h2>
-  </div>
-  <div class="decision-body">
-    <p>A known hazard: regenerating a historical CoA through today's LIMS code can produce a different result than the as-issued version. Panel definitions, regulatory limits, and analyte names have all changed. Confident's preserved-as-issued bytes are the only source of regulatory truth for older CoAs.</p>
-  </div>
-  <div class="options">
-    <label class="opt"><input type="radio" name="d5" value="logs_only"><span class="opt-text"><strong>Engineer logs only.</strong> Quietly record; users see no warning.</span></label>
-    <label class="opt"><input type="radio" name="d5" value="ui_warning"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Confirmation dialog in UI before regeneration.</strong> User can proceed, but knowingly.</span></label>
-    <label class="opt"><input type="radio" name="d5" value="hard_block"><span class="opt-text"><strong>Hard-block regeneration</strong> for samples with a backfilled CoA. Require admin override.</span></label>
-    <label class="opt"><input type="radio" name="d5" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
-  </div>
-  <div class="notes-wrap">
-    <label>Notes (optional)</label>
-    <textarea placeholder=""></textarea>
-  </div>
-</section>
-
-<!-- ============ Decision 6 ============ -->
-<section class="decision" id="d6" data-decision-id="d6">
-  <div class="decision-head">
-    <span class="decision-num">Decision 6 of 6</span>
-    <h2>When does the deferred LIMS-side amendment UX get picked back up?</h2>
-  </div>
-  <div class="decision-body">
-    <p>The amendment-authoring workflow (modal, canned amendment messages, native red "AMENDED" cover-page banner) was pulled from v1 to protect Pearson's microbials release. It's clearly desired — this decision is about scheduling.</p>
-  </div>
-  <div class="options">
-    <label class="opt"><input type="radio" name="d6" value="after_pearson"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Pick it up immediately after Pearson's microbials release ships.</strong> Sequential, no overlap risk.</span></label>
-    <label class="opt"><input type="radio" name="d6" value="parallel_track"><span class="opt-text"><strong>Parallel-track now</strong> with a different engineer.</span></label>
-    <label class="opt"><input type="radio" name="d6" value="punt"><span class="opt-text"><strong>Punt indefinitely.</strong> Amendments stay manual in Confident's UI.</span></label>
-    <label class="opt"><input type="radio" name="d6" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
-  </div>
-  <div class="notes-wrap">
-    <label>Notes (optional)</label>
-    <textarea placeholder=""></textarea>
-  </div>
-</section>
 
 </main>
-
-<div class="floatbar">
-  <button class="ghost" id="btnReset" title="Clear all decisions (cannot undo)">Reset</button>
-  <button class="primary" id="btnCompileBottom">Compile decisions</button>
-</div>
 
 <div class="modal-backdrop" id="modal" data-open="false">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-head">
-      <h2 id="modalTitle">Output</h2>
+      <h2 id="modalTitle">Bootstrap prompt</h2>
       <button class="close" id="modalClose" aria-label="Close">&times;</button>
     </div>
     <div class="modal-body">
       <div class="modal-toolbar">
-        <button class="primary" id="btnCopy">Copy to clipboard</button>
-        <button class="ghost" id="btnDownload">Download .md</button>
-        <button class="ghost" id="btnCloseFooter">Close</button>
+        <button class="primary" id="btnModalCopy">Copy to clipboard</button>
+        <button class="ghost" id="btnModalClose">Close</button>
       </div>
       <div class="modal-output">
         <pre id="modalOutput"></pre>
@@ -733,9 +507,190 @@
     if (e.key === 'Enter') tryPassword();
   });
 
-  // ====== Document fetch / view / copy / download ======
-  const docCache = {};
+  // ====== Tiny inline markdown renderer ======
+  // Handles the subset used in these docs: headings (#-####), paragraphs,
+  // fenced code blocks (```), inline code, bold, italic, links, blockquotes,
+  // bulleted + numbered lists, tables (GFM-style), horizontal rules.
+  // Not a general-purpose parser — good enough for the corpus, fast, dep-free.
 
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, function (c) {
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+    });
+  }
+
+  function renderInline(s) {
+    // s is already escaped. Apply inline transformations.
+    // Preserve inline code first via placeholder, to avoid bold/italic eating its content.
+    const codes = [];
+    s = s.replace(/`([^`]+)`/g, function (_, code) {
+      codes.push(code);
+      return ' CODE' + (codes.length - 1) + '';
+    });
+    // Bold (**text**) before italic (*text*) — order matters.
+    s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    s = s.replace(/(^|[\s(])\*([^*\s][^*]*?)\*(?=[\s.,;:!?)]|$)/g, '$1<em>$2</em>');
+    // Links: [text](url)
+    s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, function (_, text, url) {
+      return '<a href="' + url + '" target="_blank" rel="noopener">' + text + '</a>';
+    });
+    // Auto-link bare http(s) URLs
+    s = s.replace(/(^|[\s])(https?:\/\/[^\s<]+)/g, function (_, pre, url) {
+      return pre + '<a href="' + url + '" target="_blank" rel="noopener">' + url + '</a>';
+    });
+    // Restore inline code
+    s = s.replace(/ CODE(\d+)/g, function (_, i) {
+      return '<code>' + codes[parseInt(i, 10)] + '</code>';
+    });
+    return s;
+  }
+
+  function isBlockStarter(ln) {
+    if (!ln || ln.trim() === '') return true;
+    if (ln.startsWith('```')) return true;
+    if (/^#{1,6} /.test(ln)) return true;
+    if (ln.startsWith('> ')) return true;
+    if (/^[-*] /.test(ln)) return true;
+    if (/^\d+\. /.test(ln)) return true;
+    if (ln.startsWith('|')) return true;
+    if (ln.trim() === '---') return true;
+    return false;
+  }
+
+  function renderMd(md, opts) {
+    opts = opts || {};
+    const stripFirstH1 = !!opts.stripFirstH1;
+
+    // Normalize line endings
+    md = md.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+    const lines = md.split('\n');
+    const out = [];
+    let i = 0;
+    let firstH1Stripped = false;
+
+    while (i < lines.length) {
+      const ln = lines[i];
+
+      // Fenced code block
+      if (ln.startsWith('```')) {
+        i++;
+        const codeLines = [];
+        while (i < lines.length && !lines[i].startsWith('```')) {
+          codeLines.push(lines[i]);
+          i++;
+        }
+        if (i < lines.length) i++; // skip closing ```
+        out.push('<pre><code>' + escapeHtml(codeLines.join('\n')) + '</code></pre>');
+        continue;
+      }
+
+      // Heading
+      const hMatch = ln.match(/^(#{1,6}) (.*)$/);
+      if (hMatch) {
+        const level = hMatch[1].length;
+        const text = hMatch[2];
+        if (level === 1 && stripFirstH1 && !firstH1Stripped) {
+          firstH1Stripped = true;
+          i++;
+          continue;
+        }
+        // Shift down one level so doc # doesn't conflict with page <h2> headers.
+        const shifted = Math.min(level + 1, 6);
+        out.push('<h' + shifted + '>' + renderInline(escapeHtml(text)) + '</h' + shifted + '>');
+        i++;
+        continue;
+      }
+
+      // Horizontal rule
+      if (ln.trim() === '---') {
+        out.push('<hr>');
+        i++;
+        continue;
+      }
+
+      // Blockquote (single block of contiguous > lines)
+      if (ln.startsWith('> ')) {
+        const bqLines = [];
+        while (i < lines.length && lines[i].startsWith('> ')) {
+          bqLines.push(lines[i].substring(2));
+          i++;
+        }
+        // Render the blockquote body as a paragraph
+        out.push('<blockquote><p>' + renderInline(escapeHtml(bqLines.join(' '))) + '</p></blockquote>');
+        continue;
+      }
+
+      // Table — requires header row + separator row immediately following
+      if (ln.startsWith('|') && i + 1 < lines.length && /^\|[\s\-:|]+\|/.test(lines[i + 1])) {
+        const headerCells = ln.split('|').slice(1, -1).map(function (c) { return c.trim(); });
+        i += 2; // skip header + separator
+        const rows = [];
+        while (i < lines.length && lines[i].startsWith('|')) {
+          const cells = lines[i].split('|').slice(1, -1).map(function (c) { return c.trim(); });
+          rows.push(cells);
+          i++;
+        }
+        let html = '<table><thead><tr>';
+        headerCells.forEach(function (c) {
+          html += '<th>' + renderInline(escapeHtml(c)) + '</th>';
+        });
+        html += '</tr></thead><tbody>';
+        rows.forEach(function (row) {
+          html += '<tr>';
+          // pad/truncate to header length
+          for (let c = 0; c < headerCells.length; c++) {
+            const cell = row[c] || '';
+            html += '<td>' + renderInline(escapeHtml(cell)) + '</td>';
+          }
+          html += '</tr>';
+        });
+        html += '</tbody></table>';
+        out.push(html);
+        continue;
+      }
+
+      // Unordered list
+      if (/^[-*] /.test(ln)) {
+        const items = [];
+        while (i < lines.length && /^[-*] /.test(lines[i])) {
+          items.push('<li>' + renderInline(escapeHtml(lines[i].substring(2))) + '</li>');
+          i++;
+        }
+        out.push('<ul>' + items.join('') + '</ul>');
+        continue;
+      }
+
+      // Ordered list
+      if (/^\d+\. /.test(ln)) {
+        const items = [];
+        while (i < lines.length && /^\d+\. /.test(lines[i])) {
+          items.push('<li>' + renderInline(escapeHtml(lines[i].replace(/^\d+\. /, ''))) + '</li>');
+          i++;
+        }
+        out.push('<ol>' + items.join('') + '</ol>');
+        continue;
+      }
+
+      // Blank line
+      if (ln.trim() === '') {
+        i++;
+        continue;
+      }
+
+      // Paragraph (collect until block starter)
+      const pLines = [ln];
+      i++;
+      while (i < lines.length && !isBlockStarter(lines[i])) {
+        pLines.push(lines[i]);
+        i++;
+      }
+      out.push('<p>' + renderInline(escapeHtml(pLines.join(' '))) + '</p>');
+    }
+    return out.join('\n');
+  }
+
+  // ====== Page initialization (after unlock) ======
+  const docCache = {};
   async function fetchDoc(filename) {
     if (docCache[filename]) return docCache[filename];
     const resp = await fetch(filename, { cache: 'no-cache' });
@@ -745,18 +700,24 @@
     return text;
   }
 
-  function downloadText(text, filename, mime) {
-    const blob = new Blob([text], { type: mime || 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = filename;
-    document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    setTimeout(function () { URL.revokeObjectURL(url); }, 500);
+  async function loadInlineDocs() {
+    const sections = document.querySelectorAll('.doc-content[data-doc]');
+    await Promise.all([].slice.call(sections).map(async function (el) {
+      const filename = el.getAttribute('data-doc');
+      try {
+        const md = await fetchDoc(filename);
+        el.innerHTML = renderMd(md, { stripFirstH1: true });
+        el.classList.remove('loading');
+      } catch (e) {
+        el.innerHTML = '<p style="color: var(--red)">Failed to load <code>' + filename + '</code>: ' + (e.message || e) + '</p>';
+        el.classList.remove('loading');
+      }
+    }));
   }
 
   async function copyText(text) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      try { await navigator.clipboard.writeText(text); return true; } catch (e) { /* fall through */ }
+      try { await navigator.clipboard.writeText(text); return true; } catch (e) {}
     }
     const ta = document.createElement('textarea');
     ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
@@ -767,220 +728,9 @@
     return ok;
   }
 
-  // ====== Decisions ======
-  const STORAGE_KEY = 'coa-true-up-decisions-v1';
-
-  const DECISIONS = [
-    { id: 'd1', num: 1, title: 'Lab rollout order', options: {
-        ohio_first: 'Ohio first, then Michigan.',
-        michigan_first: 'Michigan first, then Ohio.',
-        both: 'Both labs concurrently.',
-        other: 'Other (see notes).' } },
-    { id: 'd2', num: 2, title: 'Backfill pace', options: {
-        fast: 'Fast — ~2 to 3 days, ~1 request/second.',
-        balanced: 'Balanced — ~5 to 7 days, ~0.5 request/second.',
-        slow: 'Slow — ~2 to 3 weeks, ~0.25 request/second.',
-        other: 'Other (see notes).' } },
-    { id: 'd3', num: 3, title: 'Multiple-file handling (Confident "CoA additions")', options: {
-        auto_import: 'Auto-import all as historical versions.',
-        flag: 'Import but flag each for human review.',
-        skip: 'Skip them entirely until we understand what they are.',
-        other: 'Other (see notes).' } },
-    { id: 'd4', num: 4, title: 'Confident-only samples (no LIMS match)', options: {
-        surface_v1: 'Surface in v1 via orphan crawl + CS review queue.',
-        defer_v2: 'Defer to v2 (capture as known follow-up).',
-        never: 'Do not enumerate at all.',
-        other: 'Other (see notes).' } },
-    { id: 'd5', num: 5, title: 'Drift warning when regenerating a backfilled CoA', options: {
-        logs_only: 'Engineer logs only, no user-visible warning.',
-        ui_warning: 'Confirmation dialog in UI before regeneration.',
-        hard_block: 'Hard-block regeneration; require admin override.',
-        other: 'Other (see notes).' } },
-    { id: 'd6', num: 6, title: 'Timing for the deferred amendment UX', options: {
-        after_pearson: 'Pick up immediately after Pearson microbials ships.',
-        parallel_track: 'Parallel-track now with a different engineer.',
-        punt: 'Punt indefinitely until business demand forces it.',
-        other: 'Other (see notes).' } }
-  ];
-
-  function loadState() {
-    try { const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : {}; }
-    catch (e) { return {}; }
-  }
-  function saveState(state) {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
-  }
-  let state = loadState();
-
-  function applyDecisionState(dec) {
-    const sec = document.getElementById(dec.id);
-    if (!sec) return;
-    const s = state[dec.id] || {};
-    if (s.choice) {
-      const radio = sec.querySelector('input[type="radio"][value="' + s.choice + '"]');
-      if (radio && !radio.checked) radio.checked = true;
-    }
-    const ta = sec.querySelector('textarea');
-    if (ta && typeof s.notes === 'string' && ta.value !== s.notes) ta.value = s.notes;
-    sec.dataset.answered = s.choice ? 'true' : 'false';
-  }
-
-  function updateProgress() {
-    let n = 0;
-    DECISIONS.forEach(function (dec) {
-      if ((state[dec.id] || {}).choice) n++;
-    });
-    const el = document.getElementById('progressCount');
-    if (el) el.textContent = n;
-  }
-
-  function compileDecisionsMarkdown() {
-    const lines = [];
-    lines.push('# CoA Backfill — Decisions');
-    lines.push('');
-    lines.push('Reviewed: ' + new Date().toISOString());
-    lines.push('');
-
-    let answered = 0, pending = 0;
-    DECISIONS.forEach(function (dec) {
-      if ((state[dec.id] || {}).choice) answered++; else pending++;
-    });
-    lines.push('**Status:** ' + answered + ' of ' + DECISIONS.length + ' decided.');
-    lines.push('');
-
-    DECISIONS.forEach(function (dec) {
-      const s = state[dec.id] || {};
-      const choiceLabel = s.choice ? (dec.options[s.choice] || s.choice) : '_(not yet decided)_';
-      lines.push('## Decision ' + dec.num + ' — ' + dec.title);
-      lines.push('');
-      lines.push('**Chosen:** ' + choiceLabel);
-      if (s.notes && s.notes.trim()) {
-        lines.push('');
-        lines.push('**Notes:**');
-        lines.push('');
-        s.notes.trim().split(/\r?\n/).forEach(function (ln) { lines.push('> ' + ln); });
-      }
-      lines.push('');
-    });
-
-    if (pending > 0) {
-      lines.push('---');
-      lines.push('');
-      lines.push('**Outstanding:** ' + pending + ' decision' + (pending === 1 ? '' : 's') + ' not yet picked.');
-      lines.push('');
-    }
-
-    return lines.join('\n');
-  }
-
   function initContent() {
-    // Wire decision cards
-    DECISIONS.forEach(function (dec) {
-      const sec = document.getElementById(dec.id);
-      if (!sec) return;
-      sec.querySelectorAll('input[type="radio"][name="' + dec.id + '"]').forEach(function (r) {
-        r.addEventListener('change', function () {
-          state[dec.id] = state[dec.id] || {};
-          state[dec.id].choice = r.value;
-          saveState(state);
-          applyDecisionState(dec);
-          updateProgress();
-        });
-      });
-      const ta = sec.querySelector('textarea');
-      if (ta) {
-        ta.addEventListener('input', function () {
-          state[dec.id] = state[dec.id] || {};
-          state[dec.id].notes = ta.value;
-          saveState(state);
-        });
-      }
-      applyDecisionState(dec);
-    });
-    updateProgress();
+    loadInlineDocs();
 
-    // Modal infra
-    const modal = document.getElementById('modal');
-    const modalOutput = document.getElementById('modalOutput');
-    const modalTitle = document.getElementById('modalTitle');
-
-    let currentContent = '';
-    let currentFilename = 'output.md';
-
-    function openModal(title, text, downloadName) {
-      modalTitle.textContent = title;
-      modalOutput.textContent = text;
-      currentContent = text;
-      currentFilename = downloadName || 'output.md';
-      modal.dataset.open = 'true';
-      document.body.style.overflow = 'hidden';
-    }
-    function closeModal() {
-      modal.dataset.open = 'false';
-      document.body.style.overflow = '';
-    }
-
-    function openDecisionsModal() {
-      openModal('Decisions (paste into Claude Code)', compileDecisionsMarkdown(), 'coa-backfill-decisions-' + new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19) + '.md');
-    }
-
-    document.getElementById('btnCompile').addEventListener('click', openDecisionsModal);
-    document.getElementById('btnCompileBottom').addEventListener('click', openDecisionsModal);
-    document.getElementById('modalClose').addEventListener('click', closeModal);
-    document.getElementById('btnCloseFooter').addEventListener('click', closeModal);
-    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && modal.dataset.open === 'true') closeModal();
-    });
-
-    // Document cards (view / copy / download)
-    document.querySelectorAll('.doc-card .doc-actions button').forEach(function (btn) {
-      btn.addEventListener('click', async function () {
-        const doc = btn.getAttribute('data-doc');
-        const action = btn.getAttribute('data-action');
-        btn.disabled = true;
-        try {
-          const text = await fetchDoc(doc);
-          if (action === 'view') openModal(doc, text, doc);
-          else if (action === 'copy') {
-            const ok = await copyText(text);
-            showToast(ok ? ('Copied ' + doc) : 'Copy failed');
-          }
-          else if (action === 'download') {
-            downloadText(text, doc, 'text/markdown;charset=utf-8');
-            showToast('Downloaded ' + doc);
-          }
-        } catch (e) {
-          showToast('Failed to load ' + doc);
-        } finally {
-          btn.disabled = false;
-        }
-      });
-    });
-
-    // Bootstrap prompt buttons
-    document.getElementById('btnCopyBootstrap').addEventListener('click', async function () {
-      try {
-        const text = await fetchDoc('BOOTSTRAP.md');
-        const ok = await copyText(text);
-        showToast(ok ? 'Bootstrap prompt copied' : 'Copy failed');
-      } catch (e) { showToast('Failed to load BOOTSTRAP.md'); }
-    });
-    document.getElementById('btnViewBootstrap').addEventListener('click', async function () {
-      try {
-        const text = await fetchDoc('BOOTSTRAP.md');
-        openModal('BOOTSTRAP.md', text, 'BOOTSTRAP.md');
-      } catch (e) { showToast('Failed to load BOOTSTRAP.md'); }
-    });
-    document.getElementById('btnDownloadBootstrap').addEventListener('click', async function () {
-      try {
-        const text = await fetchDoc('BOOTSTRAP.md');
-        downloadText(text, 'BOOTSTRAP.md', 'text/markdown;charset=utf-8');
-        showToast('Downloaded BOOTSTRAP.md');
-      } catch (e) { showToast('Failed to load BOOTSTRAP.md'); }
-    });
-
-    // Toast
     const toast = document.getElementById('toast');
     let toastTimer = null;
     function showToast(msg) {
@@ -990,25 +740,45 @@
       toastTimer = setTimeout(function () { toast.dataset.show = 'false'; }, 2200);
     }
 
-    // Copy / Download buttons inside modal
-    document.getElementById('btnCopy').addEventListener('click', async function () {
-      const ok = await copyText(currentContent);
-      showToast(ok ? 'Copied to clipboard' : 'Copy failed — select manually');
-    });
-    document.getElementById('btnDownload').addEventListener('click', function () {
-      downloadText(currentContent, currentFilename, 'text/markdown;charset=utf-8');
-      showToast('Downloaded');
+    // Modal infra (used only for bootstrap full-screen view)
+    const modal = document.getElementById('modal');
+    const modalOutput = document.getElementById('modalOutput');
+    let modalText = '';
+
+    function openBootstrapModal(text) {
+      modalText = text;
+      modalOutput.textContent = text;
+      modal.dataset.open = 'true';
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      modal.dataset.open = 'false';
+      document.body.style.overflow = '';
+    }
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    document.getElementById('btnModalClose').addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.dataset.open === 'true') closeModal();
     });
 
-    document.getElementById('btnReset').addEventListener('click', function () {
-      if (!confirm('Clear all decisions? This cannot be undone.')) return;
-      state = {}; saveState(state);
-      DECISIONS.forEach(applyDecisionState);
-      document.querySelectorAll('input[type="radio"]').forEach(function (r) { r.checked = false; });
-      document.querySelectorAll('textarea').forEach(function (t) { t.value = ''; });
-      document.querySelectorAll('.decision').forEach(function (s) { s.dataset.answered = 'false'; });
-      updateProgress();
-      showToast('All decisions cleared');
+    // Bootstrap prompt buttons
+    document.getElementById('btnCopyBootstrap').addEventListener('click', async function () {
+      try {
+        const text = await fetchDoc('BOOTSTRAP.md');
+        const ok = await copyText(text);
+        showToast(ok ? 'Bootstrap prompt copied to clipboard' : 'Copy failed — paste from full-screen view');
+      } catch (e) { showToast('Failed to load BOOTSTRAP.md'); }
+    });
+    document.getElementById('btnViewBootstrap').addEventListener('click', async function () {
+      try {
+        const text = await fetchDoc('BOOTSTRAP.md');
+        openBootstrapModal(text);
+      } catch (e) { showToast('Failed to load BOOTSTRAP.md'); }
+    });
+    document.getElementById('btnModalCopy').addEventListener('click', async function () {
+      const ok = await copyText(modalText);
+      showToast(ok ? 'Copied to clipboard' : 'Copy failed — select manually');
     });
   }
 
