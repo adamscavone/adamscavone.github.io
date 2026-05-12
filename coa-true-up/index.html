@@ -34,23 +34,16 @@
 
   /* Password gate */
   #lock {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg);
-    z-index: 999;
-    padding: 1rem;
+    position: fixed; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg); z-index: 999; padding: 1rem;
   }
   #lock .lock-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 1.5rem 1.75rem;
-    max-width: 380px;
-    width: 100%;
-    text-align: center;
+    max-width: 380px; width: 100%; text-align: center;
   }
   #lock h1 { margin: 0 0 0.4rem; font-size: 1.05rem; }
   #lock p { color: var(--fg-dim); font-size: 0.9rem; margin: 0 0 1rem; }
@@ -82,13 +75,13 @@
     padding: 0.85rem 1rem;
   }
   header.app .row {
-    max-width: 880px; margin: 0 auto;
+    max-width: 920px; margin: 0 auto;
     display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
   }
   header.app h1 { margin: 0; font-size: 1.05rem; font-weight: 700; }
   header.app .sub { color: var(--fg-dim); font-size: 0.82rem; margin: 0; }
   header.app .spacer { flex: 1; }
-  header.app nav { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  header.app nav { display: flex; gap: 0.3rem; flex-wrap: wrap; }
   header.app nav a {
     color: var(--fg-dim); text-decoration: none; font-size: 0.82rem;
     padding: 0.3rem 0.6rem; border-radius: 4px;
@@ -100,24 +93,28 @@
     font: inherit; cursor: pointer; border-radius: 6px;
     transition: background 0.12s, border-color 0.12s, transform 0.08s;
   }
-  button.primary { padding: 0.5rem 0.95rem; background: var(--accent); color: var(--accent-fg); border: 1px solid var(--accent); font-weight: 600; }
+  button.primary { padding: 0.55rem 1rem; background: var(--accent); color: var(--accent-fg); border: 1px solid var(--accent); font-weight: 600; }
   button.primary:hover { background: #a3c5fa; border-color: #a3c5fa; }
   button.primary:active { transform: scale(0.985); }
-  button.ghost { padding: 0.5rem 0.95rem; background: transparent; color: var(--fg); border: 1px solid var(--border-strong); }
+  button.ghost { padding: 0.55rem 1rem; background: transparent; color: var(--fg); border: 1px solid var(--border-strong); }
   button.ghost:hover { border-color: var(--accent); color: var(--accent); }
-  button.small { padding: 0.35rem 0.7rem; font-size: 0.85rem; background: var(--bg-elev); color: var(--fg); border: 1px solid var(--border-strong); }
-  button.small:hover { border-color: var(--accent); color: var(--accent); }
 
-  main { max-width: 880px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+  main { max-width: 920px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
 
-  .hero {
+  /* ============ At-a-glance summary ============ */
+  .glance {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1.35rem 1.6rem;
-    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.8rem;
+    overflow: hidden;
   }
-  .hero .tag {
+  .glance .glance-hero {
+    padding: 1.6rem 1.75rem 1.4rem;
+    background: linear-gradient(135deg, rgba(138, 180, 248, 0.06), transparent 65%);
+    border-bottom: 1px solid var(--border);
+  }
+  .glance .tag {
     display: inline-block;
     background: rgba(108, 196, 108, 0.15);
     color: var(--green);
@@ -127,24 +124,86 @@
     text-transform: uppercase; letter-spacing: 0.07em;
     margin-bottom: 0.7rem;
   }
-  .hero h2 { margin: 0 0 0.6rem; font-size: 1.25rem; line-height: 1.35; }
-  .hero p { margin: 0 0 0.7rem; color: var(--fg-dim); }
-  .hero p:last-child { margin-bottom: 0; }
-  .hero strong { color: var(--fg); }
-
-  .bootstrap-card {
-    background: linear-gradient(135deg, rgba(138, 180, 248, 0.08), rgba(138, 180, 248, 0.03));
-    border: 1px solid var(--accent);
-    border-radius: 10px;
-    padding: 1.25rem 1.5rem;
-    margin: 1.5rem 0;
+  .glance h2 { margin: 0 0 0.35rem; font-size: 1.4rem; line-height: 1.3; }
+  .glance .glance-hero p {
+    margin: 0; color: var(--fg-dim);
+    font-size: 0.95rem; line-height: 1.55;
   }
-  .bootstrap-card h3 { margin: 0 0 0.5rem; font-size: 1.05rem; color: var(--accent); }
-  .bootstrap-card p { margin: 0 0 0.85rem; color: var(--fg-dim); font-size: 0.93rem; }
-  .bootstrap-card p:last-of-type { margin-bottom: 0.85rem; }
-  .bootstrap-card .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-  .bootstrap-card code { color: var(--fg); background: var(--bg-elev); padding: 0.05rem 0.35rem; border-radius: 3px; font-size: 0.88em; }
 
+  .glance-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .glance-grid > div {
+    padding: 1.1rem 1.5rem 1.2rem;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .glance-grid > div:nth-child(2n) { border-right: none; }
+  .glance-grid > div:nth-last-child(-n+2) { border-bottom: none; }
+  .glance-grid h3 {
+    margin: 0 0 0.55rem;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-muted);
+    font-weight: 700;
+  }
+  .glance-grid h3 .ico { color: var(--accent); margin-right: 0.3rem; font-size: 0.9rem; }
+  .glance-grid p, .glance-grid li {
+    font-size: 0.92rem; line-height: 1.55; color: var(--fg);
+  }
+  .glance-grid p { margin: 0 0 0.5rem; }
+  .glance-grid p:last-child { margin-bottom: 0; }
+  .glance-grid ul, .glance-grid ol { margin: 0; padding-left: 1.2rem; color: var(--fg); }
+  .glance-grid li { margin-bottom: 0.35rem; }
+  .glance-grid li:last-child { margin-bottom: 0; }
+  .glance-grid strong { color: var(--fg); font-weight: 700; }
+  .glance-grid .strike { color: var(--fg-dim); }
+
+  .glance-arch {
+    padding: 1.25rem 1.5rem;
+    background: var(--bg-card-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .glance-arch h3 {
+    margin: 0 0 0.7rem;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-muted);
+    font-weight: 700;
+  }
+  .glance-arch pre {
+    margin: 0;
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--fg-dim);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .glance-arch pre b { color: var(--accent); font-weight: 700; }
+  .glance-arch pre i { color: var(--fg); font-style: normal; }
+
+  .glance-cta {
+    padding: 1.3rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .glance-cta .cta-text {
+    flex: 1; min-width: 240px;
+  }
+  .glance-cta .cta-text strong { color: var(--accent); }
+  .glance-cta .cta-text p { margin: 0; color: var(--fg-dim); font-size: 0.92rem; }
+
+  /* ============ Section cards (full doc content rendered inline) ============ */
   .doc-section {
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -163,6 +222,7 @@
     display: flex;
     align-items: baseline;
     gap: 0.7rem;
+    flex-wrap: wrap;
   }
   .doc-section > h2.section-title .order {
     color: var(--fg-muted);
@@ -179,8 +239,17 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
+  .doc-section .section-tldr {
+    padding: 0.7rem 1.5rem;
+    background: rgba(138, 180, 248, 0.04);
+    border-bottom: 1px solid var(--border);
+    color: var(--fg-dim);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+  .doc-section .section-tldr strong { color: var(--accent); font-weight: 700; }
   .doc-section .doc-content {
-    padding: 1rem 1.6rem 1.4rem;
+    padding: 1.1rem 1.6rem 1.4rem;
     color: var(--fg);
     font-size: 0.96rem;
     line-height: 1.65;
@@ -190,17 +259,17 @@
     font-style: italic;
   }
 
-  /* Markdown-rendered content styles */
+  /* ============ Markdown-rendered content styles ============ */
   .doc-content h1, .doc-content h2, .doc-content h3, .doc-content h4, .doc-content h5 {
     color: var(--fg); line-height: 1.35; font-weight: 700;
-    margin: 1.6rem 0 0.5rem;
+    margin: 1.7rem 0 0.5rem;
   }
   .doc-content > h1:first-child, .doc-content > h2:first-child,
   .doc-content > h3:first-child { margin-top: 0; }
   .doc-content h1 { font-size: 1.25rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
   .doc-content h2 { font-size: 1.1rem; }
   .doc-content h3 { font-size: 1rem; color: var(--accent); }
-  .doc-content h4 { font-size: 0.95rem; color: var(--fg-dim); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 1.1rem; }
+  .doc-content h4 { font-size: 0.95rem; color: var(--fg-dim); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 1.2rem; }
   .doc-content p { margin: 0 0 0.85rem; }
   .doc-content strong { color: var(--fg); font-weight: 700; }
   .doc-content em { color: var(--fg-dim); font-style: italic; }
@@ -214,59 +283,85 @@
     font-size: 0.88em;
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   }
-  .doc-content pre {
+
+  /* Code blocks with copy buttons */
+  .code-block { position: relative; margin: 0.7rem 0 1rem; }
+  .code-block pre {
     background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 0.85rem 1rem;
+    padding: 0.9rem 1rem;
     overflow-x: auto;
-    margin: 0.6rem 0 1rem;
+    margin: 0;
     line-height: 1.5;
   }
-  .doc-content pre code {
+  .code-block pre code {
     background: transparent;
     padding: 0;
     font-size: 0.85rem;
     color: var(--fg);
   }
+  .code-block .code-copy {
+    position: absolute; top: 0.45rem; right: 0.45rem;
+    background: var(--bg-card); color: var(--fg-dim);
+    border: 1px solid var(--border-strong); border-radius: 4px;
+    padding: 0.25rem 0.6rem; font: inherit; font-size: 0.72rem;
+    font-weight: 600; letter-spacing: 0.04em;
+    cursor: pointer; opacity: 0.35;
+    transition: opacity 0.15s, color 0.15s, border-color 0.15s;
+    text-transform: uppercase;
+  }
+  .code-block:hover .code-copy { opacity: 1; }
+  .code-block .code-copy:hover { color: var(--accent); border-color: var(--accent); }
+  .code-block .code-copy.copied { color: var(--green); border-color: var(--green); opacity: 1; }
+
   .doc-content blockquote {
     border-left: 3px solid var(--accent);
-    background: rgba(138, 180, 248, 0.04);
+    background: rgba(138, 180, 248, 0.05);
     padding: 0.55rem 1rem;
-    margin: 0.6rem 0 0.9rem;
+    margin: 0.7rem 0 1rem;
     color: var(--fg-dim);
+    border-radius: 0 6px 6px 0;
   }
   .doc-content blockquote p { margin: 0; }
-  .doc-content ul, .doc-content ol { margin: 0.4rem 0 0.9rem; padding-left: 1.5rem; }
-  .doc-content li { margin-bottom: 0.3rem; }
+  .doc-content blockquote strong { color: var(--fg); }
+
+  .doc-content ul, .doc-content ol { margin: 0.4rem 0 0.9rem; padding-left: 1.55rem; }
+  .doc-content li { margin-bottom: 0.4rem; }
   .doc-content li > ul, .doc-content li > ol { margin: 0.3rem 0; }
   .doc-content hr {
     border: none;
     border-top: 1px solid var(--border);
-    margin: 1.3rem 0;
+    margin: 1.4rem 0;
   }
+
   .doc-content table {
     width: 100%;
     border-collapse: collapse;
-    margin: 0.7rem 0 1.1rem;
+    margin: 0.8rem 0 1.2rem;
     font-size: 0.9rem;
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .doc-content th, .doc-content td {
     text-align: left;
-    padding: 0.5rem 0.7rem;
+    padding: 0.55rem 0.8rem;
     border-bottom: 1px solid var(--border);
     vertical-align: top;
+    line-height: 1.5;
   }
   .doc-content th {
     background: var(--bg-card-2);
     color: var(--fg);
     font-weight: 700;
     border-bottom-color: var(--border-strong);
+    white-space: nowrap;
   }
   .doc-content tr:last-child td { border-bottom: none; }
   .doc-content tbody tr:hover { background: rgba(138, 180, 248, 0.03); }
 
-  /* Modal — kept lean, used only for the bootstrap prompt full-screen */
+  /* Modal (used only for full-screen bootstrap prompt view) */
   .modal-backdrop {
     position: fixed; inset: 0;
     background: rgba(0, 0, 0, 0.7);
@@ -309,8 +404,21 @@
   }
   .toast[data-show="true"] { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+  .bootstrap-card {
+    background: linear-gradient(135deg, rgba(138, 180, 248, 0.08), rgba(138, 180, 248, 0.03));
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    padding: 1.4rem 1.6rem;
+    margin: 2rem 0 1.5rem;
+  }
+  .bootstrap-card h3 { margin: 0 0 0.5rem; font-size: 1.1rem; color: var(--accent); }
+  .bootstrap-card p { margin: 0 0 0.85rem; color: var(--fg-dim); font-size: 0.93rem; }
+  .bootstrap-card p:last-of-type { margin-bottom: 0.85rem; }
+  .bootstrap-card .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .bootstrap-card code { color: var(--fg); background: var(--bg-elev); padding: 0.08rem 0.35rem; border-radius: 3px; font-size: 0.88em; }
+
   .downloads-footer {
-    margin-top: 2.5rem;
+    margin-top: 2rem;
     padding: 1.2rem 1.5rem;
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -331,15 +439,23 @@
   }
   .downloads-footer .dl-list a:hover { border-color: var(--accent); color: var(--accent); }
 
-  @media (max-width: 600px) {
+  @media (max-width: 700px) {
     header.app h1 { font-size: 0.95rem; }
     header.app .sub { display: none; }
     header.app nav { display: none; }
     main { padding: 1rem 0.7rem 4rem; }
+    .glance-grid { grid-template-columns: 1fr; }
+    .glance-grid > div { border-right: none; }
+    .glance-grid > div:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
+    .glance-grid > div:last-child { border-bottom: none; }
+    .glance .glance-hero { padding: 1.2rem 1.25rem 1rem; }
+    .glance h2 { font-size: 1.2rem; }
+    .glance-arch pre { font-size: 0.7rem; }
     .doc-section > h2.section-title { padding: 0.85rem 1.1rem; font-size: 1rem; }
     .doc-section > h2.section-title .approx-read { display: none; }
-    .doc-section .doc-content { padding: 0.8rem 1.1rem 1.1rem; }
-    .hero, .bootstrap-card { padding: 1rem 1.15rem; }
+    .doc-section .doc-content { padding: 0.9rem 1.1rem 1.1rem; }
+    .doc-section .section-tldr { padding: 0.6rem 1.1rem; }
+    .bootstrap-card { padding: 1.1rem 1.25rem; }
   }
 </style>
 </head>
@@ -361,10 +477,11 @@
   <div class="row">
     <div>
       <h1>CoA Backfill — Project Handoff</h1>
-      <p class="sub">read top-to-bottom · ~30 minutes · then copy the prompt at the bottom</p>
+      <p class="sub">at-a-glance summary + 5 deep-dive sections + bootstrap prompt</p>
     </div>
     <span class="spacer"></span>
     <nav>
+      <a href="#sec-glance">Glance</a>
       <a href="#sec-orientation">1. Orient</a>
       <a href="#sec-storage">2. Storage</a>
       <a href="#sec-plan">3. Plan</a>
@@ -377,42 +494,156 @@
 
 <main>
 
-<div class="hero">
-  <span class="tag">Handoff to David Kohn</span>
-  <h2>Pull every CoA NCTL has issued out of Confident Cannabis and into NCTL's own archive.</h2>
-  <p>North Coast Testing Laboratories generates Certificates of Analysis and currently depends on Confident Cannabis as the authoritative archive. We're closing that gap: every of-record CoA goes into NCTL's own Azure Files share, with cryptographic integrity and per-file provenance. After this ships, NCTL's internal LIMS becomes the system of record.</p>
-  <p><strong>This project is independent of the in-flight Kondo branch of the NCLims codebase.</strong> It reads production read-only, talks to Confident's API, writes to the existing Azure Files share, and keeps its bookkeeping in its own isolated ledger. <strong>No NCLims source-code changes required.</strong> Pearson's microbials release is untouched.</p>
-  <p>Read all five sections below in order. They go from "what this project is" through "how the existing system works" to "the engineering plan, access requirements, and the API protocol." At the end, copy the bootstrap prompt and paste it into a fresh Claude Code session — that's how you start.</p>
+<!-- ============ AT A GLANCE ============ -->
+<div class="glance" id="sec-glance">
+  <div class="glance-hero">
+    <span class="tag">Handoff to David Kohn</span>
+    <h2>Pull every CoA out of Confident Cannabis into NCTL's own archive.</h2>
+    <p>The whole project on one screen. Read this section, skim the architecture diagram, glance at the "what you build / don't build" lists, and you have the shape of the project. The deep-dive sections below carry the details.</p>
+  </div>
+
+  <div class="glance-grid">
+    <div>
+      <h3><span class="ico">▮</span>The Problem</h3>
+      <p>NCTL generates Certificates of Analysis but currently relies on <strong>Confident Cannabis</strong> (an external SaaS) as the authoritative archive of every CoA ever issued. If they go down, change terms, or have a contract dispute, NCTL loses immediate access to evidence of work it did.</p>
+    </div>
+    <div>
+      <h3><span class="ico">▶</span>The Solution</h3>
+      <p>Pull every of-record CoA out of Confident into NCTL's own Azure Files share, with SHA-256 integrity proof and per-file provenance. After this ships, <strong>NCTL's internal LIMS becomes the system of record</strong> — future amendments originate in LIMS (separate initiative) and get pushed to Confident.</p>
+    </div>
+    <div>
+      <h3><span class="ico">✓</span>What You Build</h3>
+      <ul>
+        <li><strong>Standalone .NET 8 worker</strong> (Azure WebJob) — reads production NCLims read-only, calls Confident's API, downloads each CoA PDF, writes to existing Azure Files share.</li>
+        <li><strong>Going-forward scanner</strong> — polls <code>ReportFile</code> hourly so newly-issued CoAs (including Pearson's micro release) land in the archive automatically.</li>
+        <li><strong>Operational ledger</strong> (your own Azure SQL DB, 3 tables) — every imported file has SHA-256, provenance, status. Auditor-replayable.</li>
+      </ul>
+    </div>
+    <div>
+      <h3><span class="ico">✕</span>What You DON'T Touch</h3>
+      <ul>
+        <li class="strike"><strong>NCLims source code</strong> — no edits. Kondo branch and Pearson's microbials release are unaffected.</li>
+        <li class="strike"><strong>Production NCLims schema</strong> — no migrations. Your ledger lives in its own DB.</li>
+        <li class="strike"><strong>Byte-by-byte hash comparison</strong> as the reconciliation primitive. Use Confident's per-file <code>public_key</code> Guid instead — hashes false-positive on rendering drift. (Detail in section 3.)</li>
+        <li class="strike"><strong>LIMS-side amendment UX</strong> — deferred to a follow-up initiative after Pearson ships.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="glance-arch">
+    <h3><span class="ico">⛬</span>Architecture (data flow, one direction)</h3>
+<pre>
+    <i>┌────────────────── YOUR STANDALONE PROJECT ──────────────────┐</i>
+    <i>│</i>                                                              <i>│</i>
+    <i>│</i>   Prod NCLims DB  ────►  <b>Sample enumerator</b>                   <i>│</i>
+    <i>│</i>   (read-only, KV)         (Sample.ConfidentCannabisId list)   <i>│</i>
+    <i>│</i>                                  │                            <i>│</i>
+    <i>│</i>                                  ▼                            <i>│</i>
+    <i>│</i>   Confident API  ◄────  <b>HMAC-signed CC client + Polly</b>       <i>│</i>
+    <i>│</i>   (per-lab creds)              │                              <i>│</i>
+    <i>│</i>                                ▼                              <i>│</i>
+    <i>│</i>                       <b>Fetch PDF + SHA-256</b>                    <i>│</i>
+    <i>│</i>                                │                              <i>│</i>
+    <i>│</i>                                ▼                              <i>│</i>
+    <i>│</i>   Azure Files share ◄── <b>Upload as new GUID file</b>              <i>│</i>
+    <i>│</i>   <b>nclimsfiles/production/&lt;NCTL|NCTLM&gt;/Sample Reports/</b>          <i>│</i>
+    <i>│</i>   (same share NCLims uses)     │                              <i>│</i>
+    <i>│</i>                                ▼                              <i>│</i>
+    <i>│</i>   Your ledger DB    ◄──  <b>CoaBackfillItem row</b>                <i>│</i>
+    <i>│</i>   (Azure SQL, isolated)   (SampleId, CcCoaPublicKey,          <i>│</i>
+    <i>│</i>                            Sha256, FilePath, Outcome)         <i>│</i>
+    <i>│</i>                                                              <i>│</i>
+    <i>└─────────────────────────────────────────────────────────────┘</i>
+</pre>
+  </div>
+
+  <div class="glance-grid">
+    <div>
+      <h3><span class="ico">⏱</span>Your First Day</h3>
+      <ol>
+        <li>Get Azure access (Adam grants it) — Key Vault read on <code>nclims-kv</code>, Storage RBAC on <code>nclimsfiles</code>, prod DB read via the bundled connection string.</li>
+        <li>Verify access — run the 5 commands in <a href="#sec-setup">Section 4</a> (each has a Copy button).</li>
+        <li>Copy the <a href="#sec-bootstrap">bootstrap prompt</a> at the bottom, paste into a fresh Claude Code session.</li>
+        <li>Let Claude read these docs (it can fetch them by URL), verify your access, scaffold the project.</li>
+        <li>Smoke-test 10 samples — <strong>sample 217848 must be one of them</strong> (NCTL's gold-case historical amendment).</li>
+      </ol>
+    </div>
+    <div>
+      <h3><span class="ico">☎</span>Domain Expert</h3>
+      <p><strong>Adam Scavone</strong> (<code>ascavone@nctl.com</code>) owns the product context. He's your escalation path for:</p>
+      <ul>
+        <li>"What is this field actually for"</li>
+        <li>"Why was X decided this way"</li>
+        <li>Azure access blockers (RBAC, KV secrets, CC credential decryption)</li>
+        <li>Verifying findings on open discovery items (especially <code>CoaAdditions</code> semantics)</li>
+      </ul>
+      <p>Handle pure-engineering decisions yourself. Send him questions, not implementation choices.</p>
+    </div>
+    <div>
+      <h3><span class="ico">⚠</span>Key Gotchas</h3>
+      <ul>
+        <li><strong>Azure Files, not Blob Storage.</strong> In Portal nav: <em>Storage account → File shares</em>, not <em>Containers</em>.</li>
+        <li>Lab slugs are <code>NCTL</code> (Ohio, LabId=1001) and <code>NCTLM</code> (Michigan, LabId=1003) — not <code>oh</code>/<code>mi</code>.</li>
+        <li>Filter <code>ReportType = 2</code> when looking for CoAs (1=MetrcCsv, 4=ManifestReport, 5=ConsolidatedCoA).</li>
+        <li>Raw Azure Files URLs don't open in a browser — auth headers required. Use Portal Download button or SAS URL.</li>
+        <li>The existing <code>CcApiService.cs</code> has known bugs (no retries, broken <code>modifiedSinceTime</code>); see Section 5.</li>
+      </ul>
+    </div>
+    <div>
+      <h3><span class="ico">⊕</span>Volume &amp; Timing</h3>
+      <ul>
+        <li>~200,000 historical samples across both labs.</li>
+        <li>~400,000 network ops total (one Sample call + one PDF download per sample).</li>
+        <li>At 0.5 req/sec sustained (recommended): <strong>~5–7 days wall-clock</strong>.</li>
+        <li>~200 GiB of new bytes added to the share (currently 504 GiB; plenty of headroom).</li>
+        <li>Resumable per-sample — stop/restart freely, no data loss.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="glance-cta">
+    <div class="cta-text">
+      <p>Read the five sections below for full detail (~30 min total), then <strong>scroll to the bottom and copy the bootstrap prompt</strong> into a fresh Claude Code session — that's how you start.</p>
+    </div>
+    <a class="primary" style="text-decoration:none; display:inline-flex; align-items:center;" href="#sec-bootstrap">Jump to bootstrap →</a>
+  </div>
 </div>
+
+<!-- ============ Doc sections rendered from .md ============ -->
 
 <section class="doc-section" id="sec-orientation">
   <h2 class="section-title"><span class="order">01</span>Orientation — start here<span class="approx-read">~5 min</span></h2>
+  <div class="section-tldr"><strong>TL;DR:</strong> why this project exists, what's already settled vs. what's deferred (amendment UX, with Pearson context), what's known empirically, and what discovery items will come out of your smoke test.</div>
   <div class="doc-content loading" data-doc="HANDOFF.md">Loading orientation…</div>
 </section>
 
 <section class="doc-section" id="sec-storage">
   <h2 class="section-title"><span class="order">02</span>How NCTL stores CoAs today<span class="approx-read">~15 min + hands-on</span></h2>
+  <div class="section-tldr"><strong>TL;DR:</strong> guided Azure Portal walkthrough. The data model (Sample → ReportFile → FileStorage → share), how to find the storage account name and share, the GUID-lookup SQL pattern, version history, and the "raw URL doesn't open" gotcha. Skim if you already know Azure Files; spend the full 15 minutes the first time.</div>
   <div class="doc-content loading" data-doc="STORAGE_PRIMER.md">Loading storage primer…</div>
 </section>
 
 <section class="doc-section" id="sec-plan">
   <h2 class="section-title"><span class="order">03</span>The engineering plan<span class="approx-read">~10 min</span></h2>
+  <div class="section-tldr"><strong>TL;DR:</strong> the spec. Architecture (standalone, decoupled), reconciliation primitive (CC's per-file identifier, not byte hashing — with rationale), per-sample backfill workflow, ledger schema, going-forward incremental sync via <code>ReportFile</code> polling, bulletproof invariants, verification protocol.</div>
   <div class="doc-content loading" data-doc="PLAN.md">Loading plan…</div>
 </section>
 
 <section class="doc-section" id="sec-setup">
   <h2 class="section-title"><span class="order">04</span>Access &amp; setup requirements<span class="approx-read">~5 min</span></h2>
+  <div class="section-tldr"><strong>TL;DR:</strong> Azure tenant + RBAC roles you need, Key Vault secrets, where Confident credentials live, tooling, repo hosting choices, and a 5-command first-day verification suite (each is copyable).</div>
   <div class="doc-content loading" data-doc="SETUP.md">Loading setup…</div>
 </section>
 
 <section class="doc-section" id="sec-cc-api">
   <h2 class="section-title"><span class="order">05</span>Confident Cannabis API protocol<span class="approx-read">~8 min</span></h2>
+  <div class="section-tldr"><strong>TL;DR:</strong> HMAC-SHA256 request signing (lift the protocol from this doc, don't lift the bugs from NCLims's existing client), endpoint catalog, response shape for <code>/v0/sample/{id}</code>, rate-limit strategy, error handling. Includes pasteable Polly retry policy snippet.</div>
   <div class="doc-content loading" data-doc="CC_API_REFERENCE.md">Loading API reference…</div>
 </section>
 
 <div class="bootstrap-card" id="sec-bootstrap">
   <h3>▶ Start your Claude Code session</h3>
-  <p>Open a fresh Claude Code session in whatever directory you'll work in. Paste the prompt below as your first message. Claude will read these docs back via fetch (they live at the same URLs), verify your Azure access, and scaffold the project per the plan.</p>
+  <p>You've read the docs. Now open a fresh Claude Code session in whatever directory you'll work in. Click <strong>Copy bootstrap prompt</strong> below and paste it as your first message. Claude will fetch these same docs back by URL, verify your Azure access, and scaffold the project per the plan.</p>
   <p>Domain expert: <strong>Adam Scavone</strong> (<code>ascavone@nctl.com</code>). Escalate product / domain questions to him; handle pure-engineering decisions yourself.</p>
   <div class="actions">
     <button class="primary" id="btnCopyBootstrap">Copy bootstrap prompt</button>
@@ -470,13 +701,11 @@
     const hash = await crypto.subtle.digest('SHA-256', buf);
     return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
   }
-
   function unlock() {
     document.body.dataset.unlocked = 'true';
     try { sessionStorage.setItem(UNLOCK_KEY, '1'); } catch (e) {}
     setTimeout(initContent, 0);
   }
-
   try {
     if (sessionStorage.getItem(UNLOCK_KEY) === '1') {
       document.body.dataset.unlocked = 'true';
@@ -501,18 +730,12 @@
     }
     pwSubmit.disabled = false;
   }
-
   pwSubmit.addEventListener('click', tryPassword);
   pwInput.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') tryPassword();
   });
 
-  // ====== Tiny inline markdown renderer ======
-  // Handles the subset used in these docs: headings (#-####), paragraphs,
-  // fenced code blocks (```), inline code, bold, italic, links, blockquotes,
-  // bulleted + numbered lists, tables (GFM-style), horizontal rules.
-  // Not a general-purpose parser — good enough for the corpus, fast, dep-free.
-
+  // ====== Markdown renderer (subset for these docs) ======
   function escapeHtml(s) {
     return s.replace(/[&<>"']/g, function (c) {
       return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
@@ -520,26 +743,20 @@
   }
 
   function renderInline(s) {
-    // s is already escaped. Apply inline transformations.
-    // Preserve inline code first via placeholder, to avoid bold/italic eating its content.
     const codes = [];
     s = s.replace(/`([^`]+)`/g, function (_, code) {
       codes.push(code);
-      return ' CODE' + (codes.length - 1) + '';
+      return ' CODE' + (codes.length - 1) + ' ';
     });
-    // Bold (**text**) before italic (*text*) — order matters.
     s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
     s = s.replace(/(^|[\s(])\*([^*\s][^*]*?)\*(?=[\s.,;:!?)]|$)/g, '$1<em>$2</em>');
-    // Links: [text](url)
     s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, function (_, text, url) {
       return '<a href="' + url + '" target="_blank" rel="noopener">' + text + '</a>';
     });
-    // Auto-link bare http(s) URLs
     s = s.replace(/(^|[\s])(https?:\/\/[^\s<]+)/g, function (_, pre, url) {
       return pre + '<a href="' + url + '" target="_blank" rel="noopener">' + url + '</a>';
     });
-    // Restore inline code
-    s = s.replace(/ CODE(\d+)/g, function (_, i) {
+    s = s.replace(/ CODE(\d+) /g, function (_, i) {
       return '<code>' + codes[parseInt(i, 10)] + '</code>';
     });
     return s;
@@ -560,8 +777,6 @@
   function renderMd(md, opts) {
     opts = opts || {};
     const stripFirstH1 = !!opts.stripFirstH1;
-
-    // Normalize line endings
     md = md.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
     const lines = md.split('\n');
     const out = [];
@@ -571,7 +786,6 @@
     while (i < lines.length) {
       const ln = lines[i];
 
-      // Fenced code block
       if (ln.startsWith('```')) {
         i++;
         const codeLines = [];
@@ -579,12 +793,10 @@
           codeLines.push(lines[i]);
           i++;
         }
-        if (i < lines.length) i++; // skip closing ```
+        if (i < lines.length) i++;
         out.push('<pre><code>' + escapeHtml(codeLines.join('\n')) + '</code></pre>');
         continue;
       }
-
-      // Heading
       const hMatch = ln.match(/^(#{1,6}) (.*)$/);
       if (hMatch) {
         const level = hMatch[1].length;
@@ -594,36 +806,28 @@
           i++;
           continue;
         }
-        // Shift down one level so doc # doesn't conflict with page <h2> headers.
         const shifted = Math.min(level + 1, 6);
         out.push('<h' + shifted + '>' + renderInline(escapeHtml(text)) + '</h' + shifted + '>');
         i++;
         continue;
       }
-
-      // Horizontal rule
       if (ln.trim() === '---') {
         out.push('<hr>');
         i++;
         continue;
       }
-
-      // Blockquote (single block of contiguous > lines)
       if (ln.startsWith('> ')) {
         const bqLines = [];
         while (i < lines.length && lines[i].startsWith('> ')) {
           bqLines.push(lines[i].substring(2));
           i++;
         }
-        // Render the blockquote body as a paragraph
         out.push('<blockquote><p>' + renderInline(escapeHtml(bqLines.join(' '))) + '</p></blockquote>');
         continue;
       }
-
-      // Table — requires header row + separator row immediately following
       if (ln.startsWith('|') && i + 1 < lines.length && /^\|[\s\-:|]+\|/.test(lines[i + 1])) {
         const headerCells = ln.split('|').slice(1, -1).map(function (c) { return c.trim(); });
-        i += 2; // skip header + separator
+        i += 2;
         const rows = [];
         while (i < lines.length && lines[i].startsWith('|')) {
           const cells = lines[i].split('|').slice(1, -1).map(function (c) { return c.trim(); });
@@ -637,7 +841,6 @@
         html += '</tr></thead><tbody>';
         rows.forEach(function (row) {
           html += '<tr>';
-          // pad/truncate to header length
           for (let c = 0; c < headerCells.length; c++) {
             const cell = row[c] || '';
             html += '<td>' + renderInline(escapeHtml(cell)) + '</td>';
@@ -648,8 +851,6 @@
         out.push(html);
         continue;
       }
-
-      // Unordered list
       if (/^[-*] /.test(ln)) {
         const items = [];
         while (i < lines.length && /^[-*] /.test(lines[i])) {
@@ -659,8 +860,6 @@
         out.push('<ul>' + items.join('') + '</ul>');
         continue;
       }
-
-      // Ordered list
       if (/^\d+\. /.test(ln)) {
         const items = [];
         while (i < lines.length && /^\d+\. /.test(lines[i])) {
@@ -670,14 +869,10 @@
         out.push('<ol>' + items.join('') + '</ol>');
         continue;
       }
-
-      // Blank line
       if (ln.trim() === '') {
         i++;
         continue;
       }
-
-      // Paragraph (collect until block starter)
       const pLines = [ln];
       i++;
       while (i < lines.length && !isBlockStarter(lines[i])) {
@@ -689,7 +884,7 @@
     return out.join('\n');
   }
 
-  // ====== Page initialization (after unlock) ======
+  // ====== Doc fetching ======
   const docCache = {};
   async function fetchDoc(filename) {
     if (docCache[filename]) return docCache[filename];
@@ -698,21 +893,6 @@
     const text = await resp.text();
     docCache[filename] = text;
     return text;
-  }
-
-  async function loadInlineDocs() {
-    const sections = document.querySelectorAll('.doc-content[data-doc]');
-    await Promise.all([].slice.call(sections).map(async function (el) {
-      const filename = el.getAttribute('data-doc');
-      try {
-        const md = await fetchDoc(filename);
-        el.innerHTML = renderMd(md, { stripFirstH1: true });
-        el.classList.remove('loading');
-      } catch (e) {
-        el.innerHTML = '<p style="color: var(--red)">Failed to load <code>' + filename + '</code>: ' + (e.message || e) + '</p>';
-        el.classList.remove('loading');
-      }
-    }));
   }
 
   async function copyText(text) {
@@ -728,8 +908,62 @@
     return ok;
   }
 
+  // ====== Per-code-block copy buttons ======
+  function enhanceCodeBlocks(container) {
+    const pres = container.querySelectorAll('pre');
+    pres.forEach(function (pre) {
+      if (pre.parentNode.classList && pre.parentNode.classList.contains('code-block')) return;
+      const wrap = document.createElement('div');
+      wrap.className = 'code-block';
+      pre.parentNode.insertBefore(wrap, pre);
+      wrap.appendChild(pre);
+
+      const btn = document.createElement('button');
+      btn.className = 'code-copy';
+      btn.type = 'button';
+      btn.textContent = 'Copy';
+      btn.addEventListener('click', async function (e) {
+        e.stopPropagation();
+        const code = pre.querySelector('code');
+        const text = code ? code.textContent : pre.textContent;
+        const ok = await copyText(text);
+        if (ok) {
+          btn.classList.add('copied');
+          btn.textContent = 'Copied';
+          setTimeout(function () {
+            btn.classList.remove('copied');
+            btn.textContent = 'Copy';
+          }, 1300);
+        } else {
+          btn.textContent = 'Failed';
+          setTimeout(function () { btn.textContent = 'Copy'; }, 1300);
+        }
+      });
+      wrap.appendChild(btn);
+    });
+  }
+
+  async function loadInlineDocs() {
+    const sections = document.querySelectorAll('.doc-content[data-doc]');
+    await Promise.all([].slice.call(sections).map(async function (el) {
+      const filename = el.getAttribute('data-doc');
+      try {
+        const md = await fetchDoc(filename);
+        el.innerHTML = renderMd(md, { stripFirstH1: true });
+        el.classList.remove('loading');
+        enhanceCodeBlocks(el);
+      } catch (e) {
+        el.innerHTML = '<p style="color: var(--red)">Failed to load <code>' + filename + '</code>: ' + (e.message || e) + '</p>';
+        el.classList.remove('loading');
+      }
+    }));
+  }
+
   function initContent() {
     loadInlineDocs();
+
+    // Enhance the architecture diagram (so people can copy it if they want).
+    document.querySelectorAll('.glance-arch').forEach(enhanceCodeBlocks);
 
     const toast = document.getElementById('toast');
     let toastTimer = null;
@@ -740,7 +974,6 @@
       toastTimer = setTimeout(function () { toast.dataset.show = 'false'; }, 2200);
     }
 
-    // Modal infra (used only for bootstrap full-screen view)
     const modal = document.getElementById('modal');
     const modalOutput = document.getElementById('modalOutput');
     let modalText = '';
@@ -762,7 +995,6 @@
       if (e.key === 'Escape' && modal.dataset.open === 'true') closeModal();
     });
 
-    // Bootstrap prompt buttons
     document.getElementById('btnCopyBootstrap').addEventListener('click', async function () {
       try {
         const text = await fetchDoc('BOOTSTRAP.md');
