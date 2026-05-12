@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="dark">
+<title>CoA True-Up — Decisions Needed</title>
+<style>
+  :root {
+    --bg: #0b0d10;
+    --bg-card: #14181d;
+    --bg-card-2: #1a1e24;
+    --bg-elev: #1f242b;
+    --fg: #e6e8eb;
+    --fg-dim: #9aa0a6;
+    --fg-muted: #6b7075;
+    --accent: #8ab4f8;
+    --accent-fg: #0b0d10;
+    --green: #6cc46c;
+    --amber: #e8b76a;
+    --red: #ef6f6f;
+    --border: #2d3239;
+    --border-strong: #3b4047;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Password gate */
+  #lock {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    z-index: 999;
+    padding: 1rem;
+  }
+  #lock .lock-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem 1.75rem;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+  }
+  #lock h1 { margin: 0 0 0.4rem; font-size: 1.05rem; }
+  #lock p { color: var(--fg-dim); font-size: 0.9rem; margin: 0 0 1rem; }
+  #lock input[type="password"] {
+    width: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.65rem 0.8rem;
+    font: inherit;
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  #lock input[type="password"]:focus { outline: none; border-color: var(--accent); }
+  #lock button {
+    background: var(--accent);
+    color: var(--accent-fg);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+  }
+  #lock .err {
+    color: var(--red);
+    font-size: 0.82rem;
+    margin-top: 0.5rem;
+    min-height: 1.1em;
+  }
+  body[data-unlocked="true"] #lock { display: none; }
+  body:not([data-unlocked="true"]) #content { display: none; }
+
+  header.app {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(11, 13, 16, 0.92);
+    backdrop-filter: saturate(180%) blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.85rem 1rem;
+  }
+  header.app .row {
+    max-width: 820px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  header.app h1 { margin: 0; font-size: 1.05rem; font-weight: 700; }
+  header.app .sub { color: var(--fg-dim); font-size: 0.82rem; margin: 0; }
+  header.app .spacer { flex: 1; }
+  header.app .progress { color: var(--fg-dim); font-size: 0.82rem; font-family: ui-monospace, monospace; }
+  header.app .progress strong { color: var(--fg); }
+
+  button.primary, button.ghost {
+    font: inherit;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 0.5rem 0.95rem;
+    transition: background 0.12s, border-color 0.12s, transform 0.08s;
+  }
+  button.primary { background: var(--accent); color: var(--accent-fg); border: 1px solid var(--accent); font-weight: 600; }
+  button.primary:hover { background: #a3c5fa; border-color: #a3c5fa; }
+  button.primary:active { transform: scale(0.985); }
+  button.ghost { background: transparent; color: var(--fg); border: 1px solid var(--border-strong); }
+  button.ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  main { max-width: 820px; margin: 0 auto; padding: 1.5rem 1rem 6rem; }
+
+  .settled {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.93rem;
+    color: var(--fg-dim);
+  }
+  .settled h3 {
+    margin: 0 0 0.55rem;
+    font-size: 0.95rem;
+    color: var(--fg);
+    font-weight: 700;
+  }
+  .settled p { margin: 0 0 0.6rem; }
+  .settled p:last-child { margin-bottom: 0; }
+  .settled strong { color: var(--fg); }
+  .settled ul { margin: 0.4rem 0 0.6rem; padding-left: 1.3rem; }
+  .settled li { margin-bottom: 0.2rem; }
+
+  .decision {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 1.2rem;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .decision[data-answered="true"] {
+    border-color: rgba(108, 196, 108, 0.5);
+  }
+
+  .decision-head {
+    padding: 1rem 1.25rem 0.4rem;
+  }
+  .decision-num {
+    display: inline-block;
+    color: var(--fg-muted);
+    font-size: 0.75rem;
+    font-family: ui-monospace, monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  .decision-head h2 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--fg);
+  }
+
+  .decision-body {
+    padding: 0 1.25rem 0.4rem;
+    color: var(--fg);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .decision-body p { margin: 0 0 0.6rem; }
+  .decision-body strong { color: var(--fg); }
+  .decision-body em { color: var(--fg-dim); }
+  .decision-body ul { margin: 0.3rem 0 0.7rem; padding-left: 1.4rem; }
+  .decision-body li { margin-bottom: 0.3rem; }
+
+  .options {
+    padding: 0.4rem 1.25rem 0.4rem;
+  }
+  .opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.6rem 0.8rem;
+    margin-bottom: 0.4rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    background: var(--bg-card-2);
+    transition: border-color 0.12s, background 0.12s;
+    line-height: 1.5;
+    font-size: 0.94rem;
+  }
+  .opt:hover { border-color: var(--accent); }
+  .opt input[type="radio"] {
+    margin-top: 0.25rem;
+    accent-color: var(--accent);
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+  }
+  .opt-text {
+    flex: 1;
+  }
+  .opt-text strong { color: var(--fg); }
+  .opt input[type="radio"]:checked + .opt-text strong { color: var(--accent); }
+  .opt:has(input[type="radio"]:checked) {
+    border-color: var(--accent);
+    background: rgba(138, 180, 248, 0.08);
+  }
+  .rec {
+    color: var(--green);
+    font-weight: 600;
+    font-size: 0.78rem;
+    margin-right: 0.45rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .notes-wrap {
+    padding: 0 1.25rem 1rem;
+  }
+  .notes-wrap label {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--fg-muted);
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .notes-wrap textarea {
+    width: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.6rem 0.75rem;
+    font: inherit;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    resize: vertical;
+    min-height: 56px;
+    transition: border-color 0.12s;
+  }
+  .notes-wrap textarea:focus { outline: none; border-color: var(--accent); }
+  .notes-wrap textarea::placeholder { color: var(--fg-muted); }
+
+  .check-list {
+    background: var(--bg-elev);
+    border-radius: 6px;
+    padding: 0.7rem 1rem;
+    margin: 0.4rem 0 0.7rem;
+  }
+  .check-list ol { margin: 0; padding-left: 1.4rem; }
+  .check-list li { margin-bottom: 0.35rem; font-size: 0.92rem; line-height: 1.5; }
+  .check-list .group {
+    color: var(--fg-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0.7rem 0 0.3rem;
+    font-weight: 600;
+  }
+  .check-list .group:first-child { margin-top: 0; }
+
+  /* Modal */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .modal-backdrop[data-open="true"] { display: flex; }
+  .modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 720px;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .modal-head { padding: 0.9rem 1.15rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.7rem; }
+  .modal-head h2 { margin: 0; font-size: 1.05rem; flex: 1; }
+  .modal-head .close { background: transparent; color: var(--fg-dim); border: none; font-size: 1.4rem; cursor: pointer; line-height: 1; padding: 0.2rem 0.45rem; border-radius: 4px; }
+  .modal-head .close:hover { color: var(--fg); background: var(--bg-elev); }
+  .modal-body { padding: 0; overflow: auto; flex: 1; display: flex; flex-direction: column; }
+  .modal-toolbar { padding: 0.7rem 1.15rem; border-bottom: 1px solid var(--border); display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .modal-output { flex: 1; overflow: auto; }
+  .modal-output pre { margin: 0; border-radius: 0; background: var(--bg); padding: 1rem 1.15rem; white-space: pre-wrap; word-wrap: break-word; font-size: 0.85rem; line-height: 1.55; color: var(--fg); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+  .toast {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--bg-elev);
+    border: 1px solid var(--border-strong);
+    color: var(--fg);
+    padding: 0.55rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    opacity: 0;
+    transition: all 0.2s;
+    pointer-events: none;
+    z-index: 200;
+  }
+  .toast[data-show="true"] { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .floatbar { position: fixed; bottom: 1rem; right: 1rem; display: flex; gap: 0.5rem; z-index: 40; }
+  .floatbar button { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5); }
+
+  @media (max-width: 600px) {
+    header.app h1 { font-size: 0.95rem; }
+    header.app .sub { display: none; }
+    .floatbar { bottom: 0.5rem; right: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="lock">
+  <div class="lock-card">
+    <h1>CoA True-Up — Stakeholder Review</h1>
+    <p>Enter access code to view.</p>
+    <input type="password" id="pwInput" autocomplete="off" autofocus>
+    <button id="pwSubmit">Continue</button>
+    <div class="err" id="pwErr"></div>
+  </div>
+</div>
+
+<div id="content">
+
+<header class="app">
+  <div class="row">
+    <div>
+      <h1>CoA True-Up — Decisions Needed</h1>
+      <p class="sub">six calls · ~5 min · everything else is settled</p>
+    </div>
+    <span class="spacer"></span>
+    <span class="progress">decided: <strong id="progressCount">0</strong> / <strong id="progressTotal">6</strong></span>
+    <button class="primary" id="btnCompile">Compile decisions</button>
+  </div>
+</header>
+
+<main>
+
+<div class="settled">
+  <h3>Context — what this project is and what's already settled</h3>
+  <p><strong>The problem:</strong> Confident Cannabis is today's "system of record" for every Certificate of Analysis we've ever issued, including the rare amendments we make after a lab-error correction. Our internal LIMS doesn't have its own complete archive. If Confident ever changed terms, raised prices, or went down, we'd lose the canonical copy of work we already did. We need to pull every "of-record" CoA from Confident into our own Azure storage, and we need every CoA we issue going forward to land there cleanly the moment it's generated.</p>
+  <p><strong>Already settled in the engineering plan:</strong> the backfill uses Confident's per-file identifier (not byte-by-byte hash comparison, which would fail on harmless rendering differences) as the comparison key. SHA-256 still gets stored on every imported file as tamper-evidence for auditors. The going-forward hook is a small, surgical change in the "Generate Reports" code path — it does <strong>not</strong> touch the report renderer or cover-page layout, so it's safe to ship alongside Pearson's microbials release. After launch, LIMS becomes the authoritative system; future amendments will be authored in LIMS and pushed out to Confident (no more reverse-direction sync needed).</p>
+  <p><strong>Explicitly deferred to a follow-up initiative:</strong> the in-LIMS "Amend CoA" user interface (modal, canned amendment messages, cover-page banner like the red "REPORT AMENDED" stamp on sample 217848). That work touches reporter code and was pulled from v1 specifically to protect Pearson's release timeline. Amendments will continue to be authored manually in Confident's UI until the LIMS-side amendment workflow ships as its own initiative.</p>
+</div>
+
+<!-- ============ Decision 1 ============ -->
+<section class="decision" id="d1" data-decision-id="d1">
+  <div class="decision-head">
+    <span class="decision-num">Decision 1 of 6</span>
+    <h2>Which lab gets backfilled first?</h2>
+  </div>
+  <div class="decision-body">
+    <p>The backfill pulls hundreds of thousands of CoAs from Confident — Ohio (NCTL) and Michigan (NCTLM) combined. We can run them concurrently, or stagger them so we validate the pipeline on one lab before pointing it at the other.</p>
+    <p>Either way, every CoA newly issued <em>after</em> the launch date lands in LIMS automatically through the same going-forward hook, regardless of lab. This decision only affects the historical backfill order.</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d1" value="ohio_first"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Ohio first, then Michigan.</strong> Validate the pipeline on the lab with the larger sample volume and the engineer (Adam) actively on-call. Michigan starts ~3 days behind once Ohio is humming.</span></label>
+    <label class="opt"><input type="radio" name="d1" value="michigan_first"><span class="opt-text"><strong>Michigan first, then Ohio.</strong> Smaller corpus = faster to validate end-to-end. Ohio (larger) starts after we've proven the pattern.</span></label>
+    <label class="opt"><input type="radio" name="d1" value="both"><span class="opt-text"><strong>Both labs concurrently.</strong> Doubles the API load against Confident, but cuts wall-clock time roughly in half. Higher risk of Confident throttling us.</span></label>
+    <label class="opt"><input type="radio" name="d1" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
+  </div>
+  <div class="notes-wrap">
+    <label>Notes (optional)</label>
+    <textarea placeholder=""></textarea>
+  </div>
+</section>
+
+<!-- ============ Decision 2 ============ -->
+<section class="decision" id="d2" data-decision-id="d2">
+  <div class="decision-head">
+    <span class="decision-num">Decision 2 of 6</span>
+    <h2>How fast should the backfill run?</h2>
+  </div>
+  <div class="decision-body">
+    <p>Confident has no bulk-download endpoint — we have to ask for each sample one at a time, which means roughly 400,000 network calls for the historical corpus (one to look up the sample, one to download the PDF). The pace determines wall-clock time and the risk of Confident's API rate-limiting us.</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d2" value="fast"><span class="opt-text"><strong>Fast — ~2 to 3 days.</strong> ~1 request/second. Highest risk of Confident throttling us mid-run; if they do, the backfill pauses and resumes itself, but the wall-clock benefit might evaporate.</span></label>
+    <label class="opt"><input type="radio" name="d2" value="balanced"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Balanced — ~5 to 7 days.</strong> ~0.5 request/second. Conservative enough that throttling is unlikely; still completes within a sprint.</span></label>
+    <label class="opt"><input type="radio" name="d2" value="slow"><span class="opt-text"><strong>Slow — ~2 to 3 weeks.</strong> ~0.25 request/second. Gentlest possible pace, near-zero throttling risk, but extends the period during which the historical archive is incomplete.</span></label>
+    <label class="opt"><input type="radio" name="d2" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
+  </div>
+  <div class="notes-wrap">
+    <label>Notes (optional)</label>
+    <textarea placeholder=""></textarea>
+  </div>
+</section>
+
+<!-- ============ Decision 3 ============ -->
+<section class="decision" id="d3" data-decision-id="d3">
+  <div class="decision-head">
+    <span class="decision-num">Decision 3 of 6</span>
+    <h2>When Confident has multiple CoA files for one sample, what do we do?</h2>
+  </div>
+  <div class="decision-body">
+    <p>Confident's data model holds a primary CoA per sample <em>plus</em> a list called "CoA additions" — additional file references attached to the same sample. We don't yet know empirically what these are: amendment history, supplemental documents (method addendums, accreditation letters), or something else. The single known amendment in our history (sample 217848) is our best test case for finding out.</p>
+    <p>Decision is about what the backfill does when it encounters them.</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d3" value="auto_import"><span class="opt-text"><strong>Auto-import all of them</strong> as historical versions of the same CoA. Most complete archive; risks misclassifying non-CoA documents as CoA versions.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="flag"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Import them, but flag each one for human review.</strong> The bytes are saved (so we're not throwing data away), but they don't become "official" until someone confirms what they are. Decide canonical treatment after the backfill shows us how many there actually are.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="skip"><span class="opt-text"><strong>Skip them entirely</strong> until we understand what they are. Fastest backfill, but we may need a second pass later if any of them turn out to be amendment history.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
+  </div>
+  <div class="notes-wrap">
+    <label>Notes (optional)</label>
+    <textarea placeholder=""></textarea>
+  </div>
+</section>
+
+<!-- ============ Decision 4 ============ -->
+<section class="decision" id="d4" data-decision-id="d4">
+  <div class="decision-head">
+    <span class="decision-num">Decision 4 of 6</span>
+    <h2>What about samples that exist in Confident but have no matching LIMS record?</h2>
+  </div>
+  <div class="decision-body">
+    <p>After the backfill imports everything Confident has for samples LIMS knows about, there will likely be CoAs in Confident that don't map to any LIMS sample. These are usually side-channel work: 9999-prefixed placeholder manifests, outsourced testing routed through us, special-projects samples that never went through our standard intake, or genuine data-entry mismatches.</p>
+    <p>They're not lost data — they exist in Confident. Question is whether we surface them for CS review now or later.</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d4" value="surface_v1"><span class="opt-text"><strong>Surface them in v1.</strong> Run a secondary "orphan crawl" against Confident, build a CS review queue. Side-channel work gets formally captured during the same launch.</span></label>
+    <label class="opt"><input type="radio" name="d4" value="defer_v2"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Defer to v2.</strong> Capture them as a known follow-up, ship the primary backfill alone first, build the side-channel queue once the LIMS-side amendment UX is also being built (natural pairing).</span></label>
+    <label class="opt"><input type="radio" name="d4" value="never"><span class="opt-text"><strong>Don't enumerate them at all.</strong> Treat Confident as the system of record for side-channel work indefinitely.</span></label>
+    <label class="opt"><input type="radio" name="d4" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
+  </div>
+  <div class="notes-wrap">
+    <label>Notes (optional)</label>
+    <textarea placeholder=""></textarea>
+  </div>
+</section>
+
+<!-- ============ Decision 5 ============ -->
+<section class="decision" id="d5" data-decision-id="d5">
+  <div class="decision-head">
+    <span class="decision-num">Decision 5 of 6</span>
+    <h2>What happens if someone regenerates a backfilled CoA?</h2>
+  </div>
+  <div class="decision-body">
+    <p>A known hazard: regenerating a historical CoA through today's LIMS code can produce a different result than the as-issued version. Panel definitions, regulatory limits, and analyte names have all changed over the years — for example, Ohio's 3796 rules have evolved, so a 2023 CoA regenerated today might show different pesticide limits or microbial analyte names than what we originally sent the customer.</p>
+    <p>Confident's preserved-as-issued bytes are the only source of regulatory truth for those older CoAs. If a user clicks "Generate Reports" on a sample whose CoA we just backfilled from Confident, we'd be replacing the as-issued version with one that has today's panel definitions baked in.</p>
+    <p>How loud should the system be about this?</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d5" value="logs_only"><span class="opt-text"><strong>Engineer logs only.</strong> Quietly record the regeneration event in the application logs. Users see no warning. Smallest UX footprint.</span></label>
+    <label class="opt"><input type="radio" name="d5" value="ui_warning"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Show a confirmation dialog</strong> in the UI before regeneration. "This sample has an as-issued CoA from Confident dated [date]. Regenerating may produce different results due to panel definition changes. Continue?" — user can still proceed, but knowingly.</span></label>
+    <label class="opt"><input type="radio" name="d5" value="hard_block"><span class="opt-text"><strong>Hard-block regeneration entirely</strong> for samples with a backfilled CoA from Confident. They'd require an explicit admin override to regenerate. Strongest protection; most operational friction.</span></label>
+    <label class="opt"><input type="radio" name="d5" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
+  </div>
+  <div class="notes-wrap">
+    <label>Notes (optional)</label>
+    <textarea placeholder=""></textarea>
+  </div>
+</section>
+
+<!-- ============ Decision 6 ============ -->
+<section class="decision" id="d6" data-decision-id="d6">
+  <div class="decision-head">
+    <span class="decision-num">Decision 6 of 6</span>
+    <h2>When does the deferred LIMS-side amendment UX get picked back up?</h2>
+  </div>
+  <div class="decision-body">
+    <p>The amendment-authoring workflow (modal, canned amendment messages, native red "AMENDED" banner on the cover page) was pulled from v1 to keep this project off Pearson's reporter-code surface area. It's clearly desired — we just want to make sure timing doesn't compromise the microbials release.</p>
+    <p>This decision is about scheduling, not whether to build it.</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d6" value="after_pearson"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Pick it up immediately after Pearson's microbials release ships.</strong> Same engineer, sequential. No overlap risk. Likely a 1-2 week effort once started.</span></label>
+    <label class="opt"><input type="radio" name="d6" value="parallel_track"><span class="opt-text"><strong>Parallel-track it now</strong> with a different engineer working on the amendment UX while Pearson finishes microbials. Faster to ship; reintroduces some collision risk on shared reporter code.</span></label>
+    <label class="opt"><input type="radio" name="d6" value="punt"><span class="opt-text"><strong>Punt indefinitely.</strong> Amendments stay manual in Confident's UI until business demand forces the issue. Lowest engineering load; longest gap before LIMS is "truly" of-record for amendments.</span></label>
+    <label class="opt"><input type="radio" name="d6" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
+  </div>
+  <div class="notes-wrap">
+    <label>Notes (optional)</label>
+    <textarea placeholder=""></textarea>
+  </div>
+</section>
+
+</main>
+
+<div class="floatbar">
+  <button class="ghost" id="btnReset" title="Clear all decisions (cannot undo)">Reset</button>
+  <button class="primary" id="btnCompileBottom">Compile decisions</button>
+</div>
+
+<div class="modal-backdrop" id="modal" data-open="false">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <h2 id="modalTitle">Decisions (paste into Claude Code)</h2>
+      <button class="close" id="modalClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-toolbar">
+        <button class="primary" id="btnCopy">Copy to clipboard</button>
+        <button class="ghost" id="btnDownload">Download .md</button>
+        <button class="ghost" id="btnCloseFooter">Close</button>
+      </div>
+      <div class="modal-output">
+        <pre id="modalOutput"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" data-show="false"></div>
+
+</div><!-- /#content -->
+
+<script>
+(function () {
+  'use strict';
+
+  // ====== Password gate ======
+  // SHA-256("nctl") — set to the hex digest below; client-side, not real security
+  const PW_HASH = 'a012deb3f95feda2731373f2d9e2861394f78d2d570408bb3193e04a630e2c96';
+  const UNLOCK_KEY = 'coa-true-up-unlocked-v1';
+
+  async function sha256Hex(str) {
+    const buf = new TextEncoder().encode(str);
+    const hash = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  function unlock() {
+    document.body.dataset.unlocked = 'true';
+    try { sessionStorage.setItem(UNLOCK_KEY, '1'); } catch (e) {}
+    setTimeout(initContent, 0);
+  }
+
+  try {
+    if (sessionStorage.getItem(UNLOCK_KEY) === '1') {
+      document.body.dataset.unlocked = 'true';
+    }
+  } catch (e) {}
+
+  const pwInput = document.getElementById('pwInput');
+  const pwSubmit = document.getElementById('pwSubmit');
+  const pwErr = document.getElementById('pwErr');
+
+  async function tryPassword() {
+    const v = pwInput.value;
+    if (!v) { pwErr.textContent = 'Enter the access code.'; return; }
+    pwSubmit.disabled = true;
+    const hex = await sha256Hex(v);
+    if (hex === PW_HASH) {
+      pwErr.textContent = '';
+      unlock();
+    } else {
+      pwErr.textContent = 'Incorrect access code.';
+      pwInput.select();
+    }
+    pwSubmit.disabled = false;
+  }
+
+  pwSubmit.addEventListener('click', tryPassword);
+  pwInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') tryPassword();
+  });
+
+  // ====== Decisions ======
+  const STORAGE_KEY = 'coa-true-up-decisions-v1';
+
+  const DECISIONS = [
+    {
+      id: 'd1',
+      num: 1,
+      title: 'Lab rollout order',
+      options: {
+        ohio_first: 'Ohio first, then Michigan.',
+        michigan_first: 'Michigan first, then Ohio.',
+        both: 'Both labs concurrently.',
+        other: 'Other (see notes).'
+      }
+    },
+    {
+      id: 'd2',
+      num: 2,
+      title: 'Backfill pace',
+      options: {
+        fast: 'Fast — ~2 to 3 days, ~1 request/second.',
+        balanced: 'Balanced — ~5 to 7 days, ~0.5 request/second.',
+        slow: 'Slow — ~2 to 3 weeks, ~0.25 request/second.',
+        other: 'Other (see notes).'
+      }
+    },
+    {
+      id: 'd3',
+      num: 3,
+      title: 'Multiple-file handling (Confident "CoA additions")',
+      options: {
+        auto_import: 'Auto-import all as historical versions.',
+        flag: 'Import but flag each one for human review.',
+        skip: 'Skip them entirely until we understand what they are.',
+        other: 'Other (see notes).'
+      }
+    },
+    {
+      id: 'd4',
+      num: 4,
+      title: 'Confident-only samples (no LIMS match)',
+      options: {
+        surface_v1: 'Surface in v1 via orphan crawl + CS review queue.',
+        defer_v2: 'Defer to v2 (capture as known follow-up).',
+        never: 'Do not enumerate at all.',
+        other: 'Other (see notes).'
+      }
+    },
+    {
+      id: 'd5',
+      num: 5,
+      title: 'Drift warning when regenerating a backfilled CoA',
+      options: {
+        logs_only: 'Engineer logs only, no user-visible warning.',
+        ui_warning: 'Confirmation dialog in UI before regeneration.',
+        hard_block: 'Hard-block regeneration; require admin override.',
+        other: 'Other (see notes).'
+      }
+    },
+    {
+      id: 'd6',
+      num: 6,
+      title: 'Timing for the deferred amendment UX',
+      options: {
+        after_pearson: 'Pick up immediately after Pearson microbials ships.',
+        parallel_track: 'Parallel-track now with a different engineer.',
+        punt: 'Punt indefinitely until business demand forces it.',
+        other: 'Other (see notes).'
+      }
+    }
+  ];
+
+  function loadState() {
+    try { const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : {}; }
+    catch (e) { return {}; }
+  }
+  function saveState(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  let state = loadState();
+
+  function applyDecisionState(dec) {
+    const sec = document.getElementById(dec.id);
+    if (!sec) return;
+    const s = state[dec.id] || {};
+    if (s.choice) {
+      const radio = sec.querySelector('input[type="radio"][value="' + s.choice + '"]');
+      if (radio && !radio.checked) radio.checked = true;
+    }
+    const ta = sec.querySelector('textarea');
+    if (ta && typeof s.notes === 'string' && ta.value !== s.notes) ta.value = s.notes;
+    sec.dataset.answered = s.choice ? 'true' : 'false';
+  }
+
+  function updateProgress() {
+    let n = 0;
+    DECISIONS.forEach(function (dec) {
+      if ((state[dec.id] || {}).choice) n++;
+    });
+    const el = document.getElementById('progressCount');
+    if (el) el.textContent = n;
+  }
+
+  function compileMarkdown() {
+    const lines = [];
+    lines.push('# CoA True-Up — Decisions');
+    lines.push('');
+    lines.push('Reviewed: ' + new Date().toISOString());
+    lines.push('');
+
+    let answered = 0, pending = 0;
+    DECISIONS.forEach(function (dec) {
+      if ((state[dec.id] || {}).choice) answered++; else pending++;
+    });
+    lines.push('**Status:** ' + answered + ' of ' + DECISIONS.length + ' decided.');
+    lines.push('');
+
+    DECISIONS.forEach(function (dec) {
+      const s = state[dec.id] || {};
+      const choiceLabel = s.choice ? (dec.options[s.choice] || s.choice) : '_(not yet decided)_';
+      lines.push('## Decision ' + dec.num + ' — ' + dec.title);
+      lines.push('');
+      lines.push('**Chosen:** ' + choiceLabel);
+      if (s.notes && s.notes.trim()) {
+        lines.push('');
+        lines.push('**Notes:**');
+        lines.push('');
+        s.notes.trim().split(/\r?\n/).forEach(function (ln) { lines.push('> ' + ln); });
+      }
+      lines.push('');
+    });
+
+    if (pending > 0) {
+      lines.push('---');
+      lines.push('');
+      lines.push('**Outstanding:** ' + pending + ' decision' + (pending === 1 ? '' : 's') + ' not yet picked.');
+      lines.push('');
+    }
+
+    return lines.join('\n');
+  }
+
+  function initContent() {
+    DECISIONS.forEach(function (dec) {
+      const sec = document.getElementById(dec.id);
+      if (!sec) return;
+      sec.querySelectorAll('input[type="radio"][name="' + dec.id + '"]').forEach(function (r) {
+        r.addEventListener('change', function () {
+          state[dec.id] = state[dec.id] || {};
+          state[dec.id].choice = r.value;
+          saveState(state);
+          applyDecisionState(dec);
+          updateProgress();
+        });
+      });
+      const ta = sec.querySelector('textarea');
+      if (ta) {
+        ta.addEventListener('input', function () {
+          state[dec.id] = state[dec.id] || {};
+          state[dec.id].notes = ta.value;
+          saveState(state);
+        });
+      }
+      applyDecisionState(dec);
+    });
+    updateProgress();
+
+    const modal = document.getElementById('modal');
+    const modalOutput = document.getElementById('modalOutput');
+
+    function openModal() {
+      modalOutput.textContent = compileMarkdown();
+      modal.dataset.open = 'true';
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      modal.dataset.open = 'false';
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('btnCompile').addEventListener('click', openModal);
+    document.getElementById('btnCompileBottom').addEventListener('click', openModal);
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    document.getElementById('btnCloseFooter').addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.dataset.open === 'true') closeModal();
+    });
+
+    const toast = document.getElementById('toast');
+    let toastTimer = null;
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.dataset.show = 'true';
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { toast.dataset.show = 'false'; }, 2200);
+    }
+
+    document.getElementById('btnCopy').addEventListener('click', function () {
+      const text = modalOutput.textContent;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function () { showToast('Copied to clipboard'); },
+          function () { fallbackCopy(text); }
+        );
+      } else { fallbackCopy(text); }
+    });
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); showToast('Copied to clipboard'); }
+      catch (e) { showToast('Copy failed — select manually'); }
+      document.body.removeChild(ta);
+    }
+
+    document.getElementById('btnDownload').addEventListener('click', function () {
+      const text = compileMarkdown();
+      const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const ts = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+      a.href = url; a.download = 'coa-true-up-decisions-' + ts + '.md';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 500);
+      showToast('Downloaded');
+    });
+
+    document.getElementById('btnReset').addEventListener('click', function () {
+      if (!confirm('Clear all decisions? This cannot be undone.')) return;
+      state = {}; saveState(state);
+      DECISIONS.forEach(applyDecisionState);
+      document.querySelectorAll('input[type="radio"]').forEach(function (r) { r.checked = false; });
+      document.querySelectorAll('textarea').forEach(function (t) { t.value = ''; });
+      document.querySelectorAll('.decision').forEach(function (s) { s.dataset.answered = 'false'; });
+      updateProgress();
+      showToast('All decisions cleared');
+    });
+  }
+
+  if (document.body.dataset.unlocked === 'true') initContent();
+})();
+</script>
+
+</body>
+</html>
