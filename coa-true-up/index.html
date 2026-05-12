@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="dark">
-<title>CoA True-Up — Decisions Needed</title>
+<title>CoA Backfill — Project Handoff</title>
 <style>
   :root {
     --bg: #0b0d10;
@@ -96,7 +96,7 @@
     padding: 0.85rem 1rem;
   }
   header.app .row {
-    max-width: 820px;
+    max-width: 900px;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -109,20 +109,107 @@
   header.app .progress { color: var(--fg-dim); font-size: 0.82rem; font-family: ui-monospace, monospace; }
   header.app .progress strong { color: var(--fg); }
 
-  button.primary, button.ghost {
+  button.primary, button.ghost, button.small {
     font: inherit;
     cursor: pointer;
     border-radius: 6px;
-    padding: 0.5rem 0.95rem;
     transition: background 0.12s, border-color 0.12s, transform 0.08s;
   }
-  button.primary { background: var(--accent); color: var(--accent-fg); border: 1px solid var(--accent); font-weight: 600; }
+  button.primary { padding: 0.5rem 0.95rem; background: var(--accent); color: var(--accent-fg); border: 1px solid var(--accent); font-weight: 600; }
   button.primary:hover { background: #a3c5fa; border-color: #a3c5fa; }
   button.primary:active { transform: scale(0.985); }
-  button.ghost { background: transparent; color: var(--fg); border: 1px solid var(--border-strong); }
+  button.ghost { padding: 0.5rem 0.95rem; background: transparent; color: var(--fg); border: 1px solid var(--border-strong); }
   button.ghost:hover { border-color: var(--accent); color: var(--accent); }
+  button.small { padding: 0.35rem 0.7rem; font-size: 0.85rem; background: var(--bg-elev); color: var(--fg); border: 1px solid var(--border-strong); }
+  button.small:hover { border-color: var(--accent); color: var(--accent); }
 
-  main { max-width: 820px; margin: 0 auto; padding: 1.5rem 1rem 6rem; }
+  main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 6rem; }
+
+  .hero {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero h2 { margin: 0 0 0.5rem; font-size: 1.2rem; }
+  .hero p { margin: 0 0 0.7rem; color: var(--fg-dim); }
+  .hero p:last-child { margin-bottom: 0; }
+  .hero strong { color: var(--fg); }
+  .hero .tag {
+    display: inline-block;
+    background: rgba(108, 196, 108, 0.15);
+    color: var(--green);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-muted);
+    margin: 2rem 0 0.7rem;
+    font-weight: 700;
+  }
+  .section-title:first-child { margin-top: 0; }
+
+  .doc-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .doc-card .doc-meta { flex: 1; min-width: 250px; }
+  .doc-card .doc-meta h3 {
+    margin: 0 0 0.3rem;
+    font-size: 1rem;
+    color: var(--fg);
+  }
+  .doc-card .doc-meta h3 .order {
+    display: inline-block;
+    background: var(--bg-elev);
+    color: var(--fg-dim);
+    font-size: 0.7rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 4px;
+    margin-right: 0.4rem;
+    font-family: ui-monospace, monospace;
+    letter-spacing: 0.05em;
+  }
+  .doc-card .doc-meta p {
+    margin: 0;
+    color: var(--fg-dim);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .doc-card .doc-actions {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .bootstrap-card {
+    background: var(--bg-card);
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .bootstrap-card h3 { margin: 0 0 0.5rem; font-size: 1.05rem; color: var(--accent); }
+  .bootstrap-card p { margin: 0 0 0.7rem; color: var(--fg-dim); font-size: 0.92rem; }
+  .bootstrap-card .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
   .settled {
     background: var(--bg-card);
@@ -142,8 +229,6 @@
   .settled p { margin: 0 0 0.6rem; }
   .settled p:last-child { margin-bottom: 0; }
   .settled strong { color: var(--fg); }
-  .settled ul { margin: 0.4rem 0 0.6rem; padding-left: 1.3rem; }
-  .settled li { margin-bottom: 0.2rem; }
 
   .decision {
     background: var(--bg-card);
@@ -157,9 +242,7 @@
     border-color: rgba(108, 196, 108, 0.5);
   }
 
-  .decision-head {
-    padding: 1rem 1.25rem 0.4rem;
-  }
+  .decision-head { padding: 1rem 1.25rem 0.4rem; }
   .decision-num {
     display: inline-block;
     color: var(--fg-muted);
@@ -176,7 +259,6 @@
     line-height: 1.3;
     color: var(--fg);
   }
-
   .decision-body {
     padding: 0 1.25rem 0.4rem;
     color: var(--fg);
@@ -186,12 +268,7 @@
   .decision-body p { margin: 0 0 0.6rem; }
   .decision-body strong { color: var(--fg); }
   .decision-body em { color: var(--fg-dim); }
-  .decision-body ul { margin: 0.3rem 0 0.7rem; padding-left: 1.4rem; }
-  .decision-body li { margin-bottom: 0.3rem; }
-
-  .options {
-    padding: 0.4rem 1.25rem 0.4rem;
-  }
+  .options { padding: 0.4rem 1.25rem 0.4rem; }
   .opt {
     display: flex;
     align-items: flex-start;
@@ -214,9 +291,7 @@
     width: 16px;
     height: 16px;
   }
-  .opt-text {
-    flex: 1;
-  }
+  .opt-text { flex: 1; }
   .opt-text strong { color: var(--fg); }
   .opt input[type="radio"]:checked + .opt-text strong { color: var(--accent); }
   .opt:has(input[type="radio"]:checked) {
@@ -231,10 +306,7 @@
     text-transform: uppercase;
     letter-spacing: 0.04em;
   }
-
-  .notes-wrap {
-    padding: 0 1.25rem 1rem;
-  }
+  .notes-wrap { padding: 0 1.25rem 1rem; }
   .notes-wrap label {
     display: block;
     font-size: 0.78rem;
@@ -260,24 +332,6 @@
   .notes-wrap textarea:focus { outline: none; border-color: var(--accent); }
   .notes-wrap textarea::placeholder { color: var(--fg-muted); }
 
-  .check-list {
-    background: var(--bg-elev);
-    border-radius: 6px;
-    padding: 0.7rem 1rem;
-    margin: 0.4rem 0 0.7rem;
-  }
-  .check-list ol { margin: 0; padding-left: 1.4rem; }
-  .check-list li { margin-bottom: 0.35rem; font-size: 0.92rem; line-height: 1.5; }
-  .check-list .group {
-    color: var(--fg-muted);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin: 0.7rem 0 0.3rem;
-    font-weight: 600;
-  }
-  .check-list .group:first-child { margin-top: 0; }
-
   /* Modal */
   .modal-backdrop {
     position: fixed;
@@ -296,7 +350,7 @@
     border: 1px solid var(--border-strong);
     border-radius: 10px;
     width: 100%;
-    max-width: 720px;
+    max-width: 820px;
     max-height: 88vh;
     display: flex;
     flex-direction: column;
@@ -309,7 +363,12 @@
   .modal-body { padding: 0; overflow: auto; flex: 1; display: flex; flex-direction: column; }
   .modal-toolbar { padding: 0.7rem 1.15rem; border-bottom: 1px solid var(--border); display: flex; gap: 0.5rem; flex-wrap: wrap; }
   .modal-output { flex: 1; overflow: auto; }
-  .modal-output pre { margin: 0; border-radius: 0; background: var(--bg); padding: 1rem 1.15rem; white-space: pre-wrap; word-wrap: break-word; font-size: 0.85rem; line-height: 1.55; color: var(--fg); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .modal-output pre {
+    margin: 0; border-radius: 0; background: var(--bg);
+    padding: 1rem 1.15rem; white-space: pre-wrap; word-wrap: break-word;
+    font-size: 0.85rem; line-height: 1.55; color: var(--fg);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
 
   .toast {
     position: fixed;
@@ -336,6 +395,8 @@
     header.app h1 { font-size: 0.95rem; }
     header.app .sub { display: none; }
     .floatbar { bottom: 0.5rem; right: 0.5rem; }
+    .doc-card { flex-direction: column; }
+    .doc-card .doc-actions { width: 100%; }
   }
 </style>
 </head>
@@ -343,7 +404,7 @@
 
 <div id="lock">
   <div class="lock-card">
-    <h1>CoA True-Up — Stakeholder Review</h1>
+    <h1>CoA Backfill — Handoff</h1>
     <p>Enter access code to view.</p>
     <input type="password" id="pwInput" autocomplete="off" autofocus>
     <button id="pwSubmit">Continue</button>
@@ -356,22 +417,114 @@
 <header class="app">
   <div class="row">
     <div>
-      <h1>CoA True-Up — Decisions Needed</h1>
-      <p class="sub">six calls · ~5 min · everything else is settled</p>
+      <h1>CoA Backfill — Project Handoff</h1>
+      <p class="sub">handoff packet for David Kohn · 6 documents · 6 stakeholder decisions</p>
     </div>
     <span class="spacer"></span>
-    <span class="progress">decided: <strong id="progressCount">0</strong> / <strong id="progressTotal">6</strong></span>
+    <span class="progress">decisions: <strong id="progressCount">0</strong> / <strong id="progressTotal">6</strong></span>
     <button class="primary" id="btnCompile">Compile decisions</button>
   </div>
 </header>
 
 <main>
 
+<div class="hero">
+  <span class="tag">Handoff in progress</span>
+  <h2>Pull every CoA NCTL has issued out of Confident Cannabis and into NCTL's own archive.</h2>
+  <p>North Coast Testing Laboratories generates Certificates of Analysis and currently depends on Confident Cannabis as the authoritative archive. We're closing that gap: every of-record CoA goes into NCTL's own Azure Files share, with cryptographic integrity and per-file provenance. After this ships, NCTL's internal LIMS becomes the system of record.</p>
+  <p><strong>This project is independent of the in-flight Kondo branch of the NCLims codebase.</strong> It reads production read-only, talks to Confident's API, writes to the existing Azure Files share, and keeps its bookkeeping in its own isolated ledger. <strong>No NCLims source-code changes required.</strong> Pearson's microbials release is untouched.</p>
+</div>
+
+<div class="bootstrap-card">
+  <h3>👋 Your first move: paste the bootstrap prompt into Claude Code</h3>
+  <p>Copy the prompt below, open a fresh Claude Code session in whatever directory you'll work in, and paste it as your first message. Claude will read the docs in order, verify your access, and scaffold the project per the plan.</p>
+  <div class="actions">
+    <button class="primary" id="btnCopyBootstrap">Copy bootstrap prompt</button>
+    <button class="ghost" id="btnViewBootstrap">View prompt</button>
+    <button class="ghost" id="btnDownloadBootstrap">Download .md</button>
+  </div>
+</div>
+
+<div class="section-title">Reading order — start at the top, work down</div>
+
+<div class="doc-card">
+  <div class="doc-meta">
+    <h3><span class="order">01</span>HANDOFF.md</h3>
+    <p>Orientation. Why the project exists, what's already decided, what's deferred, who the domain expert is. Start here for the 5-minute overview.</p>
+  </div>
+  <div class="doc-actions">
+    <button class="small" data-doc="HANDOFF.md" data-action="view">View</button>
+    <button class="small" data-doc="HANDOFF.md" data-action="copy">Copy</button>
+    <button class="small" data-doc="HANDOFF.md" data-action="download">Download</button>
+  </div>
+</div>
+
+<div class="doc-card">
+  <div class="doc-meta">
+    <h3><span class="order">02</span>STORAGE_PRIMER.md</h3>
+    <p>Guided tour of NCTL's current CoA storage. The Azure Portal walkthrough, the GUID lookup pattern, how to verify chain-of-custody for any sample, the "raw URL doesn't open" gotcha, version history examples. Read before touching anything.</p>
+  </div>
+  <div class="doc-actions">
+    <button class="small" data-doc="STORAGE_PRIMER.md" data-action="view">View</button>
+    <button class="small" data-doc="STORAGE_PRIMER.md" data-action="copy">Copy</button>
+    <button class="small" data-doc="STORAGE_PRIMER.md" data-action="download">Download</button>
+  </div>
+</div>
+
+<div class="doc-card">
+  <div class="doc-meta">
+    <h3><span class="order">03</span>PLAN.md</h3>
+    <p>Engineering plan. Architecture, why we use Confident's per-file identifier (not byte hashing) as the reconciliation key, backfill orchestration, ledger schema, the going-forward incremental sync (no NCLims code changes), verification protocol. This is the spec.</p>
+  </div>
+  <div class="doc-actions">
+    <button class="small" data-doc="PLAN.md" data-action="view">View</button>
+    <button class="small" data-doc="PLAN.md" data-action="copy">Copy</button>
+    <button class="small" data-doc="PLAN.md" data-action="download">Download</button>
+  </div>
+</div>
+
+<div class="doc-card">
+  <div class="doc-meta">
+    <h3><span class="order">04</span>SETUP.md</h3>
+    <p>Access requirements: Azure RBAC roles, Key Vault secrets, Confident API credentials, tooling, repo hosting choices. Get the access listed here before you can run anything.</p>
+  </div>
+  <div class="doc-actions">
+    <button class="small" data-doc="SETUP.md" data-action="view">View</button>
+    <button class="small" data-doc="SETUP.md" data-action="copy">Copy</button>
+    <button class="small" data-doc="SETUP.md" data-action="download">Download</button>
+  </div>
+</div>
+
+<div class="doc-card">
+  <div class="doc-meta">
+    <h3><span class="order">05</span>CC_API_REFERENCE.md</h3>
+    <p>Confident Cannabis API protocol. HMAC-SHA256 request signing, endpoint catalog, response shape for the sample endpoint, known bugs in the existing NCLims client that you should NOT replicate. Don't go to production without reading this.</p>
+  </div>
+  <div class="doc-actions">
+    <button class="small" data-doc="CC_API_REFERENCE.md" data-action="view">View</button>
+    <button class="small" data-doc="CC_API_REFERENCE.md" data-action="copy">Copy</button>
+    <button class="small" data-doc="CC_API_REFERENCE.md" data-action="download">Download</button>
+  </div>
+</div>
+
+<div class="doc-card">
+  <div class="doc-meta">
+    <h3><span class="order">06</span>BOOTSTRAP.md</h3>
+    <p>The prompt to paste into your Claude Code session as message #1. Tells Claude where to find these docs, what to read first, what NOT to assume, and what your first concrete deliverable should be.</p>
+  </div>
+  <div class="doc-actions">
+    <button class="small" data-doc="BOOTSTRAP.md" data-action="view">View</button>
+    <button class="small" data-doc="BOOTSTRAP.md" data-action="copy">Copy</button>
+    <button class="small" data-doc="BOOTSTRAP.md" data-action="download">Download</button>
+  </div>
+</div>
+
+<div class="section-title">Stakeholder decisions — Adam's section</div>
+
 <div class="settled">
-  <h3>Context — what this project is and what's already settled</h3>
-  <p><strong>The problem:</strong> Confident Cannabis is today's "system of record" for every Certificate of Analysis we've ever issued, including the rare amendments we make after a lab-error correction. Our internal LIMS doesn't have its own complete archive. If Confident ever changed terms, raised prices, or went down, we'd lose the canonical copy of work we already did. We need to pull every "of-record" CoA from Confident into our own Azure storage, and we need every CoA we issue going forward to land there cleanly the moment it's generated.</p>
-  <p><strong>Already settled in the engineering plan:</strong> the backfill uses Confident's per-file identifier (not byte-by-byte hash comparison, which would fail on harmless rendering differences) as the comparison key. SHA-256 still gets stored on every imported file as tamper-evidence for auditors. The going-forward hook is a small, surgical change in the "Generate Reports" code path — it does <strong>not</strong> touch the report renderer or cover-page layout, so it's safe to ship alongside Pearson's microbials release. After launch, LIMS becomes the authoritative system; future amendments will be authored in LIMS and pushed out to Confident (no more reverse-direction sync needed).</p>
-  <p><strong>Explicitly deferred to a follow-up initiative:</strong> the in-LIMS "Amend CoA" user interface (modal, canned amendment messages, cover-page banner like the red "REPORT AMENDED" stamp on sample 217848). That work touches reporter code and was pulled from v1 specifically to protect Pearson's release timeline. Amendments will continue to be authored manually in Confident's UI until the LIMS-side amendment workflow ships as its own initiative.</p>
+  <h3>What this section is for</h3>
+  <p>Six product-level decisions about the rollout. Already-recommended (★) defaults shown — most stakeholders can scan, pick the recommended option, and move on. Adam will compile responses and hand David the chosen options separately from the docs above.</p>
+  <p><strong>David doesn't need these answered before starting the project</strong> — the smoke test + ledger work is independent of these calls. Decisions 1, 2, 5 affect the rollout itself; decisions 3, 4, 6 affect scope outside the core flow.</p>
 </div>
 
 <!-- ============ Decision 1 ============ -->
@@ -382,12 +535,11 @@
   </div>
   <div class="decision-body">
     <p>The backfill pulls hundreds of thousands of CoAs from Confident — Ohio (NCTL) and Michigan (NCTLM) combined. We can run them concurrently, or stagger them so we validate the pipeline on one lab before pointing it at the other.</p>
-    <p>Either way, every CoA newly issued <em>after</em> the launch date lands in LIMS automatically through the same going-forward hook, regardless of lab. This decision only affects the historical backfill order.</p>
   </div>
   <div class="options">
-    <label class="opt"><input type="radio" name="d1" value="ohio_first"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Ohio first, then Michigan.</strong> Validate the pipeline on the lab with the larger sample volume and the engineer (Adam) actively on-call. Michigan starts ~3 days behind once Ohio is humming.</span></label>
-    <label class="opt"><input type="radio" name="d1" value="michigan_first"><span class="opt-text"><strong>Michigan first, then Ohio.</strong> Smaller corpus = faster to validate end-to-end. Ohio (larger) starts after we've proven the pattern.</span></label>
-    <label class="opt"><input type="radio" name="d1" value="both"><span class="opt-text"><strong>Both labs concurrently.</strong> Doubles the API load against Confident, but cuts wall-clock time roughly in half. Higher risk of Confident throttling us.</span></label>
+    <label class="opt"><input type="radio" name="d1" value="ohio_first"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Ohio first, then Michigan.</strong> Validate the pipeline on the lab with the larger sample volume. Michigan starts ~3 days behind once Ohio is humming.</span></label>
+    <label class="opt"><input type="radio" name="d1" value="michigan_first"><span class="opt-text"><strong>Michigan first, then Ohio.</strong> Smaller corpus = faster to validate end-to-end.</span></label>
+    <label class="opt"><input type="radio" name="d1" value="both"><span class="opt-text"><strong>Both labs concurrently.</strong> Doubles the API load against Confident, but cuts wall-clock time roughly in half. Higher risk of Confident throttling.</span></label>
     <label class="opt"><input type="radio" name="d1" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
   </div>
   <div class="notes-wrap">
@@ -403,12 +555,12 @@
     <h2>How fast should the backfill run?</h2>
   </div>
   <div class="decision-body">
-    <p>Confident has no bulk-download endpoint — we have to ask for each sample one at a time, which means roughly 400,000 network calls for the historical corpus (one to look up the sample, one to download the PDF). The pace determines wall-clock time and the risk of Confident's API rate-limiting us.</p>
+    <p>Confident has no bulk-download endpoint — we have to ask for each sample one at a time. Roughly 400,000 network calls for the historical corpus. Pace determines wall-clock time and risk of Confident's API rate-limiting us.</p>
   </div>
   <div class="options">
-    <label class="opt"><input type="radio" name="d2" value="fast"><span class="opt-text"><strong>Fast — ~2 to 3 days.</strong> ~1 request/second. Highest risk of Confident throttling us mid-run; if they do, the backfill pauses and resumes itself, but the wall-clock benefit might evaporate.</span></label>
-    <label class="opt"><input type="radio" name="d2" value="balanced"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Balanced — ~5 to 7 days.</strong> ~0.5 request/second. Conservative enough that throttling is unlikely; still completes within a sprint.</span></label>
-    <label class="opt"><input type="radio" name="d2" value="slow"><span class="opt-text"><strong>Slow — ~2 to 3 weeks.</strong> ~0.25 request/second. Gentlest possible pace, near-zero throttling risk, but extends the period during which the historical archive is incomplete.</span></label>
+    <label class="opt"><input type="radio" name="d2" value="fast"><span class="opt-text"><strong>Fast — ~2 to 3 days.</strong> ~1 request/second. Highest risk of throttling.</span></label>
+    <label class="opt"><input type="radio" name="d2" value="balanced"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Balanced — ~5 to 7 days.</strong> ~0.5 request/second. Throttling unlikely; completes within a sprint.</span></label>
+    <label class="opt"><input type="radio" name="d2" value="slow"><span class="opt-text"><strong>Slow — ~2 to 3 weeks.</strong> ~0.25 request/second. Gentlest pace; longest gap before archive is complete.</span></label>
     <label class="opt"><input type="radio" name="d2" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
   </div>
   <div class="notes-wrap">
@@ -424,13 +576,12 @@
     <h2>When Confident has multiple CoA files for one sample, what do we do?</h2>
   </div>
   <div class="decision-body">
-    <p>Confident's data model holds a primary CoA per sample <em>plus</em> a list called "CoA additions" — additional file references attached to the same sample. We don't yet know empirically what these are: amendment history, supplemental documents (method addendums, accreditation letters), or something else. The single known amendment in our history (sample 217848) is our best test case for finding out.</p>
-    <p>Decision is about what the backfill does when it encounters them.</p>
+    <p>Confident's data model holds a primary CoA per sample <em>plus</em> a list called "CoA additions" — additional file references attached to the same sample. We don't yet know empirically what these are: amendment history, supplemental documents (method addendums, accreditation letters), or something else. Sample 217848 (our one documented historical amendment) is our gold test case.</p>
   </div>
   <div class="options">
-    <label class="opt"><input type="radio" name="d3" value="auto_import"><span class="opt-text"><strong>Auto-import all of them</strong> as historical versions of the same CoA. Most complete archive; risks misclassifying non-CoA documents as CoA versions.</span></label>
-    <label class="opt"><input type="radio" name="d3" value="flag"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Import them, but flag each one for human review.</strong> The bytes are saved (so we're not throwing data away), but they don't become "official" until someone confirms what they are. Decide canonical treatment after the backfill shows us how many there actually are.</span></label>
-    <label class="opt"><input type="radio" name="d3" value="skip"><span class="opt-text"><strong>Skip them entirely</strong> until we understand what they are. Fastest backfill, but we may need a second pass later if any of them turn out to be amendment history.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="auto_import"><span class="opt-text"><strong>Auto-import all of them</strong> as historical versions. Most complete archive; risks misclassifying non-CoA documents.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="flag"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Import them, but flag each for human review.</strong> Bytes saved; don't become "official" until someone confirms what they are.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="skip"><span class="opt-text"><strong>Skip them entirely</strong> until we understand what they are.</span></label>
     <label class="opt"><input type="radio" name="d3" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
   </div>
   <div class="notes-wrap">
@@ -446,13 +597,12 @@
     <h2>What about samples that exist in Confident but have no matching LIMS record?</h2>
   </div>
   <div class="decision-body">
-    <p>After the backfill imports everything Confident has for samples LIMS knows about, there will likely be CoAs in Confident that don't map to any LIMS sample. These are usually side-channel work: 9999-prefixed placeholder manifests, outsourced testing routed through us, special-projects samples that never went through our standard intake, or genuine data-entry mismatches.</p>
-    <p>They're not lost data — they exist in Confident. Question is whether we surface them for CS review now or later.</p>
+    <p>After the backfill imports everything Confident has for samples LIMS knows about, there will likely be CoAs in Confident that don't map to any LIMS sample. Usually side-channel work: 9999-prefixed placeholder manifests, outsourced testing, special-projects samples.</p>
   </div>
   <div class="options">
-    <label class="opt"><input type="radio" name="d4" value="surface_v1"><span class="opt-text"><strong>Surface them in v1.</strong> Run a secondary "orphan crawl" against Confident, build a CS review queue. Side-channel work gets formally captured during the same launch.</span></label>
-    <label class="opt"><input type="radio" name="d4" value="defer_v2"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Defer to v2.</strong> Capture them as a known follow-up, ship the primary backfill alone first, build the side-channel queue once the LIMS-side amendment UX is also being built (natural pairing).</span></label>
-    <label class="opt"><input type="radio" name="d4" value="never"><span class="opt-text"><strong>Don't enumerate them at all.</strong> Treat Confident as the system of record for side-channel work indefinitely.</span></label>
+    <label class="opt"><input type="radio" name="d4" value="surface_v1"><span class="opt-text"><strong>Surface them in v1.</strong> Secondary "orphan crawl" against Confident; build a CS review queue.</span></label>
+    <label class="opt"><input type="radio" name="d4" value="defer_v2"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Defer to v2.</strong> Capture as known follow-up; pair with the amendment UX initiative.</span></label>
+    <label class="opt"><input type="radio" name="d4" value="never"><span class="opt-text"><strong>Don't enumerate them at all.</strong></span></label>
     <label class="opt"><input type="radio" name="d4" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
   </div>
   <div class="notes-wrap">
@@ -468,14 +618,12 @@
     <h2>What happens if someone regenerates a backfilled CoA?</h2>
   </div>
   <div class="decision-body">
-    <p>A known hazard: regenerating a historical CoA through today's LIMS code can produce a different result than the as-issued version. Panel definitions, regulatory limits, and analyte names have all changed over the years — for example, Ohio's 3796 rules have evolved, so a 2023 CoA regenerated today might show different pesticide limits or microbial analyte names than what we originally sent the customer.</p>
-    <p>Confident's preserved-as-issued bytes are the only source of regulatory truth for those older CoAs. If a user clicks "Generate Reports" on a sample whose CoA we just backfilled from Confident, we'd be replacing the as-issued version with one that has today's panel definitions baked in.</p>
-    <p>How loud should the system be about this?</p>
+    <p>A known hazard: regenerating a historical CoA through today's LIMS code can produce a different result than the as-issued version. Panel definitions, regulatory limits, and analyte names have all changed. Confident's preserved-as-issued bytes are the only source of regulatory truth for older CoAs.</p>
   </div>
   <div class="options">
-    <label class="opt"><input type="radio" name="d5" value="logs_only"><span class="opt-text"><strong>Engineer logs only.</strong> Quietly record the regeneration event in the application logs. Users see no warning. Smallest UX footprint.</span></label>
-    <label class="opt"><input type="radio" name="d5" value="ui_warning"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Show a confirmation dialog</strong> in the UI before regeneration. "This sample has an as-issued CoA from Confident dated [date]. Regenerating may produce different results due to panel definition changes. Continue?" — user can still proceed, but knowingly.</span></label>
-    <label class="opt"><input type="radio" name="d5" value="hard_block"><span class="opt-text"><strong>Hard-block regeneration entirely</strong> for samples with a backfilled CoA from Confident. They'd require an explicit admin override to regenerate. Strongest protection; most operational friction.</span></label>
+    <label class="opt"><input type="radio" name="d5" value="logs_only"><span class="opt-text"><strong>Engineer logs only.</strong> Quietly record; users see no warning.</span></label>
+    <label class="opt"><input type="radio" name="d5" value="ui_warning"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Confirmation dialog in UI before regeneration.</strong> User can proceed, but knowingly.</span></label>
+    <label class="opt"><input type="radio" name="d5" value="hard_block"><span class="opt-text"><strong>Hard-block regeneration</strong> for samples with a backfilled CoA. Require admin override.</span></label>
     <label class="opt"><input type="radio" name="d5" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
   </div>
   <div class="notes-wrap">
@@ -491,13 +639,12 @@
     <h2>When does the deferred LIMS-side amendment UX get picked back up?</h2>
   </div>
   <div class="decision-body">
-    <p>The amendment-authoring workflow (modal, canned amendment messages, native red "AMENDED" banner on the cover page) was pulled from v1 to keep this project off Pearson's reporter-code surface area. It's clearly desired — we just want to make sure timing doesn't compromise the microbials release.</p>
-    <p>This decision is about scheduling, not whether to build it.</p>
+    <p>The amendment-authoring workflow (modal, canned amendment messages, native red "AMENDED" cover-page banner) was pulled from v1 to protect Pearson's microbials release. It's clearly desired — this decision is about scheduling.</p>
   </div>
   <div class="options">
-    <label class="opt"><input type="radio" name="d6" value="after_pearson"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Pick it up immediately after Pearson's microbials release ships.</strong> Same engineer, sequential. No overlap risk. Likely a 1-2 week effort once started.</span></label>
-    <label class="opt"><input type="radio" name="d6" value="parallel_track"><span class="opt-text"><strong>Parallel-track it now</strong> with a different engineer working on the amendment UX while Pearson finishes microbials. Faster to ship; reintroduces some collision risk on shared reporter code.</span></label>
-    <label class="opt"><input type="radio" name="d6" value="punt"><span class="opt-text"><strong>Punt indefinitely.</strong> Amendments stay manual in Confident's UI until business demand forces the issue. Lowest engineering load; longest gap before LIMS is "truly" of-record for amendments.</span></label>
+    <label class="opt"><input type="radio" name="d6" value="after_pearson"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Pick it up immediately after Pearson's microbials release ships.</strong> Sequential, no overlap risk.</span></label>
+    <label class="opt"><input type="radio" name="d6" value="parallel_track"><span class="opt-text"><strong>Parallel-track now</strong> with a different engineer.</span></label>
+    <label class="opt"><input type="radio" name="d6" value="punt"><span class="opt-text"><strong>Punt indefinitely.</strong> Amendments stay manual in Confident's UI.</span></label>
     <label class="opt"><input type="radio" name="d6" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
   </div>
   <div class="notes-wrap">
@@ -516,7 +663,7 @@
 <div class="modal-backdrop" id="modal" data-open="false">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-head">
-      <h2 id="modalTitle">Decisions (paste into Claude Code)</h2>
+      <h2 id="modalTitle">Output</h2>
       <button class="close" id="modalClose" aria-label="Close">&times;</button>
     </div>
     <div class="modal-body">
@@ -541,7 +688,6 @@
   'use strict';
 
   // ====== Password gate ======
-  // SHA-256("nctl") — set to the hex digest below; client-side, not real security
   const PW_HASH = 'a012deb3f95feda2731373f2d9e2861394f78d2d570408bb3193e04a630e2c96';
   const UNLOCK_KEY = 'coa-true-up-unlocked-v1';
 
@@ -587,76 +733,74 @@
     if (e.key === 'Enter') tryPassword();
   });
 
+  // ====== Document fetch / view / copy / download ======
+  const docCache = {};
+
+  async function fetchDoc(filename) {
+    if (docCache[filename]) return docCache[filename];
+    const resp = await fetch(filename, { cache: 'no-cache' });
+    if (!resp.ok) throw new Error('Fetch failed: ' + resp.status);
+    const text = await resp.text();
+    docCache[filename] = text;
+    return text;
+  }
+
+  function downloadText(text, filename, mime) {
+    const blob = new Blob([text], { type: mime || 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 500);
+  }
+
+  async function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      try { await navigator.clipboard.writeText(text); return true; } catch (e) { /* fall through */ }
+    }
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+    return ok;
+  }
+
   // ====== Decisions ======
   const STORAGE_KEY = 'coa-true-up-decisions-v1';
 
   const DECISIONS = [
-    {
-      id: 'd1',
-      num: 1,
-      title: 'Lab rollout order',
-      options: {
+    { id: 'd1', num: 1, title: 'Lab rollout order', options: {
         ohio_first: 'Ohio first, then Michigan.',
         michigan_first: 'Michigan first, then Ohio.',
         both: 'Both labs concurrently.',
-        other: 'Other (see notes).'
-      }
-    },
-    {
-      id: 'd2',
-      num: 2,
-      title: 'Backfill pace',
-      options: {
+        other: 'Other (see notes).' } },
+    { id: 'd2', num: 2, title: 'Backfill pace', options: {
         fast: 'Fast — ~2 to 3 days, ~1 request/second.',
         balanced: 'Balanced — ~5 to 7 days, ~0.5 request/second.',
         slow: 'Slow — ~2 to 3 weeks, ~0.25 request/second.',
-        other: 'Other (see notes).'
-      }
-    },
-    {
-      id: 'd3',
-      num: 3,
-      title: 'Multiple-file handling (Confident "CoA additions")',
-      options: {
+        other: 'Other (see notes).' } },
+    { id: 'd3', num: 3, title: 'Multiple-file handling (Confident "CoA additions")', options: {
         auto_import: 'Auto-import all as historical versions.',
-        flag: 'Import but flag each one for human review.',
+        flag: 'Import but flag each for human review.',
         skip: 'Skip them entirely until we understand what they are.',
-        other: 'Other (see notes).'
-      }
-    },
-    {
-      id: 'd4',
-      num: 4,
-      title: 'Confident-only samples (no LIMS match)',
-      options: {
+        other: 'Other (see notes).' } },
+    { id: 'd4', num: 4, title: 'Confident-only samples (no LIMS match)', options: {
         surface_v1: 'Surface in v1 via orphan crawl + CS review queue.',
         defer_v2: 'Defer to v2 (capture as known follow-up).',
         never: 'Do not enumerate at all.',
-        other: 'Other (see notes).'
-      }
-    },
-    {
-      id: 'd5',
-      num: 5,
-      title: 'Drift warning when regenerating a backfilled CoA',
-      options: {
+        other: 'Other (see notes).' } },
+    { id: 'd5', num: 5, title: 'Drift warning when regenerating a backfilled CoA', options: {
         logs_only: 'Engineer logs only, no user-visible warning.',
         ui_warning: 'Confirmation dialog in UI before regeneration.',
         hard_block: 'Hard-block regeneration; require admin override.',
-        other: 'Other (see notes).'
-      }
-    },
-    {
-      id: 'd6',
-      num: 6,
-      title: 'Timing for the deferred amendment UX',
-      options: {
+        other: 'Other (see notes).' } },
+    { id: 'd6', num: 6, title: 'Timing for the deferred amendment UX', options: {
         after_pearson: 'Pick up immediately after Pearson microbials ships.',
         parallel_track: 'Parallel-track now with a different engineer.',
         punt: 'Punt indefinitely until business demand forces it.',
-        other: 'Other (see notes).'
-      }
-    }
+        other: 'Other (see notes).' } }
   ];
 
   function loadState() {
@@ -666,7 +810,6 @@
   function saveState(state) {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
   }
-
   let state = loadState();
 
   function applyDecisionState(dec) {
@@ -691,9 +834,9 @@
     if (el) el.textContent = n;
   }
 
-  function compileMarkdown() {
+  function compileDecisionsMarkdown() {
     const lines = [];
-    lines.push('# CoA True-Up — Decisions');
+    lines.push('# CoA Backfill — Decisions');
     lines.push('');
     lines.push('Reviewed: ' + new Date().toISOString());
     lines.push('');
@@ -731,6 +874,7 @@
   }
 
   function initContent() {
+    // Wire decision cards
     DECISIONS.forEach(function (dec) {
       const sec = document.getElementById(dec.id);
       if (!sec) return;
@@ -755,11 +899,19 @@
     });
     updateProgress();
 
+    // Modal infra
     const modal = document.getElementById('modal');
     const modalOutput = document.getElementById('modalOutput');
+    const modalTitle = document.getElementById('modalTitle');
 
-    function openModal() {
-      modalOutput.textContent = compileMarkdown();
+    let currentContent = '';
+    let currentFilename = 'output.md';
+
+    function openModal(title, text, downloadName) {
+      modalTitle.textContent = title;
+      modalOutput.textContent = text;
+      currentContent = text;
+      currentFilename = downloadName || 'output.md';
       modal.dataset.open = 'true';
       document.body.style.overflow = 'hidden';
     }
@@ -768,8 +920,12 @@
       document.body.style.overflow = '';
     }
 
-    document.getElementById('btnCompile').addEventListener('click', openModal);
-    document.getElementById('btnCompileBottom').addEventListener('click', openModal);
+    function openDecisionsModal() {
+      openModal('Decisions (paste into Claude Code)', compileDecisionsMarkdown(), 'coa-backfill-decisions-' + new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19) + '.md');
+    }
+
+    document.getElementById('btnCompile').addEventListener('click', openDecisionsModal);
+    document.getElementById('btnCompileBottom').addEventListener('click', openDecisionsModal);
     document.getElementById('modalClose').addEventListener('click', closeModal);
     document.getElementById('btnCloseFooter').addEventListener('click', closeModal);
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
@@ -777,6 +933,54 @@
       if (e.key === 'Escape' && modal.dataset.open === 'true') closeModal();
     });
 
+    // Document cards (view / copy / download)
+    document.querySelectorAll('.doc-card .doc-actions button').forEach(function (btn) {
+      btn.addEventListener('click', async function () {
+        const doc = btn.getAttribute('data-doc');
+        const action = btn.getAttribute('data-action');
+        btn.disabled = true;
+        try {
+          const text = await fetchDoc(doc);
+          if (action === 'view') openModal(doc, text, doc);
+          else if (action === 'copy') {
+            const ok = await copyText(text);
+            showToast(ok ? ('Copied ' + doc) : 'Copy failed');
+          }
+          else if (action === 'download') {
+            downloadText(text, doc, 'text/markdown;charset=utf-8');
+            showToast('Downloaded ' + doc);
+          }
+        } catch (e) {
+          showToast('Failed to load ' + doc);
+        } finally {
+          btn.disabled = false;
+        }
+      });
+    });
+
+    // Bootstrap prompt buttons
+    document.getElementById('btnCopyBootstrap').addEventListener('click', async function () {
+      try {
+        const text = await fetchDoc('BOOTSTRAP.md');
+        const ok = await copyText(text);
+        showToast(ok ? 'Bootstrap prompt copied' : 'Copy failed');
+      } catch (e) { showToast('Failed to load BOOTSTRAP.md'); }
+    });
+    document.getElementById('btnViewBootstrap').addEventListener('click', async function () {
+      try {
+        const text = await fetchDoc('BOOTSTRAP.md');
+        openModal('BOOTSTRAP.md', text, 'BOOTSTRAP.md');
+      } catch (e) { showToast('Failed to load BOOTSTRAP.md'); }
+    });
+    document.getElementById('btnDownloadBootstrap').addEventListener('click', async function () {
+      try {
+        const text = await fetchDoc('BOOTSTRAP.md');
+        downloadText(text, 'BOOTSTRAP.md', 'text/markdown;charset=utf-8');
+        showToast('Downloaded BOOTSTRAP.md');
+      } catch (e) { showToast('Failed to load BOOTSTRAP.md'); }
+    });
+
+    // Toast
     const toast = document.getElementById('toast');
     let toastTimer = null;
     function showToast(msg) {
@@ -786,34 +990,13 @@
       toastTimer = setTimeout(function () { toast.dataset.show = 'false'; }, 2200);
     }
 
-    document.getElementById('btnCopy').addEventListener('click', function () {
-      const text = modalOutput.textContent;
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(
-          function () { showToast('Copied to clipboard'); },
-          function () { fallbackCopy(text); }
-        );
-      } else { fallbackCopy(text); }
+    // Copy / Download buttons inside modal
+    document.getElementById('btnCopy').addEventListener('click', async function () {
+      const ok = await copyText(currentContent);
+      showToast(ok ? 'Copied to clipboard' : 'Copy failed — select manually');
     });
-
-    function fallbackCopy(text) {
-      const ta = document.createElement('textarea');
-      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-      document.body.appendChild(ta); ta.select();
-      try { document.execCommand('copy'); showToast('Copied to clipboard'); }
-      catch (e) { showToast('Copy failed — select manually'); }
-      document.body.removeChild(ta);
-    }
-
     document.getElementById('btnDownload').addEventListener('click', function () {
-      const text = compileMarkdown();
-      const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      const ts = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-      a.href = url; a.download = 'coa-true-up-decisions-' + ts + '.md';
-      document.body.appendChild(a); a.click(); document.body.removeChild(a);
-      setTimeout(function () { URL.revokeObjectURL(url); }, 500);
+      downloadText(currentContent, currentFilename, 'text/markdown;charset=utf-8');
       showToast('Downloaded');
     });
 
