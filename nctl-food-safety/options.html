@@ -15,14 +15,13 @@
   <div class="row">
     <div class="brand">
       <h1>NCTL Food Safety Services</h1>
-      <p class="sub">Page B &middot; neutral options</p>
+      <p class="sub">Neutral options &mdash; no verdict</p>
     </div>
     <span class="spacer"></span>
     <nav>
       <a href="index.html">Overview</a>
-      <a href="recommendation.html">Recommendation</a>
       <a href="options.html" class="active">Options</a>
-      <a href="decisions.html">Decisions</a>
+      <a href="recommendation.html">Recommendation</a>
     </nav>
     <span class="progress">decided: <strong id="progressCount">0</strong> / <strong>9</strong></span>
     <button class="primary" id="btnCompile">Compile</button>
@@ -35,9 +34,14 @@
 <p class="page-sub">Side-by-side comparisons for each major decision. No recommendation; you weigh the tradeoffs.</p>
 
 <div class="callout">
-  <h4>What you&rsquo;re reading &mdash; Page B of 3</h4>
-  <p>This is the <strong>neutral</strong> framing of a strategic-exploration brief for NCTL (a licensed cannabis testing lab in Ohio + Michigan). The question: should NCTL add a Food Safety Services line for its cannabis-edibles customers (and possibly conventional food customers)? This page shows the same facts as the Recommendation page but without a verdict &mdash; just comparison tables. Pick this framing if you want to form your own conclusion. The other two framings via the top nav: <a href="recommendation.html">Recommendation</a> (opinionated, with reasoning) and <a href="decisions.html">Decisions</a> (just the nine decision cards). The <a href="index.html">Overview</a> page explains how this brief was prepared.</p>
-  <p>Nothing here commits NCTL to anything. No capex authorized, no customer interviews done yet. Your job: read, then click your answers on the nine decision cards at the bottom. Click <strong>Compile decisions</strong> when done &mdash; you&rsquo;ll get a markdown block to send back to Adam.</p>
+  <h4>What you&rsquo;re reading &mdash; Options (the neutral framing)</h4>
+  <p>This is the <strong>neutral</strong> framing of a strategic-exploration brief for NCTL (a licensed cannabis testing lab in Ohio + Michigan). The question: should NCTL add a Food Safety Services line for its cannabis-edibles customers (and possibly conventional food customers)? This page shows the facts as comparison tables, without a verdict &mdash; pick this framing if you want to form your own conclusion. The other framing via the top nav is the <a href="recommendation.html">Recommendation</a> page (opinionated, with reasoning). The <a href="index.html">Overview</a> page explains how this brief was prepared.</p>
+  <p>Nothing here commits NCTL to anything. No capex authorized, no customer interviews done yet. Your job: read, then click your answers on the decision cards at the bottom. Click <strong>Compile decisions</strong> when done &mdash; you&rsquo;ll get a markdown block to send back to Adam.</p>
+</div>
+
+<div class="callout amber">
+  <h4>Operating constraint &mdash; existing LC-MS at capacity, leased instrument assumed</h4>
+  <p>NCTL&rsquo;s existing LC-MS/MS and GC-MS are at capacity on cannabis workload. <strong>This brief assumes a leased dedicated LC-MS/MS</strong> for the new line &mdash; triple-quad, 36&ndash;60 month lease, ~$5&ndash;9K/month all-in (lease + consumables + service). That makes the food-fraud / cannabis-product authenticity options below feasible without a large capital outlay; it&rsquo;s an OpEx commitment that needs ~12 months of authenticity revenue to pay back. The ELISA-based allergen line does not depend on the leased LC-MS.</p>
 </div>
 
 <h2 class="section">Option 1: Analytical method</h2>
@@ -78,10 +82,10 @@
       <td class="num">$8&ndash;15</td>
     </tr>
     <tr>
-      <td>Capex to launch</td>
-      <td class="num">$15&ndash;35K</td>
-      <td>$0 (NCTL has LC-MS) + method dev cost</td>
-      <td>$30&ndash;60K (thermocycler)</td>
+      <td>Cost to launch</td>
+      <td class="num">$15&ndash;35K capex</td>
+      <td>~$5&ndash;9K/month lease (triple-quad) + method dev &mdash; existing LC-MS at capacity</td>
+      <td>$30&ndash;60K capex (thermocycler)</td>
     </tr>
     <tr>
       <td>Time to first commercial result</td>
@@ -263,8 +267,8 @@
     </tr>
     <tr>
       <td>Instruments needed (vs. NCTL today)</td>
-      <td>LC-MS/MS + GC-MS (already owned)</td>
-      <td>LC-MS + GC-MS owned; IRMS ($150-300K) needed for honey/syrup gold-standard work</td>
+      <td>Leased LC-MS/MS (~$5&ndash;9K/month) covers the workload; GC-MS time would also need to be carved out or added</td>
+      <td>Leased LC-MS covers most authenticity panels; IRMS (~$150&ndash;300K capex) optional for premium honey / syrup work</td>
     </tr>
     <tr>
       <td>Regulatory anchor</td>
@@ -325,9 +329,9 @@
 <section class="decision" id="d3">
   <div class="decision-head"><span class="decision-num">Decision 3 of 9</span><h3>Analytical method</h3></div>
   <div class="options">
-    <label class="opt"><input type="radio" name="d3" value="elisa"><span class="opt-text"><strong>ELISA only</strong> &mdash; R-Biopharm RIDASCREEN, AOAC 2012.01.</span></label>
-    <label class="opt"><input type="radio" name="d3" value="both"><span class="opt-text"><strong>ELISA + LC-MS/MS development</strong> for hydrolyzed/fermented matrices.</span></label>
-    <label class="opt"><input type="radio" name="d3" value="lcms"><span class="opt-text"><strong>LC-MS/MS only</strong> &mdash; build on existing LC-MS.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="elisa"><span class="opt-text"><strong>ELISA only</strong> &mdash; R-Biopharm RIDASCREEN, AOAC 2012.01. Doesn&rsquo;t touch capacity-constrained LC-MS / GC-MS.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="both"><span class="opt-text"><strong>ELISA + LC-MS/MS development</strong> &mdash; requires LC-MS capacity expansion.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="lcms"><span class="opt-text"><strong>LC-MS/MS only</strong> &mdash; requires LC-MS expansion + 6-12 month method-validation runway.</span></label>
   </div>
   <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
 </section>
@@ -335,10 +339,10 @@
 <section class="decision" id="d4">
   <div class="decision-head"><span class="decision-num">Decision 4 of 9</span><h3>Services scope</h3></div>
   <div class="options">
-    <label class="opt"><input type="radio" name="d4" value="testing"><span class="opt-text"><strong>Testing only.</strong></span></label>
-    <label class="opt"><input type="radio" name="d4" value="swabs"><span class="opt-text"><strong>+ On-site sanitation / swab programs.</strong></span></label>
-    <label class="opt"><input type="radio" name="d4" value="consulting"><span class="opt-text"><strong>+ Full food-safety consulting.</strong></span></label>
-    <label class="opt"><input type="radio" name="d4" value="authenticity"><span class="opt-text"><strong>+ Food-fraud / authenticity testing.</strong></span></label>
+    <label class="opt"><input type="radio" name="d4" value="testing"><span class="opt-text"><strong>Allergen testing only</strong> &mdash; no on-site, no lease.</span></label>
+    <label class="opt"><input type="radio" name="d4" value="swabs"><span class="opt-text"><strong>Testing + on-site sanitation / swab programs</strong> &mdash; no LC-MS lease.</span></label>
+    <label class="opt"><input type="radio" name="d4" value="authenticity"><span class="opt-text"><strong>Testing + swabs + cannabis-product authenticity</strong> via leased LC-MS (~$5&ndash;9K/month OpEx).</span></label>
+    <label class="opt"><input type="radio" name="d4" value="full"><span class="opt-text"><strong>All of the above + full food-safety consulting</strong> (cGMP / HACCP / PCQI / mock recalls / GFSI prep).</span></label>
   </div>
   <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
 </section>
@@ -354,12 +358,12 @@
 </section>
 
 <section class="decision" id="d6">
-  <div class="decision-head"><span class="decision-num">Decision 6 of 9</span><h3>Authenticity beachhead</h3></div>
+  <div class="decision-head"><span class="decision-num">Decision 6 of 9 &middot; assumes leased LC-MS</span><h3>Authenticity beachhead</h3></div>
   <div class="options">
-    <label class="opt"><input type="radio" name="d6" value="cannabis"><span class="opt-text"><strong>Cannabis-product authenticity first.</strong></span></label>
-    <label class="opt"><input type="radio" name="d6" value="food"><span class="opt-text"><strong>Conventional food authenticity first.</strong></span></label>
-    <label class="opt"><input type="radio" name="d6" value="both"><span class="opt-text"><strong>Both in parallel.</strong></span></label>
-    <label class="opt"><input type="radio" name="d6" value="skip"><span class="opt-text"><strong>Skip authenticity</strong> &mdash; defer to year 2.</span></label>
+    <label class="opt"><input type="radio" name="d6" value="cannabis"><span class="opt-text"><strong>Cannabis-product authenticity first</strong> &mdash; anchor tenant for the leased LC-MS.</span></label>
+    <label class="opt"><input type="radio" name="d6" value="food"><span class="opt-text"><strong>Conventional food authenticity first</strong> &mdash; requires additional GC-MS / IRMS beyond the lease.</span></label>
+    <label class="opt"><input type="radio" name="d6" value="both"><span class="opt-text"><strong>Both in parallel</strong> &mdash; bigger ask.</span></label>
+    <label class="opt"><input type="radio" name="d6" value="skip"><span class="opt-text"><strong>Skip authenticity</strong> &mdash; allergen-only build, don&rsquo;t lease the LC-MS.</span></label>
   </div>
   <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
 </section>

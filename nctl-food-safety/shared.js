@@ -79,9 +79,9 @@
       id: 'd3', num: 3,
       title: 'Analytical method for allergen testing',
       options: {
-        elisa: 'ELISA only — R-Biopharm RIDASCREEN line, AOAC 2012.01 safe harbor.',
-        both: 'ELISA primary + LC-MS/MS allergen method development for hydrolyzed/fermented matrices.',
-        lcms: 'LC-MS/MS only — skip ELISA, build on existing LC-MS infrastructure.'
+        elisa: 'ELISA only — R-Biopharm RIDASCREEN line, AOAC 2012.01 safe harbor. (Does not touch capacity-constrained LC-MS / GC-MS.)',
+        both: 'ELISA primary + LC-MS/MS allergen method development (requires LC-MS capacity expansion — existing LC-MS at capacity).',
+        lcms: 'LC-MS/MS only (requires LC-MS capacity expansion; ruled out as entry method given current capacity).'
       }
     },
     {
@@ -89,9 +89,9 @@
       title: 'Services scope',
       options: {
         testing: 'Allergen testing only (samples in, results out).',
-        swabs: '+ On-site sanitation/swab programs.',
-        consulting: '+ Full food-safety consulting (cGMP, HACCP, PCQI, mock recalls, GFSI prep).',
-        authenticity: 'All of the above + food-fraud / authenticity testing (oils, honey, syrup, spices, cannabis-product authenticity).'
+        swabs: 'Allergen testing + on-site sanitation/swab programs.',
+        authenticity: 'Testing + swabs + cannabis-product authenticity (enabled by leased LC-MS, ~$5–9K/month OpEx).',
+        full: 'All of the above + full food-safety consulting (cGMP, HACCP, PCQI, mock recalls, GFSI prep).'
       }
     },
     {
@@ -105,12 +105,12 @@
     },
     {
       id: 'd6', num: 6,
-      title: 'Authenticity beachhead',
+      title: 'Authenticity beachhead (if/when LC-MS capex is authorized)',
       options: {
-        cannabis: 'Cannabis-product authenticity first (terpenes, distillate, Delta-8 synthesis).',
-        food: 'Conventional food authenticity first (olive oil, honey, maple syrup, spices).',
-        both: 'Both in parallel.',
-        skip: 'Skip authenticity for now — defer to year 2.'
+        cannabis: 'Cannabis-product authenticity first (terpenes, distillate, Delta-8 synthesis) — requires LC-MS capacity expansion.',
+        food: 'Conventional food authenticity first (olive oil, honey, maple syrup, spices) — requires LC-MS + possibly IRMS capex.',
+        both: 'Both in parallel — biggest instrument-capex ask.',
+        skip: 'Skip authenticity for now — defer pending separate LC-MS / GC-MS capex decision.'
       }
     },
     {
