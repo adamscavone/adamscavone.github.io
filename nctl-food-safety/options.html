@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="dark">
+<title>Options &mdash; NCTL Food Safety Services</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+<header class="app">
+  <div class="row">
+    <div class="brand">
+      <h1>NCTL Food Safety Services</h1>
+      <p class="sub">Page B &middot; neutral options</p>
+    </div>
+    <span class="spacer"></span>
+    <nav>
+      <a href="index.html">Overview</a>
+      <a href="recommendation.html">Recommendation</a>
+      <a href="options.html" class="active">Options</a>
+      <a href="decisions.html">Decisions</a>
+    </nav>
+    <span class="progress">decided: <strong id="progressCount">0</strong> / <strong>9</strong></span>
+    <button class="primary" id="btnCompile">Compile</button>
+  </div>
+</header>
+
+<main>
+
+<h1 class="page-title">Options &mdash; no verdict</h1>
+<p class="page-sub">Side-by-side comparisons for each major decision. No recommendation; you weigh the tradeoffs.</p>
+
+<div class="callout">
+  <h4>What you&rsquo;re reading &mdash; Page B of 3</h4>
+  <p>This is the <strong>neutral</strong> framing of a strategic-exploration brief for NCTL (a licensed cannabis testing lab in Ohio + Michigan). The question: should NCTL add a Food Safety Services line for its cannabis-edibles customers (and possibly conventional food customers)? This page shows the same facts as the Recommendation page but without a verdict &mdash; just comparison tables. Pick this framing if you want to form your own conclusion. The other two framings via the top nav: <a href="recommendation.html">Recommendation</a> (opinionated, with reasoning) and <a href="decisions.html">Decisions</a> (just the nine decision cards). The <a href="index.html">Overview</a> page explains how this brief was prepared.</p>
+  <p>Nothing here commits NCTL to anything. No capex authorized, no customer interviews done yet. Your job: read, then click your answers on the nine decision cards at the bottom. Click <strong>Compile decisions</strong> when done &mdash; you&rsquo;ll get a markdown block to send back to Adam.</p>
+</div>
+
+<h2 class="section">Option 1: Analytical method</h2>
+<p>How is allergen content actually measured? Three credible methods exist; each has a different cost/regulatory profile.</p>
+
+<table class="compare">
+  <thead>
+    <tr>
+      <th>Dimension</th>
+      <th>ELISA</th>
+      <th>LC-MS/MS</th>
+      <th>PCR (DNA)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>What it measures</td>
+      <td>Allergen protein (antibody binding)</td>
+      <td>Allergen protein (peptide fragments)</td>
+      <td>Allergen DNA presence/absence</td>
+    </tr>
+    <tr>
+      <td>Regulatory standing for FDA gluten-free claim</td>
+      <td>AOAC 2012.01 official method (R5 Mendez)</td>
+      <td>AOAC 2017.17 &mdash; First Action only, 4 allergens, limited matrices</td>
+      <td>Not regulatory standard for &lt;20 ppm threshold</td>
+    </tr>
+    <tr>
+      <td>Throughput per analyst-day</td>
+      <td>~80 samples (96-well plate)</td>
+      <td>~10&ndash;20 samples (depending on prep)</td>
+      <td>~30&ndash;50 samples</td>
+    </tr>
+    <tr>
+      <td>Reagent cost / sample</td>
+      <td class="num">$15&ndash;30</td>
+      <td class="num">$5&ndash;15 + standards</td>
+      <td class="num">$8&ndash;15</td>
+    </tr>
+    <tr>
+      <td>Capex to launch</td>
+      <td class="num">$15&ndash;35K</td>
+      <td>$0 (NCTL has LC-MS) + method dev cost</td>
+      <td>$30&ndash;60K (thermocycler)</td>
+    </tr>
+    <tr>
+      <td>Time to first commercial result</td>
+      <td>6&ndash;10 weeks (per allergen)</td>
+      <td>6&ndash;12 months (per allergen-matrix pair)</td>
+      <td>3&ndash;6 months</td>
+    </tr>
+    <tr>
+      <td>Hydrolyzed / fermented matrix limitation</td>
+      <td>Yes &mdash; antibodies miss fragmented protein</td>
+      <td>Better, but FDA defers to manufacturer records for these foods regardless</td>
+      <td>Detects DNA fragments OK</td>
+    </tr>
+    <tr>
+      <td>Multiplexable (one workflow, many allergens)</td>
+      <td>One allergen per plate; one workflow per kit</td>
+      <td>Yes &mdash; multi-allergen panels possible</td>
+      <td>Yes</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <h4>Regulatory note</h4>
+  <p>FDA&rsquo;s August 2020 final rule on gluten-free labeling for fermented and hydrolyzed foods states that gluten <em>cannot currently be adequately detected and quantified</em> for compliance purposes in those products. FDA uses manufacturer records (control programs, supplier verification) rather than test results. This means even LC-MS/MS doesn&rsquo;t solve the regulatory problem in soy sauce / beer / hydrolyzed wheat protein matrices &mdash; both methods fall back to records review.</p>
+</div>
+
+<h2 class="section">Option 2: Business model tier</h2>
+<p>How much of the value chain does NCTL own?</p>
+
+<table class="compare">
+  <thead>
+    <tr>
+      <th>Dimension</th>
+      <th>A: Testing only</th>
+      <th>B: + On-site swabs</th>
+      <th>C: + Full consulting</th>
+      <th>D: + Authenticity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Revenue model</td>
+      <td>$200&ndash;400 per sample</td>
+      <td>Per-sample + $500&ndash;2K per swab visit</td>
+      <td>Annual contract $30&ndash;60K/customer</td>
+      <td>Annual contract + per-test authenticity work</td>
+    </tr>
+    <tr>
+      <td>Estimated ARR per active customer</td>
+      <td class="num">$2&ndash;8K</td>
+      <td class="num">$15&ndash;30K</td>
+      <td class="num">$30&ndash;60K</td>
+      <td class="num">$40&ndash;80K</td>
+    </tr>
+    <tr>
+      <td>Time to first revenue</td>
+      <td>10&ndash;12 weeks</td>
+      <td>12&ndash;16 weeks</td>
+      <td>6&ndash;9 months</td>
+      <td>9&ndash;12 months</td>
+    </tr>
+    <tr>
+      <td>Staffing add</td>
+      <td>0&ndash;1 analyst</td>
+      <td>1 analyst + field tech rotation</td>
+      <td>+ PCQI-credentialed consultant</td>
+      <td>+ Authenticity method developer</td>
+    </tr>
+    <tr>
+      <td>Geographic constraint</td>
+      <td>None (mail-in)</td>
+      <td>Drive-time radius around OH + MI</td>
+      <td>Drive-time radius</td>
+      <td>Drive-time + remote testing</td>
+    </tr>
+    <tr>
+      <td>Liability profile</td>
+      <td>Lab test report</td>
+      <td>+ Sanitation verification recommendation</td>
+      <td>+ HACCP plan endorsement (professional liability)</td>
+      <td>+ Authenticity opinion (potential trade-dispute exposure)</td>
+    </tr>
+    <tr>
+      <td>Customer stickiness</td>
+      <td>Low &mdash; price-shoppable</td>
+      <td>High &mdash; ongoing program</td>
+      <td>Very high &mdash; embedded</td>
+      <td>Very high + premium positioning</td>
+    </tr>
+    <tr>
+      <td>Differentiator vs. distant food labs (Eurofins, Bia)</td>
+      <td>Minimal</td>
+      <td>Strong &mdash; local field service</td>
+      <td>Strong + advisory</td>
+      <td>Strong + cannabis-product authenticity has no incumbent</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 class="section">Option 3: Allergen panel phasing</h2>
+<p>How broad is the panel at launch?</p>
+
+<table class="compare">
+  <thead>
+    <tr>
+      <th>Dimension</th>
+      <th>Big 9 day-one</th>
+      <th>Gluten + peanut MVP</th>
+      <th>Gluten-only pilot</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Validation timeline</td>
+      <td>6&ndash;8 weeks parallel work; ~2 months total</td>
+      <td>4&ndash;6 weeks</td>
+      <td>2&ndash;3 weeks</td>
+    </tr>
+    <tr>
+      <td>Reagent / kit inventory at launch</td>
+      <td>9 kits stocked</td>
+      <td>2 kits stocked</td>
+      <td>1 kit stocked</td>
+    </tr>
+    <tr>
+      <td>Sales pitch breadth</td>
+      <td>&ldquo;Full allergen panel&rdquo; (matches Eurofins / Bia)</td>
+      <td>&ldquo;Gluten and peanut today; more coming&rdquo;</td>
+      <td>&ldquo;Gluten certification only&rdquo;</td>
+    </tr>
+    <tr>
+      <td>Risk of sample-splitting (customers send remainder to Eurofins for non-covered allergens)</td>
+      <td>Low &mdash; full coverage</td>
+      <td>Moderate &mdash; partial coverage</td>
+      <td>High &mdash; minimal coverage</td>
+    </tr>
+    <tr>
+      <td>Risk of validation overruns delaying launch</td>
+      <td>Higher (9 parallel validations)</td>
+      <td>Low (2 validations)</td>
+      <td>Minimal (1 validation)</td>
+    </tr>
+    <tr>
+      <td>Customer education burden</td>
+      <td>Higher &mdash; full-panel positioning</td>
+      <td>Moderate</td>
+      <td>Low &mdash; single-test</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout amber">
+  <h4>Peer LLM disagreement on this one</h4>
+  <p>The two outside LLMs split on phasing. <strong>Gemini</strong> argued for Big 9 day-one (&ldquo;food manufacturers refuse to split samples between labs; partial coverage cedes the account to Eurofins&rdquo;). <strong>Codex</strong> argued for gluten+peanut MVP (&ldquo;validation burden multiplies before you know which allergens produce paid demand&rdquo;). Both arguments are defensible; the call depends on whether you expect cannabis-edibles customers to behave like food customers (refuse-to-split) or treat allergen testing as a la carte add-ons.</p>
+</div>
+
+<h2 class="section">Option 4: Food-fraud / authenticity scope</h2>
+<p>If authenticity testing is in scope at all, the entry point matters.</p>
+
+<table class="compare">
+  <thead>
+    <tr>
+      <th>Dimension</th>
+      <th>Cannabis-product authenticity first</th>
+      <th>Conventional food authenticity first</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Examples</td>
+      <td>Synthetic-terpene detection, live-resin verification, Delta-8 / HHC synthesis fingerprinting, distillate composition</td>
+      <td>Olive oil adulteration, honey HFCS dilution, maple syrup fraud, spice adulteration (Sudan dyes, lead chromate), vanilla synthetic-vs-natural</td>
+    </tr>
+    <tr>
+      <td>NCTL customer access</td>
+      <td>Existing &mdash; same edibles producers, same flower brands</td>
+      <td>Zero existing relationships</td>
+    </tr>
+    <tr>
+      <td>Instruments needed (vs. NCTL today)</td>
+      <td>LC-MS/MS + GC-MS (already owned)</td>
+      <td>LC-MS + GC-MS owned; IRMS ($150-300K) needed for honey/syrup gold-standard work</td>
+    </tr>
+    <tr>
+      <td>Regulatory anchor</td>
+      <td>None &mdash; positioned as brand-protection / QA</td>
+      <td>FSMA Intentional Adulteration rule (FDA-flagged)</td>
+    </tr>
+    <tr>
+      <td>Market maturity</td>
+      <td>Nascent &mdash; no incumbent cannabis-side player</td>
+      <td>Established &mdash; Eurofins, Mérieux, USP own the category</td>
+    </tr>
+    <tr>
+      <td>Sales motion</td>
+      <td>Cross-sell to existing customer base</td>
+      <td>Net-new business development</td>
+    </tr>
+    <tr>
+      <td>Method standardization risk</td>
+      <td>Fragmented &mdash; no AOAC officials yet for most cannabis-authenticity questions</td>
+      <td>Strong &mdash; AOAC 998.12 (honey IRMS), well-validated workflows</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 class="section">Open questions (not Claude&rsquo;s call)</h2>
+<ul>
+  <li><strong>Demand signal.</strong> Have any inbound customer asks come in for allergen, food-safety, or authenticity work? None surfaced in scoping &mdash; but no formal survey either.</li>
+  <li><strong>Branding.</strong> Sub-brand of NCTL, separate LLC, or just expand NCTL scope? Liability differs.</li>
+  <li><strong>Staffing.</strong> PCQI-credentialed person on payroll vs. contract consultant. FTE ~$80&ndash;120K; consultant $200&ndash;400/hr.</li>
+  <li><strong>Accreditation.</strong> ISO 17025 scope expansion takes 6&ndash;12 months; runs in parallel with method dev.</li>
+</ul>
+
+<!-- ============ Decisions block (same as other pages) ============ -->
+<div class="decisions-block">
+  <h2 class="section">Your decisions</h2>
+  <p class="intro">Answers persist across all three pages (Recommendation / Options / Decisions) and across reloads. When you&rsquo;re done, click <strong>Compile decisions</strong>.</p>
+
+<section class="decision" id="d1">
+  <div class="decision-head"><span class="decision-num">Decision 1 of 9</span><h3>Posture</h3></div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d1" value="go"><span class="opt-text"><strong>Go</strong> &mdash; build the Food Safety Services line now.</span></label>
+    <label class="opt"><input type="radio" name="d1" value="survey"><span class="opt-text"><strong>Wait</strong> &mdash; survey customer demand first, decide in 60 days.</span></label>
+    <label class="opt"><input type="radio" name="d1" value="partner"><span class="opt-text"><strong>Partner out</strong> &mdash; refer to Bia / Eurofins for 6 months, then revisit.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<section class="decision" id="d2">
+  <div class="decision-head"><span class="decision-num">Decision 2 of 9</span><h3>Capex authorization</h3></div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d2" value="low"><span class="opt-text"><strong>~$25K</strong> entry capex.</span></label>
+    <label class="opt"><input type="radio" name="d2" value="mid"><span class="opt-text"><strong>~$50K</strong> full capex (auto washer, premium homogenizer, contingency).</span></label>
+    <label class="opt"><input type="radio" name="d2" value="hold"><span class="opt-text"><strong>Hold</strong> until demand signal validates.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<section class="decision" id="d3">
+  <div class="decision-head"><span class="decision-num">Decision 3 of 9</span><h3>Analytical method</h3></div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d3" value="elisa"><span class="opt-text"><strong>ELISA only</strong> &mdash; R-Biopharm RIDASCREEN, AOAC 2012.01.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="both"><span class="opt-text"><strong>ELISA + LC-MS/MS development</strong> for hydrolyzed/fermented matrices.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="lcms"><span class="opt-text"><strong>LC-MS/MS only</strong> &mdash; build on existing LC-MS.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<section class="decision" id="d4">
+  <div class="decision-head"><span class="decision-num">Decision 4 of 9</span><h3>Services scope</h3></div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d4" value="testing"><span class="opt-text"><strong>Testing only.</strong></span></label>
+    <label class="opt"><input type="radio" name="d4" value="swabs"><span class="opt-text"><strong>+ On-site sanitation / swab programs.</strong></span></label>
+    <label class="opt"><input type="radio" name="d4" value="consulting"><span class="opt-text"><strong>+ Full food-safety consulting.</strong></span></label>
+    <label class="opt"><input type="radio" name="d4" value="authenticity"><span class="opt-text"><strong>+ Food-fraud / authenticity testing.</strong></span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<section class="decision" id="d5">
+  <div class="decision-head"><span class="decision-num">Decision 5 of 9</span><h3>Allergen panel phasing</h3></div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d5" value="big9"><span class="opt-text"><strong>Big 9 day-one.</strong></span></label>
+    <label class="opt"><input type="radio" name="d5" value="mvp"><span class="opt-text"><strong>Gluten + peanut MVP.</strong></span></label>
+    <label class="opt"><input type="radio" name="d5" value="pilot"><span class="opt-text"><strong>Gluten-only pilot.</strong></span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<section class="decision" id="d6">
+  <div class="decision-head"><span class="decision-num">Decision 6 of 9</span><h3>Authenticity beachhead</h3></div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d6" value="cannabis"><span class="opt-text"><strong>Cannabis-product authenticity first.</strong></span></label>
+    <label class="opt"><input type="radio" name="d6" value="food"><span class="opt-text"><strong>Conventional food authenticity first.</strong></span></label>
+    <label class="opt"><input type="radio" name="d6" value="both"><span class="opt-text"><strong>Both in parallel.</strong></span></label>
+    <label class="opt"><input type="radio" name="d6" value="skip"><span class="opt-text"><strong>Skip authenticity</strong> &mdash; defer to year 2.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<section class="decision" id="d7">
+  <div class="decision-head"><span class="decision-num">Decision 7 of 9</span><h3>Demand validation</h3></div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d7" value="survey"><span class="opt-text"><strong>Yes</strong> &mdash; survey existing edibles customers first.</span></label>
+    <label class="opt"><input type="radio" name="d7" value="proceed"><span class="opt-text"><strong>No</strong> &mdash; proceed on conviction.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<section class="decision" id="d8">
+  <div class="decision-head"><span class="decision-num">Decision 8 of 9</span><h3>Staffing</h3></div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d8" value="payroll"><span class="opt-text"><strong>PCQI FTE</strong> on payroll.</span></label>
+    <label class="opt"><input type="radio" name="d8" value="contract"><span class="opt-text"><strong>Contract consultant</strong> until volume justifies FTE.</span></label>
+    <label class="opt"><input type="radio" name="d8" value="both"><span class="opt-text"><strong>Both</strong> &mdash; junior FTE + senior contractor.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<section class="decision" id="d9">
+  <div class="decision-head"><span class="decision-num">Decision 9 of 9</span><h3>Branding</h3></div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d9" value="subbrand"><span class="opt-text"><strong>NCTL Food Safety</strong> sub-brand.</span></label>
+    <label class="opt"><input type="radio" name="d9" value="llc"><span class="opt-text"><strong>Separate LLC.</strong></span></label>
+    <label class="opt"><input type="radio" name="d9" value="expand"><span class="opt-text"><strong>Just expand NCTL scope.</strong></span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+</div>
+
+</main>
+
+<div class="floatbar">
+  <button class="ghost" id="btnReset" title="Clear all decisions">Reset</button>
+  <button class="primary" id="btnCompileBottom">Compile decisions</button>
+</div>
+
+<div class="modal-backdrop" id="modal" data-open="false">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <h2 id="modalTitle">Decisions (paste into chat)</h2>
+      <button class="close" id="modalClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-toolbar">
+        <button class="primary" id="btnCopy">Copy to clipboard</button>
+        <button class="ghost" id="btnDownload">Download .md</button>
+        <button class="ghost" id="btnCloseFooter">Close</button>
+      </div>
+      <div class="modal-output"><pre id="modalOutput"></pre></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" data-show="false"></div>
+
+<script src="shared.js"></script>
+</body>
+</html>

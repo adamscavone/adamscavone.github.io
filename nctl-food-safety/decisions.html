@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="dark">
+<title>Decisions &mdash; NCTL Food Safety Services</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+<header class="app">
+  <div class="row">
+    <div class="brand">
+      <h1>NCTL Food Safety Services</h1>
+      <p class="sub">Page C &middot; decisions only</p>
+    </div>
+    <span class="spacer"></span>
+    <nav>
+      <a href="index.html">Overview</a>
+      <a href="recommendation.html">Recommendation</a>
+      <a href="options.html">Options</a>
+      <a href="decisions.html" class="active">Decisions</a>
+    </nav>
+    <span class="progress">decided: <strong id="progressCount">0</strong> / <strong>9</strong></span>
+    <button class="primary" id="btnCompile">Compile</button>
+  </div>
+</header>
+
+<main>
+
+<h1 class="page-title">Decisions</h1>
+<p class="page-sub">Nine calls. Pick your answers; compile to markdown when done.</p>
+
+<div class="callout">
+  <h4>What you&rsquo;re reading &mdash; Page C of 3</h4>
+  <p>This is the <strong>decision-only</strong> framing of a strategic-exploration brief for NCTL (a licensed cannabis testing lab in Ohio + Michigan). The question: should NCTL add a Food Safety Services line for its cannabis-edibles customers (and possibly conventional food customers)? This page strips out all analysis and shows just the nine decisions that need answers. <strong>If you haven&rsquo;t read either of the other framings, start with the <a href="recommendation.html">Recommendation</a> page (opinionated, ~10 min) or the <a href="options.html">Options</a> page (neutral comparison, ~7 min).</strong> The <a href="index.html">Overview</a> page explains how this brief was prepared.</p>
+  <p>Nothing here commits NCTL to anything. No capex authorized, no customer interviews done yet. Click your answers; <strong>Compile decisions</strong> in the bottom-right gives you a markdown block to send back to Adam.</p>
+</div>
+
+<div class="decisions-block">
+
+<!-- D1 -->
+<section class="decision" id="d1">
+  <div class="decision-head">
+    <span class="decision-num">Decision 1 of 9</span>
+    <h3>Posture</h3>
+  </div>
+  <div class="decision-body">
+    <p>Do we build the Food Safety Services line, or not?</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d1" value="go"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>Go</strong> &mdash; build the Food Safety Services line now.</span></label>
+    <label class="opt"><input type="radio" name="d1" value="survey"><span class="opt-text"><strong>Wait</strong> &mdash; formal customer-demand survey first, decide in 60 days.</span></label>
+    <label class="opt"><input type="radio" name="d1" value="partner"><span class="opt-text"><strong>Partner out</strong> &mdash; refer to Bia Diagnostics / Eurofins for 6 months, then revisit.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<!-- D2 -->
+<section class="decision" id="d2">
+  <div class="decision-head">
+    <span class="decision-num">Decision 2 of 9</span>
+    <h3>Capex authorization</h3>
+  </div>
+  <div class="decision-body">
+    <p>One microplate reader runs every allergen kit. Entry capex sized for that reality.</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d2" value="low"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>~$25K</strong> &mdash; entry capex (mid-tier plate reader, manual washer, basic homogenizer).</span></label>
+    <label class="opt"><input type="radio" name="d2" value="mid"><span class="opt-text"><strong>~$50K</strong> &mdash; full capex (auto plate washer, premium homogenizer, second pipette set, contingency).</span></label>
+    <label class="opt"><input type="radio" name="d2" value="hold"><span class="opt-text"><strong>Hold</strong> capex until demand signal validates.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<!-- D3 -->
+<section class="decision" id="d3">
+  <div class="decision-head">
+    <span class="decision-num">Decision 3 of 9</span>
+    <h3>Analytical method for allergen testing</h3>
+  </div>
+  <div class="decision-body">
+    <p>ELISA is the FDA-recognized regulatory standard (AOAC 2012.01 for gluten). LC-MS/MS exists but its AOAC method (2017.17) is First Action only, in limited matrices.</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d3" value="elisa"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>ELISA only</strong> &mdash; R-Biopharm RIDASCREEN line, AOAC 2012.01 safe harbor.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="both"><span class="opt-text"><strong>ELISA primary + LC-MS/MS development</strong> for hydrolyzed/fermented matrix exception cases.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="lcms"><span class="opt-text"><strong>LC-MS/MS only</strong> &mdash; skip ELISA, build on existing LC-MS infrastructure (6-12 month validation).</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<!-- D4 -->
+<section class="decision" id="d4">
+  <div class="decision-head">
+    <span class="decision-num">Decision 4 of 9</span>
+    <h3>Services scope</h3>
+  </div>
+  <div class="decision-body">
+    <p>How far up the value chain do we go? Each step adds ARR per customer but also delivery complexity.</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d4" value="testing"><span class="opt-text"><strong>Testing only</strong> &mdash; samples in, results out, $200&ndash;400/sample.</span></label>
+    <label class="opt"><input type="radio" name="d4" value="swabs"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>+ On-site sanitation / swab programs</strong> ($15&ndash;30K ARR per active customer).</span></label>
+    <label class="opt"><input type="radio" name="d4" value="consulting"><span class="opt-text"><strong>+ Full food-safety consulting</strong> (cGMP, HACCP, PCQI, mock recalls, GFSI prep, $30&ndash;60K ARR).</span></label>
+    <label class="opt"><input type="radio" name="d4" value="authenticity"><span class="opt-text"><strong>All of the above + food-fraud / authenticity testing</strong> (oils, honey, syrup, spices, cannabis-product authenticity).</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<!-- D5 -->
+<section class="decision" id="d5">
+  <div class="decision-head">
+    <span class="decision-num">Decision 5 of 9 &middot; peer LLMs disagreed</span>
+    <h3>Allergen panel phasing</h3>
+  </div>
+  <div class="decision-body">
+    <p>This is the only call where Gemini and Codex split. Gemini argued Big 9 day-one (&ldquo;producers won&rsquo;t split samples between labs&rdquo;). Codex argued gluten+peanut MVP (&ldquo;validation burden multiplies before you know which allergens produce demand&rdquo;).</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d5" value="big9"><span class="opt-text"><strong>Big 9 day-one</strong> &mdash; gluten + peanut + tree nut + soy + milk + egg + fish + crustacean + sesame.</span></label>
+    <label class="opt"><input type="radio" name="d5" value="mvp"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>Gluten + peanut MVP</strong>; expand to Big 9 in 6 months as demand pulls.</span></label>
+    <label class="opt"><input type="radio" name="d5" value="pilot"><span class="opt-text"><strong>Gluten-only pilot</strong> for 3 months, then scale based on demand.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<!-- D6 -->
+<section class="decision" id="d6">
+  <div class="decision-head">
+    <span class="decision-num">Decision 6 of 9</span>
+    <h3>Authenticity beachhead</h3>
+  </div>
+  <div class="decision-body">
+    <p>If food-fraud / authenticity testing is in scope, where does it start? Both peer LLMs agreed on cannabis-product first.</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d6" value="cannabis"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>Cannabis-product authenticity first</strong> (terpenes, distillate, Delta-8 synthesis byproducts).</span></label>
+    <label class="opt"><input type="radio" name="d6" value="food"><span class="opt-text"><strong>Conventional food authenticity first</strong> (olive oil, honey, maple syrup, spices).</span></label>
+    <label class="opt"><input type="radio" name="d6" value="both"><span class="opt-text"><strong>Both in parallel.</strong></span></label>
+    <label class="opt"><input type="radio" name="d6" value="skip"><span class="opt-text"><strong>Skip authenticity for now</strong> &mdash; defer to year 2.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<!-- D7 -->
+<section class="decision" id="d7">
+  <div class="decision-head">
+    <span class="decision-num">Decision 7 of 9</span>
+    <h3>Demand validation</h3>
+  </div>
+  <div class="decision-body">
+    <p>Do we survey customers before greenlighting capex, or proceed on conviction?</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d7" value="survey"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>Yes</strong> &mdash; formally survey existing edibles customers before greenlighting build.</span></label>
+    <label class="opt"><input type="radio" name="d7" value="proceed"><span class="opt-text"><strong>No</strong> &mdash; proceed on conviction; the strategic case is clear enough.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<!-- D8 -->
+<section class="decision" id="d8">
+  <div class="decision-head">
+    <span class="decision-num">Decision 8 of 9</span>
+    <h3>Staffing for on-site / consulting</h3>
+  </div>
+  <div class="decision-body">
+    <p>On-site work requires a PCQI-credentialed person. Build the role internally or contract it?</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d8" value="payroll"><span class="opt-text"><strong>Hire PCQI-credentialed FTE</strong> on payroll.</span></label>
+    <label class="opt"><input type="radio" name="d8" value="contract"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>Contract consultant</strong> at ~$200&ndash;400/hr until volume justifies FTE.</span></label>
+    <label class="opt"><input type="radio" name="d8" value="both"><span class="opt-text"><strong>Both</strong> &mdash; junior FTE for routine + senior contractor for audits.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<!-- D9 -->
+<section class="decision" id="d9">
+  <div class="decision-head">
+    <span class="decision-num">Decision 9 of 9</span>
+    <h3>Branding</h3>
+  </div>
+  <div class="decision-body">
+    <p>How does this offer go to market? Liability and customer perception differ across the three options.</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d9" value="subbrand"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>&ldquo;NCTL Food Safety&rdquo; sub-brand</strong> &mdash; preserves NCTL parent equity, signals scope expansion.</span></label>
+    <label class="opt"><input type="radio" name="d9" value="llc"><span class="opt-text"><strong>Separate LLC</strong> &mdash; distinct liability and insurance vehicle.</span></label>
+    <label class="opt"><input type="radio" name="d9" value="expand"><span class="opt-text"><strong>Just expand NCTL scope</strong> &mdash; no separate brand or entity.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+</div>
+
+</main>
+
+<div class="floatbar">
+  <button class="ghost" id="btnReset" title="Clear all decisions">Reset</button>
+  <button class="primary" id="btnCompileBottom">Compile decisions</button>
+</div>
+
+<div class="modal-backdrop" id="modal" data-open="false">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <h2 id="modalTitle">Decisions (paste into chat)</h2>
+      <button class="close" id="modalClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-toolbar">
+        <button class="primary" id="btnCopy">Copy to clipboard</button>
+        <button class="ghost" id="btnDownload">Download .md</button>
+        <button class="ghost" id="btnCloseFooter">Close</button>
+      </div>
+      <div class="modal-output">
+        <pre id="modalOutput"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" data-show="false"></div>
+
+<script src="shared.js"></script>
+</body>
+</html>

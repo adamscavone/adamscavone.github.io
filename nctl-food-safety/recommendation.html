@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="dark">
+<title>Recommendation &mdash; NCTL Food Safety Services</title>
+<link rel="stylesheet" href="shared.css">
+</head>
+<body>
+
+<header class="app">
+  <div class="row">
+    <div class="brand">
+      <h1>NCTL Food Safety Services</h1>
+      <p class="sub">Page A &middot; opinionated recommendation</p>
+    </div>
+    <span class="spacer"></span>
+    <nav>
+      <a href="index.html">Overview</a>
+      <a href="recommendation.html" class="active">Recommendation</a>
+      <a href="options.html">Options</a>
+      <a href="decisions.html">Decisions</a>
+    </nav>
+    <span class="progress">decided: <strong id="progressCount">0</strong> / <strong>9</strong></span>
+    <button class="primary" id="btnCompile">Compile</button>
+  </div>
+</header>
+
+<main>
+
+<h1 class="page-title">Build it. Start narrow. Bundle on-site work in from day one.</h1>
+<p class="page-sub">Allergen testing + on-site sanitation programs anchored by ELISA, gluten + peanut MVP, cannabis-product authenticity queued for year 2. Conventional food fraud deferred until the core offer is repeatable. ~$25K capex, ~10-week path to first commercial result.</p>
+
+<div class="callout">
+  <h4>What you&rsquo;re reading &mdash; Page A of 3</h4>
+  <p>This is the <strong>opinionated</strong> framing of a strategic-exploration brief for NCTL (a licensed cannabis testing lab in Ohio + Michigan). The question: should NCTL add a Food Safety Services line for its cannabis-edibles customers (and possibly conventional food customers)? This page leads with Adam&rsquo;s recommended call and the reasoning behind it. Two other framings of the same facts exist via the top nav: <a href="options.html">Options</a> (neutral comparison, no verdict) and <a href="decisions.html">Decisions</a> (just the nine decision cards, no prose). The <a href="index.html">Overview</a> page explains how this brief was prepared.</p>
+  <p>Nothing here commits NCTL to anything. No capex authorized, no customer interviews done yet. Your job: read, then click your answers on the nine decision cards at the bottom. Click <strong>Compile decisions</strong> when done &mdash; you&rsquo;ll get a markdown block to send back to Adam.</p>
+</div>
+
+<div class="lead">
+  <span class="stamp">Recommendation</span>
+  <p class="verdict">NCTL should stand up a &ldquo;Food Safety Services&rdquo; line with allergen testing (ELISA) plus on-site allergen-control swab programs, starting with a gluten + peanut MVP for cannabis-edibles producers in OH + MI, with cannabis-product authenticity queued as a year-2 adjacency.</p>
+
+  <p class="col-label">Three reasons</p>
+  <ol class="reasons">
+    <li><strong>The launch is cheap and fast.</strong> ELISA on R-Biopharm RIDASCREEN gets to commercial-grade results in ~10 weeks at ~$25K capex. AOAC 2012.01 is the FDA-recognized safe harbor for the gluten-free &lt;20 ppm labeling claim. One microplate reader runs every allergen kit &mdash; same instrument scales to the rest of the Big 9 when demand pulls.</li>
+    <li><strong>Bundling on-site swab programs converts testing into recurring revenue.</strong> Sample-in/results-out alone is $2-8K ARR per customer; adding on-site allergen-control verification (Hygiena AllerSnap / Neogen Reveal 3-D) pushes that to $15-30K ARR &mdash; and the geographic moat (local field service in OH + MI) locks out distant national competitors like Eurofins and Bia who can&rsquo;t cost-effectively send technicians.</li>
+    <li><strong>Cannabis-product authenticity is a real adjacency on instruments NCTL already owns.</strong> The LC-MS/MS and GC-MS infrastructure can drive distillate composition, synthetic-terpene detection, and Delta-8 / HHC synthesis fingerprinting &mdash; positioned as &ldquo;product-integrity analytics&rdquo; for brands, not regulatory adjudication. Existing customer access, no incumbent, premium pricing. Year 2 sequence.</li>
+  </ol>
+
+  <p class="col-label">Three risks</p>
+  <ol class="risks">
+    <li>Validated customer demand has not been surveyed. The strategic case is conviction-based; if you want a 60-day customer-pull survey before committing capex, it&rsquo;s defensible.</li>
+    <li>FDA&rsquo;s August 2020 rule explicitly says gluten in fermented / hydrolyzed foods cannot be reliably tested; FDA uses manufacturer records instead. NCTL must explicitly exclude those products from scope or sell them as records-review engagements, not routine compliance testing.</li>
+    <li>The MVP-vs-Big-9 phasing call is genuinely contested. The MVP path (recommended) has lower validation overhead but higher sample-splitting risk (customers send their other-allergen work to Eurofins). The Big-9 path has higher launch friction but locks in full-panel positioning.</li>
+  </ol>
+</div>
+
+<h2 class="section">What changed our framing</h2>
+<p>The original prompt was &ldquo;gluten test for our customers.&rdquo; During scoping, three expansions changed the strategic shape:</p>
+<ul>
+  <li><strong>Multi-allergen, not just gluten.</strong> The FDA Big 9 (milk, eggs, fish, crustacean, tree nuts, peanut, wheat / gluten, soy, sesame) are all addressable on the same microplate reader with kit swaps. Same workflow, same analyst, same capex. Peanut alone matters because cannabis-infused granolas and baked goods are exactly the cross-contamination matrix peanut allergies care about.</li>
+  <li><strong>On-site services, not just testing.</strong> The food-safety regulatory stack (cGMP under 21 CFR Part 117, HACCP, FSMA preventive controls, allergen control programs, environmental monitoring) is buyable services. Per-customer ARR jumps from $2-8K to $15-30K when testing is bundled with on-site verification.</li>
+  <li><strong>Food fraud is an adjacent revenue line, mostly on instruments NCTL already owns.</strong> Olive oil, honey, maple syrup, vanilla, and spice authenticity are LC-MS / GC-MS workflows. Cannabis-product authenticity (terpene authenticity, distillate composition, Delta-8 synthesis fingerprinting) is the same instruments applied to NCTL&rsquo;s existing customer base &mdash; the highest-leverage entry because the customer relationships already exist and there&rsquo;s no incumbent.</li>
+</ul>
+
+<h2 class="section">What is ELISA?</h2>
+<p>ELISA &mdash; Enzyme-Linked Immunosorbent Assay &mdash; is the regulatory-standard method for allergen detection. It uses antibodies that specifically bind the allergen protein. For gluten, the antibody is R5 Mendez (binds gliadin / secalin / hordein epitopes in wheat, rye, and barley). The format is a 96-well microplate sandwich:</p>
+
+<div class="elisa-diagram">  Step 1.  Plate well coated with capture antibody.
+  Step 2.  Sample extract added.  Allergen (if present) binds the antibody.
+  Step 3.  Detection antibody (enzyme-conjugated) added.  Forms a sandwich.
+  Step 4.  Substrate added.  Enzyme produces a color change.
+  Step 5.  Plate reader measures absorbance at ~450 nm.
+
+           [---R5---]   <- capture antibody, bound to well
+              |
+             [Gluten protein]   <- analyte from sample
+              |
+           [---R5---HRP]   <- detection antibody + enzyme
+              |
+           [color]   <- intensity proportional to gluten concentration</div>
+
+<p>Why ELISA wins for the launch:</p>
+<ul>
+  <li><strong>It&rsquo;s the AOAC official method.</strong> AOAC 2012.01 (R-Biopharm RIDASCREEN Gliadin) is the Codex Type I R5 method and the safe-harbor for FDA gluten-free &lt;20 ppm labeling claims. LC-MS/MS exists (AOAC 2017.17) but it&rsquo;s First Action status only, covers four allergens in limited matrices, and requires labeled peptide internal standards plus matrix-matched validation per product.</li>
+  <li><strong>It&rsquo;s fast.</strong> ~80 samples per plate, ~2.5 hours hands-on + incubation. Reagent cost $15-30 per sample. One analyst, one bench.</li>
+  <li><strong>It&rsquo;s sensitive enough.</strong> Quantitation range 5-80 ppm; detection limit ~3-5 ppm. The FDA threshold is &lt;20 ppm. ELISA sits squarely in that range.</li>
+  <li><strong>It scales.</strong> Same plate reader runs every Big 9 allergen kit. Capex doesn&rsquo;t multiply when you add allergens to the panel.</li>
+</ul>
+
+<div class="callout amber">
+  <h4>The one place ELISA loses</h4>
+  <p>Hydrolyzed and fermented matrices &mdash; soy sauce, beer, hydrolyzed wheat protein &mdash; chop up the gluten epitopes so the R5 antibody can&rsquo;t bind reliably. The result is false negatives. <strong>But LC-MS/MS doesn&rsquo;t solve this either.</strong> FDA&rsquo;s August 12, 2020 final rule on gluten-free labeling for fermented and hydrolyzed foods explicitly says gluten cannot currently be adequately detected or quantified in these products &mdash; FDA uses manufacturer records (control programs, supplier verification) rather than test results. The right scope decision: don&rsquo;t accept fermented / hydrolyzed gluten-claim work as routine testing. Sell it as a records-review or custom R&amp;D engagement, or refer it out.</p>
+</div>
+
+<h2 class="section">Instruments + capex</h2>
+<p>Entry capex sized for &ldquo;ELISA + manual washing, room to upgrade.&rdquo; The numbers below assume one analyst, one bench, ~6 linear feet of bench footprint, sample-prep area separate from immunoassay bench (cross-contamination control).</p>
+
+<table class="compare">
+  <thead>
+    <tr><th>Item</th><th>Range</th><th>Notes</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Microplate reader (absorbance, 405 / 450 / 620 nm)</td><td class="num">$5&ndash;15K</td><td>Mid-tier (BioTek 800TS, Tecan Sunrise). Higher-end ($25K+) unnecessary for ELISA-only.</td></tr>
+    <tr><td>Microplate washer</td><td class="num">$2&ndash;8K</td><td>Auto (BioTek 405) preferred. Manual 8-channel ($200) is the bootstrap.</td></tr>
+    <tr><td>Plate shaker / incubator (37&deg;C)</td><td class="num">$1&ndash;3K</td><td>Required for some kits.</td></tr>
+    <tr><td>Multi-channel pipettes (8 + 12 ch, variable)</td><td class="num">$1&ndash;3K</td><td>Eppendorf / Rainin.</td></tr>
+    <tr><td>Homogenizer (Polytron or stomacher)</td><td class="num">$1&ndash;5K</td><td>Cannabis edibles are sticky / viscous; reliable homogenization is non-negotiable.</td></tr>
+    <tr><td>Analytical balance, vortex, centrifuge</td><td class="num">$0</td><td>Already owned.</td></tr>
+    <tr><td>ELISA kit inventory (RIDASCREEN line, gluten + peanut at launch)</td><td class="num">~$1.5K</td><td>$400&ndash;600 per 96-plate; per-sample $15&ndash;30.</td></tr>
+    <tr class="total"><td>Entry capex (manual washing)</td><td class="num">~$15&ndash;20K</td><td>Path of least resistance for proof of concept.</td></tr>
+    <tr class="total"><td>Full capex (auto washing, premium homogenizer, contingency)</td><td class="num">~$30&ndash;35K</td><td>Recommended for permanent build.</td></tr>
+  </tbody>
+</table>
+
+<h2 class="section">Services adjacency &mdash; the bigger revenue lever</h2>
+<p>Testing alone is $2-8K ARR per customer. Bundling on-site verification work is where the per-customer economics become attractive.</p>
+
+<table class="compare">
+  <thead><tr><th>Service</th><th>Pricing benchmark</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td>Allergen sanitation swab program (post-cleaning verification)</td><td class="num">$500&ndash;2K / visit + per-swab testing</td><td>Hygiena AllerSnap, Neogen Reveal 3-D, ATP swabs. Existing field tools.</td></tr>
+    <tr><td>Environmental monitoring (Listeria / Salmonella zones)</td><td class="num">$1&ndash;3K / visit + per-swab</td><td>NCTL already does the microbiology.</td></tr>
+    <tr><td>cGMP / Part 117 facility audit</td><td class="num">$2.5&ndash;10K / audit</td><td>One-time or annual.</td></tr>
+    <tr><td>HACCP plan development</td><td class="num">$5&ndash;25K</td><td>Multi-week engagement; requires PCQI credential.</td></tr>
+    <tr><td>PCQI in-person training</td><td class="num">$1.5&ndash;3K / seat</td><td>Recurring revenue.</td></tr>
+    <tr><td>Mock recall exercise</td><td class="num">$2.5&ndash;7.5K</td><td>Required for some certifications.</td></tr>
+    <tr><td>Pre-GFSI gap audit (SQF, BRC, FSSC 22000)</td><td class="num">$5&ndash;15K</td><td>For customers preparing for multi-state retail.</td></tr>
+  </tbody>
+</table>
+
+<p>The case for stopping at Tier B (testing + swab programs) and <em>not</em> jumping to Tier C (full consulting) on day one: PCQI / HACCP advisory work is a different business with travel-heavy delivery, harder utilization management, and professional-liability exposure that NCTL&rsquo;s current insurance and staffing aren&rsquo;t built for. Tier C is reachable in year 2 once the testing + swab motion is repeatable.</p>
+
+<h2 class="section">Allergen panel scope</h2>
+<p>The FDA &ldquo;Big 9&rdquo; major food allergens (FALCPA + FASTER Act 2023):</p>
+<ol>
+  <li>Milk</li>
+  <li>Eggs</li>
+  <li>Fish</li>
+  <li>Crustacean shellfish</li>
+  <li>Tree nuts</li>
+  <li>Peanuts</li>
+  <li>Wheat (gluten = wheat + barley + rye storage proteins)</li>
+  <li>Soybeans</li>
+  <li>Sesame (added Jan 1, 2023)</li>
+</ol>
+
+<p>All 9 are addressable on the same plate reader with kit swaps. The economic question is not <em>&ldquo;should we add peanut?&rdquo;</em> &mdash; it&rsquo;s <em>&ldquo;how broad is the panel at launch?&rdquo;</em></p>
+
+<p><strong>Recommendation: gluten + peanut MVP at launch.</strong> Gluten gets the FDA-claim hook for cannabis-edibles labeling. Peanut covers the highest-severity cross-contact scenario for granolas, baked snacks, and shared-equipment edible production. Validating two allergens takes ~4-6 weeks vs. ~2 months for Big 9 parallel validation. Add milk and soy at month 4-6 if customer pull shows up; add the rest based on demand signal.</p>
+
+<h2 class="section">Food fraud / authenticity &mdash; the third adjacency</h2>
+<p>The bigger surprise during scoping: food fraud is the cheapest pivot of all because it largely runs on instruments NCTL already owns.</p>
+
+<table class="compare">
+  <thead>
+    <tr><th>Food</th><th>Common fraud</th><th>Best analytical method</th><th>NCTL capex add</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Olive oil</td><td>Cut with soybean / canola / sunflower; &ldquo;extra virgin&rdquo; mislabeling</td><td>GC-MS (fatty acid + sterol profile)</td><td>$0 (existing) + method dev</td></tr>
+    <tr><td>Honey</td><td>HFCS / rice syrup / beet sugar; mislabeled origin</td><td>LC-MS + AOAC 998.12 (C4 sugar); gold standard IRMS</td><td>$0-250K (IRMS is the premium add)</td></tr>
+    <tr><td>Maple syrup</td><td>Corn syrup / HFCS dilution; grade mislabeling</td><td>LC-MS for HFCS markers; IRMS for C4 sugars</td><td>$0-250K</td></tr>
+    <tr><td>Vanilla extract</td><td>Synthetic vanillin vs. natural</td><td>GC-MS; IRMS for &sup1;&sup3;C ratio</td><td>$0 + method dev</td></tr>
+    <tr><td>Spices (paprika, turmeric, oregano, chili)</td><td>Sudan dyes, lead chromate, leaf-filler substitution</td><td>LC-MS/MS + ICP-MS + DNA</td><td>$0 (existing)</td></tr>
+    <tr><td>Cannabis-product authenticity</td><td>Synthetic terpene fortification, distillate-as-rosin, Delta-8 synthesis byproducts</td><td>LC-MS/MS + GC-MS; chiral analysis</td><td>$0 (existing)</td></tr>
+  </tbody>
+</table>
+
+<div class="callout green">
+  <h4>Why cannabis-product authenticity, not olive oil, is the entry point</h4>
+  <p>Conventional food authenticity is the &ldquo;safer&rdquo; market but the worse entry for NCTL because the customer relationships don&rsquo;t exist and the gold-standard methods (honey IRMS, vanilla isotope ratios) live on instruments NCTL doesn&rsquo;t own. Cannabis-product authenticity is the opposite: nascent market, no incumbent, but the customers and instruments are already there. Peer-reviewed work has found Delta-8 products with impurities well beyond what COAs declared, and NIJ-funded LC-MS/MS work on commercial cannabinoid products documented systematic mislabeling. The sales motion is &ldquo;product-integrity analytics&rdquo; for brands that want defensible differentiation &mdash; not regulator-style adjudication, which the category isn&rsquo;t mature enough to deliver yet.</p>
+</div>
+
+<h2 class="section">What two outside reviewers said</h2>
+<p>We consulted Google Gemini and OpenAI Codex independently with the same four-question prompt. Both are LLMs with broad food-industry knowledge, not domain experts &mdash; treat their answers as triangulation, not gospel. They <strong>agreed</strong> on three of four calls and <strong>split</strong> on phasing.</p>
+
+<div class="peer-grid">
+  <div class="peer-card">
+    <span class="peer-name">Gemini (Google)</span>
+    <h4>Method</h4>
+    <p>Launch with ELISA. LC-MS lacks the cross-laboratory standardization for FDA gluten-free &ldquo;safe harbor.&rdquo; ELISA = $&lt;15K equipment, near-instant launch; LC-MS allergen method validation = 6-9 months on instruments currently generating cannabinoid revenue.</p>
+    <h4>Business model</h4>
+    <p>Strategy B &mdash; testing + on-site swab programs. Transforms commodity testing into a sticky SLA aligned with FSMA. Locks out distant national competitors via local field service. Scales to $20K+ ARR per customer.</p>
+    <h4>Phasing</h4>
+    <p><strong>Big 9 day-one.</strong> Food manufacturers refuse to split samples between labs &mdash; partial coverage cedes accounts to Eurofins or M&eacute;rieux. Defer food-fraud / authenticity to year 2.</p>
+    <h4>Authenticity beachhead</h4>
+    <p>Cannabis-product authenticity first &mdash; existing customer channel, no incumbent. Conventional food would require multi-year reputation-building against established reference labs.</p>
+    <p class="risk">Risk: cannabis authenticity is &ldquo;marketing-driven discretionary spend&rdquo; rather than compliance, so demand is brand-protection driven not regulatory.</p>
+  </div>
+
+  <div class="peer-card">
+    <span class="peer-name">Codex (OpenAI)</span>
+    <h4>Method</h4>
+    <p>ELISA as primary platform; LC-MS as a later exception build. AOAC 2017.17 (LC-MS allergen) is First Action only, 4 allergens, limited matrices, requires labeled peptide internal standards. ELISA = low-five-figure launch, 6-10 week validation; LC-MS build = 6-12 months.</p>
+    <h4>Business model</h4>
+    <p>Strategy B &mdash; testing + on-site swab programs. With ~50 addressable customers, pure samples-in/results-out is too thin. Use Neogen Reveal 3-D / Hygiena AllerSnap on-site. D is the wrong starting move &mdash; combines two pivots at once (consulting + authenticity) where some authenticity methods (honey IRMS) require instruments NCTL doesn&rsquo;t own.</p>
+    <h4>Phasing</h4>
+    <p><strong>Gluten + peanut MVP.</strong> Big 9 day-one multiplies validation burden, kit inventory, QC upkeep, and training before NCTL knows which allergens produce paid demand. Sequence: gluten + peanut &rarr; milk + soy on demand &rarr; sesame later. Authenticity year 2.</p>
+    <h4>Authenticity beachhead</h4>
+    <p>Cannabis-product authenticity first &mdash; commercially adjacent, instruments already owned. Peer-reviewed work has found Delta-8 products with impurities well beyond declared COAs; NIJ LC-MS/MS work documented systematic cannabinoid product mislabeling.</p>
+    <p class="risk">Risk: cannabis authenticity must be sold as &ldquo;premium QA / brand protection,&rdquo; not regulator-style bright-line adjudication &mdash; the category is too method-fragmented for that.</p>
+  </div>
+</div>
+
+<div class="callout">
+  <h4>Where they agree</h4>
+  <p>Both LLMs landed on ELISA + Strategy B + cannabis-product authenticity as the beachhead. The agreement isn&rsquo;t the same as proof, but it&rsquo;s real signal &mdash; two independent reads converging on the same three calls despite different reasoning paths.</p>
+</div>
+
+<div class="callout amber">
+  <h4>Where they split &mdash; and how we&rsquo;d call it</h4>
+  <p>Gemini argues Big 9 day-one (refuse-to-split customer behavior). Codex argues gluten + peanut MVP (validation burden multiplies before demand signal exists). <strong>Our call: lean toward Codex&rsquo;s MVP path.</strong> Gemini&rsquo;s &ldquo;refuse-to-split&rdquo; argument is strong for established food-lab customers (CPG branded foods at Eurofins / Bia) but weaker for cannabis-edibles producers, who don&rsquo;t today send the work anywhere and will likely treat allergen tests as a la carte add-ons. The MVP minimizes launch risk; expansion to Big 9 can be triggered by demand pull within 4-6 months. That said, this is the call where the exec should override us if domain instinct says &ldquo;cannabis customers will demand full panel.&rdquo;</p>
+</div>
+
+<h2 class="section">Phasing &mdash; 90 / 180 / 365-day milestones</h2>
+
+<h3 class="sub-section">Days 0&ndash;90</h3>
+<ul>
+  <li>Customer-demand survey: 5-10 conversations with active edibles producers in OH + MI. Cost: time only. Question to validate: would they pay $200&ndash;400 for gluten + peanut testing today, and would they engage NCTL for on-site sanitation work?</li>
+  <li>Capex sign-off and procurement: plate reader, washer, shaker, homogenizer, pipettes. Lead times 4-6 weeks.</li>
+  <li>Identify and contract the PCQI consultant for the on-site swab program. Start at hourly engagement, evaluate FTE at month 9.</li>
+  <li>Decide on branding (sub-brand / LLC / scope expansion) &mdash; affects website, customer communications, insurance.</li>
+</ul>
+
+<h3 class="sub-section">Days 90&ndash;180</h3>
+<ul>
+  <li>Gluten method validation: 4-6 weeks. AOAC 2012.01, R-Biopharm RIDASCREEN Gliadin. Validate on 3+ cannabis-edible matrices (gummy, baked good, beverage).</li>
+  <li>Peanut method validation: parallel, 4-6 weeks. RIDASCREEN Peanut.</li>
+  <li>Field protocol for allergen swab programs: SOPs, trending dashboard, corrective-action reporting template. (Codex&rsquo;s caveat is right: sold as one-off site visits, this work decays to low-margin services; sold as ongoing programs with trending, it sticks.)</li>
+  <li>First commercial launch: gluten testing live by month 5-6. Peanut testing live by month 6.</li>
+  <li>ISO 17025 scope-expansion application: filed; takes 6-12 months to complete.</li>
+</ul>
+
+<h3 class="sub-section">Days 180&ndash;365</h3>
+<ul>
+  <li>Allergen panel expansion: milk + soy if demand pulls (month 7-9). Tree nut + egg if pull continues (month 10-12).</li>
+  <li>On-site swab program scales: target 5-8 active customer programs by month 12.</li>
+  <li>Cannabis-product authenticity method development begins (year 2 launch): synthetic-terpene detection, Delta-8 impurity fingerprinting. Use existing LC-MS / GC-MS. Method dev ~3-6 months in parallel with allergen scale-up.</li>
+  <li>FTE decision: convert PCQI consultant to payroll if utilization &gt; 60%; stay contract otherwise.</li>
+  <li>Year-2 plan locks in: Tier C (full consulting) and / or conventional food authenticity if the core offer is repeatable and there&rsquo;s capacity to take on a second business model.</li>
+</ul>
+
+<h2 class="section">What this is not</h2>
+<ul>
+  <li><strong>Not a market study.</strong> The instrument and cost ranges come from industry benchmarks and the two LLM consults; the $X ARR per customer estimates are illustrative. Customer-pull validation is decision 7 below and should precede capex.</li>
+  <li><strong>Not a commitment to Tier C or D.</strong> The recommendation is explicitly Tier B (testing + swabs) for year 1. Full consulting and conventional food authenticity are deferred until the core offer is repeatable.</li>
+  <li><strong>Not a partnership-vs-build verdict.</strong> The 60-day customer survey can also surface whether referring to Bia / Eurofins for 6 months is the right interim move while validation runs.</li>
+</ul>
+
+<!-- ============ Decisions block ============ -->
+<div class="decisions-block">
+  <h2 class="section">Your decisions</h2>
+  <p class="intro">Answers persist across Recommendation / Options / Decisions pages. When you&rsquo;re done, click <strong>Compile decisions</strong> at the bottom right.</p>
+
+<section class="decision" id="d1">
+  <div class="decision-head"><span class="decision-num">Decision 1 of 9</span><h3>Posture</h3></div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d1" value="go"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>Go</strong> &mdash; build the line now.</span></label>
+    <label class="opt"><input type="radio" name="d1" value="survey"><span class="opt-text"><strong>Wait</strong> &mdash; survey customer demand first, decide in 60 days.</span></label>
+    <label class="opt"><input type="radio" name="d1" value="partner"><span class="opt-text"><strong>Partner out</strong> &mdash; refer to Bia / Eurofins for 6 months, then revisit.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<section class="decision" id="d2">
+  <div class="decision-head"><span class="decision-num">Decision 2 of 9</span><h3>Capex authorization</h3></div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d2" value="low"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>~$25K</strong> entry capex.</span></label>
+    <label class="opt"><input type="radio" name="d2" value="mid"><span class="opt-text"><strong>~$50K</strong> full capex.</span></label>
+    <label class="opt"><input type="radio" name="d2" value="hold"><span class="opt-text"><strong>Hold</strong> capex until demand validates.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<section class="decision" id="d3">
+  <div class="decision-head"><span class="decision-num">Decision 3 of 9</span><h3>Analytical method</h3></div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d3" value="elisa"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>ELISA only</strong> &mdash; R-Biopharm RIDASCREEN, AOAC 2012.01.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="both"><span class="opt-text"><strong>ELISA + LC-MS/MS development.</strong></span></label>
+    <label class="opt"><input type="radio" name="d3" value="lcms"><span class="opt-text"><strong>LC-MS/MS only.</strong></span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<section class="decision" id="d4">
+  <div class="decision-head"><span class="decision-num">Decision 4 of 9</span><h3>Services scope</h3></div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d4" value="testing"><span class="opt-text"><strong>Testing only.</strong></span></label>
+    <label class="opt"><input type="radio" name="d4" value="swabs"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>+ On-site sanitation / swab programs.</strong></span></label>
+    <label class="opt"><input type="radio" name="d4" value="consulting"><span class="opt-text"><strong>+ Full food-safety consulting.</strong></span></label>
+    <label class="opt"><input type="radio" name="d4" value="authenticity"><span class="opt-text"><strong>+ Food-fraud / authenticity testing.</strong></span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<section class="decision" id="d5">
+  <div class="decision-head"><span class="decision-num">Decision 5 of 9 &middot; peer LLMs disagreed</span><h3>Allergen panel phasing</h3></div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d5" value="big9"><span class="opt-text"><strong>Big 9 day-one</strong> (Gemini&rsquo;s pick).</span></label>
+    <label class="opt"><input type="radio" name="d5" value="mvp"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>Gluten + peanut MVP</strong> (Codex&rsquo;s pick, our pick).</span></label>
+    <label class="opt"><input type="radio" name="d5" value="pilot"><span class="opt-text"><strong>Gluten-only pilot</strong> for 3 months.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<section class="decision" id="d6">
+  <div class="decision-head"><span class="decision-num">Decision 6 of 9</span><h3>Authenticity beachhead</h3></div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d6" value="cannabis"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>Cannabis-product authenticity first.</strong></span></label>
+    <label class="opt"><input type="radio" name="d6" value="food"><span class="opt-text"><strong>Conventional food authenticity first.</strong></span></label>
+    <label class="opt"><input type="radio" name="d6" value="both"><span class="opt-text"><strong>Both in parallel.</strong></span></label>
+    <label class="opt"><input type="radio" name="d6" value="skip"><span class="opt-text"><strong>Skip authenticity</strong> &mdash; defer to year 2.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<section class="decision" id="d7">
+  <div class="decision-head"><span class="decision-num">Decision 7 of 9</span><h3>Demand validation</h3></div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d7" value="survey"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>Yes</strong> &mdash; 60-day customer-pull survey before capex.</span></label>
+    <label class="opt"><input type="radio" name="d7" value="proceed"><span class="opt-text"><strong>No</strong> &mdash; proceed on conviction.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<section class="decision" id="d8">
+  <div class="decision-head"><span class="decision-num">Decision 8 of 9</span><h3>Staffing</h3></div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d8" value="payroll"><span class="opt-text"><strong>PCQI FTE</strong> on payroll.</span></label>
+    <label class="opt"><input type="radio" name="d8" value="contract"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>Contract consultant</strong> until volume justifies FTE.</span></label>
+    <label class="opt"><input type="radio" name="d8" value="both"><span class="opt-text"><strong>Both</strong> &mdash; junior FTE + senior contractor.</span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+<section class="decision" id="d9">
+  <div class="decision-head"><span class="decision-num">Decision 9 of 9</span><h3>Branding</h3></div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d9" value="subbrand"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>&ldquo;NCTL Food Safety&rdquo;</strong> sub-brand.</span></label>
+    <label class="opt"><input type="radio" name="d9" value="llc"><span class="opt-text"><strong>Separate LLC.</strong></span></label>
+    <label class="opt"><input type="radio" name="d9" value="expand"><span class="opt-text"><strong>Just expand NCTL scope.</strong></span></label>
+  </div>
+  <div class="notes-wrap"><label>Notes</label><textarea placeholder="Optional"></textarea></div>
+</section>
+
+</div>
+
+</main>
+
+<div class="floatbar">
+  <button class="ghost" id="btnReset" title="Clear all decisions">Reset</button>
+  <button class="primary" id="btnCompileBottom">Compile decisions</button>
+</div>
+
+<div class="modal-backdrop" id="modal" data-open="false">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <h2 id="modalTitle">Decisions (paste into chat)</h2>
+      <button class="close" id="modalClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-toolbar">
+        <button class="primary" id="btnCopy">Copy to clipboard</button>
+        <button class="ghost" id="btnDownload">Download .md</button>
+        <button class="ghost" id="btnCloseFooter">Close</button>
+      </div>
+      <div class="modal-output"><pre id="modalOutput"></pre></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" data-show="false"></div>
+
+<script src="shared.js"></script>
+</body>
+</html>
