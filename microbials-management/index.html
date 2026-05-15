@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="dark">
+<title>Microbials Management — Decisions</title>
+<style>
+  :root {
+    --bg: #0b0d10;
+    --bg-card: #14181d;
+    --bg-card-2: #1a1e24;
+    --bg-elev: #1f242b;
+    --fg: #e6e8eb;
+    --fg-dim: #9aa0a6;
+    --fg-muted: #6b7075;
+    --accent: #8ab4f8;
+    --accent-fg: #0b0d10;
+    --green: #6cc46c;
+    --amber: #e8b76a;
+    --red: #ef6f6f;
+    --border: #2d3239;
+    --border-strong: #3b4047;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header.app {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(11, 13, 16, 0.92);
+    backdrop-filter: saturate(180%) blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.85rem 1rem;
+  }
+  header.app .row {
+    max-width: 820px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  header.app h1 { margin: 0; font-size: 1.05rem; font-weight: 700; }
+  header.app .sub { color: var(--fg-dim); font-size: 0.82rem; margin: 0; }
+  header.app .spacer { flex: 1; }
+  header.app .progress { color: var(--fg-dim); font-size: 0.82rem; font-family: ui-monospace, monospace; }
+  header.app .progress strong { color: var(--fg); }
+
+  button.primary, button.ghost {
+    font: inherit;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 0.5rem 0.95rem;
+    transition: background 0.12s, border-color 0.12s, transform 0.08s;
+  }
+  button.primary { background: var(--accent); color: var(--accent-fg); border: 1px solid var(--accent); font-weight: 600; }
+  button.primary:hover { background: #a3c5fa; border-color: #a3c5fa; }
+  button.primary:active { transform: scale(0.985); }
+  button.ghost { background: transparent; color: var(--fg); border: 1px solid var(--border-strong); }
+  button.ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  main { max-width: 820px; margin: 0 auto; padding: 1.5rem 1rem 6rem; }
+
+  .settled {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.93rem;
+    color: var(--fg-dim);
+  }
+  .settled h3 {
+    margin: 0 0 0.55rem;
+    font-size: 0.95rem;
+    color: var(--fg);
+    font-weight: 700;
+  }
+  .settled p { margin: 0 0 0.6rem; }
+  .settled p:last-child { margin-bottom: 0; }
+  .settled strong { color: var(--fg); }
+  .settled ul { margin: 0.4rem 0 0.6rem; padding-left: 1.3rem; }
+  .settled li { margin-bottom: 0.2rem; }
+
+  .decision {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 1.2rem;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .decision[data-answered="true"] {
+    border-color: rgba(108, 196, 108, 0.5);
+  }
+
+  .decision-head {
+    padding: 1rem 1.25rem 0.4rem;
+  }
+  .decision-num {
+    display: inline-block;
+    color: var(--fg-muted);
+    font-size: 0.75rem;
+    font-family: ui-monospace, monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  .decision-head h2 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--fg);
+  }
+
+  .decision-body {
+    padding: 0 1.25rem 0.4rem;
+    color: var(--fg);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .decision-body p { margin: 0 0 0.6rem; }
+  .decision-body strong { color: var(--fg); }
+  .decision-body em { color: var(--fg-dim); }
+  .decision-body ul { margin: 0.3rem 0 0.7rem; padding-left: 1.4rem; }
+  .decision-body li { margin-bottom: 0.3rem; }
+
+  .options {
+    padding: 0.4rem 1.25rem 0.4rem;
+  }
+  .opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.6rem 0.8rem;
+    margin-bottom: 0.4rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    background: var(--bg-card-2);
+    transition: border-color 0.12s, background 0.12s;
+    line-height: 1.5;
+    font-size: 0.94rem;
+  }
+  .opt:hover { border-color: var(--accent); }
+  .opt input[type="radio"] {
+    margin-top: 0.25rem;
+    accent-color: var(--accent);
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+  }
+  .opt-text {
+    flex: 1;
+  }
+  .opt-text strong { color: var(--fg); }
+  .opt input[type="radio"]:checked + .opt-text strong { color: var(--accent); }
+  .opt:has(input[type="radio"]:checked) {
+    border-color: var(--accent);
+    background: rgba(138, 180, 248, 0.08);
+  }
+  .rec {
+    color: var(--green);
+    font-weight: 600;
+    font-size: 0.78rem;
+    margin-right: 0.45rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .nopref {
+    color: var(--amber);
+    font-weight: 600;
+    font-size: 0.78rem;
+    margin-right: 0.45rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .notes-wrap {
+    padding: 0 1.25rem 1rem;
+  }
+  .notes-wrap label {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--fg-muted);
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .notes-wrap textarea {
+    width: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.6rem 0.75rem;
+    font: inherit;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    resize: vertical;
+    min-height: 56px;
+    transition: border-color 0.12s;
+  }
+  .notes-wrap textarea:focus { outline: none; border-color: var(--accent); }
+  .notes-wrap textarea::placeholder { color: var(--fg-muted); }
+
+  .check-list {
+    background: var(--bg-elev);
+    border-radius: 6px;
+    padding: 0.7rem 1rem;
+    margin: 0.4rem 0 0.7rem;
+  }
+  .check-list ol { margin: 0; padding-left: 1.4rem; }
+  .check-list li { margin-bottom: 0.35rem; font-size: 0.92rem; line-height: 1.5; }
+  .check-list .group {
+    color: var(--fg-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0.7rem 0 0.3rem;
+    font-weight: 600;
+  }
+  .check-list .group:first-child { margin-top: 0; }
+
+  .tradeoff {
+    background: var(--bg-elev);
+    border-radius: 6px;
+    padding: 0.7rem 1rem;
+    margin: 0.4rem 0 0.7rem;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+  .tradeoff strong { color: var(--fg); }
+  .tradeoff .side { margin-bottom: 0.5rem; }
+  .tradeoff .side:last-child { margin-bottom: 0; }
+
+  /* Modal */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .modal-backdrop[data-open="true"] { display: flex; }
+  .modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 720px;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .modal-head { padding: 0.9rem 1.15rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.7rem; }
+  .modal-head h2 { margin: 0; font-size: 1.05rem; flex: 1; }
+  .modal-head .close { background: transparent; color: var(--fg-dim); border: none; font-size: 1.4rem; cursor: pointer; line-height: 1; padding: 0.2rem 0.45rem; border-radius: 4px; }
+  .modal-head .close:hover { color: var(--fg); background: var(--bg-elev); }
+  .modal-body { padding: 0; overflow: auto; flex: 1; display: flex; flex-direction: column; }
+  .modal-toolbar { padding: 0.7rem 1.15rem; border-bottom: 1px solid var(--border); display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .modal-output { flex: 1; overflow: auto; }
+  .modal-output pre { margin: 0; border-radius: 0; background: var(--bg); padding: 1rem 1.15rem; white-space: pre-wrap; word-wrap: break-word; font-size: 0.85rem; line-height: 1.55; color: var(--fg); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+  .toast {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--bg-elev);
+    border: 1px solid var(--border-strong);
+    color: var(--fg);
+    padding: 0.55rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    opacity: 0;
+    transition: all 0.2s;
+    pointer-events: none;
+    z-index: 200;
+  }
+  .toast[data-show="true"] { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .floatbar { position: fixed; bottom: 1rem; right: 1rem; display: flex; gap: 0.5rem; z-index: 40; }
+  .floatbar button { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5); }
+
+  @media (max-width: 600px) {
+    header.app h1 { font-size: 0.95rem; }
+    header.app .sub { display: none; }
+    .floatbar { bottom: 0.5rem; right: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="app">
+  <div class="row">
+    <div>
+      <h1>Microbials Management — Decisions</h1>
+      <p class="sub">8 calls · direction already locked</p>
+    </div>
+    <span class="spacer"></span>
+    <span class="progress">decided: <strong id="progressCount">0</strong> / <strong id="progressTotal">8</strong></span>
+    <button class="primary" id="btnCompile">Compile decisions</button>
+  </div>
+</header>
+
+<main>
+
+<div class="settled">
+  <h3>Already settled — no input needed</h3>
+  <p><strong>Direction is locked:</strong> Microbials administration breaks out of the shared Assay Management page into a dedicated nav surface. Each Petrifilm method (TAB, TYM, TC, BTGN) and each DNA confirmation method (STEC, SAL) is first-class — its own configuration home, free to diverge over time. Settings that are genuinely shared across a family (SOPs, units, scale factor, micro extraction volume, identity) stay at the parent assay level. Gating is by lab — Ohio sees the new surface, Michigan stays on the existing micro flow until OH signs off. The new section slots under the existing "Microbials" nav group.</p>
+  <p><strong>Peer review brought back unanimous agreement</strong> that the current shared admin page is doing too much by branching on "this assay has methods, so render the micro view." The split is overdue. Both peer agents also flagged that the chemistry-vs-micro split should key off the assay's <em>type</em>, not "does it happen to have methods" — that's already part of the rebuild and isn't being decided here.</p>
+  <p><strong>One non-obvious finding from peer review:</strong> the admin UI today writes per-method defaults to a shared sample-type field, but the actual prep runtime now reads from a per-(assay × method × sample type) table that no admin page yet writes to. Admins edit one thing; the prep flow consults another. The new Microbials Management page needs to close that gap — relabeling alone would mask it. Decisions 4 and 5 below are about how and when that gap closes.</p>
+</div>
+
+<!-- ============ Decision 1 ============ -->
+<section class="decision" id="d1" data-decision-id="d1">
+  <div class="decision-head">
+    <span class="decision-num">Decision 1 of 8</span>
+    <h2>How is the new page structured under the hood?</h2>
+  </div>
+  <div class="decision-body">
+    <p>Petrifilm methods (TAB / TYM / TC / BTGN), DNA confirmation (STEC / SAL), and Plant Pathogens are <em>related but genuinely different shapes</em>. Petrifilm is colony counts and CFU/g. DNA is presence/absence — different fields, different validation, different report shape. Plant Pathogens is its own thing again.</p>
+    <p>Three ways to handle that:</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d1" value="shell"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Shared shell + three family components.</strong> One outer page handles the nav, lab-gating, header, list-of-methods, save plumbing. Three swap-in bodies — Petrifilm, DNA Confirmation, Plant Pathogen — render the family-specific fields. Each family can evolve independently without disturbing the others.</span></label>
+    <label class="opt"><input type="radio" name="d1" value="mega"><span class="opt-text"><strong>One mega-template with feature flags.</strong> Single body that shows/hides fields based on which family the method belongs to. Fewer files but heavy branching inside.</span></label>
+    <label class="opt"><input type="radio" name="d1" value="bespoke"><span class="opt-text"><strong>Six fully bespoke pages</strong>, one per method. Maximum freedom; most duplication; hardest to keep consistent.</span></label>
+    <label class="opt"><input type="radio" name="d1" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
+  </div>
+  <div class="notes-wrap">
+    <label>Notes (optional)</label>
+    <textarea placeholder=""></textarea>
+  </div>
+</section>
+
+<!-- ============ Decision 2 ============ -->
+<section class="decision" id="d2" data-decision-id="d2">
+  <div class="decision-head">
+    <span class="decision-num">Decision 2 of 8</span>
+    <h2>What happens to the existing micro section on Assay Management?</h2>
+  </div>
+  <div class="decision-body">
+    <p>The current Assay Management page has a microbial layout with all the same fields (method tabs, Quality Controls, Limits). When the new Microbials Management page ships for Ohio, what happens to that old surface?</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d2" value="gated"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Gated cutover, old becomes read-only.</strong> For Ohio, the new page is the only place to <em>edit</em> microbials; the old micro section on Assay Management goes read-only (or hidden from the list-level filter) so admins can't accidentally write to it. Michigan keeps the old editable surface until OH signs off. No split-brain, no double-edit risk, and the old surface is still there as a rollback escape hatch.</span></label>
+    <label class="opt"><input type="radio" name="d2" value="hard"><span class="opt-text"><strong>Hard cutover.</strong> The day the new page ships, the old micro section on Assay Management is gone for Ohio. Cleaner final state; no fallback if the new page hits a snag during the OH beta.</span></label>
+    <label class="opt"><input type="radio" name="d2" value="parallel"><span class="opt-text"><strong>Keep both editable in parallel.</strong> Admins can use either. (Both peer reviewers flagged this as the worst option — silent double-writes and confused audits — and recommended against it.)</span></label>
+    <label class="opt"><input type="radio" name="d2" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
+  </div>
+  <div class="notes-wrap">
+    <label>Notes (optional)</label>
+    <textarea placeholder=""></textarea>
+  </div>
+</section>
+
+<!-- ============ Decision 3 ============ -->
+<section class="decision" id="d3" data-decision-id="d3">
+  <div class="decision-head">
+    <span class="decision-num">Decision 3 of 8 · your call, no recommendation</span>
+    <h2>Quality Controls — per-method or panel-wide?</h2>
+  </div>
+  <div class="decision-body">
+    <p>Today the Quality Controls editor is rendered <em>inside</em> each method tab on the admin page, with the header "Panel Quality Control Definitions." But the data behind it is loaded by panel (assay), not by method — the same rows show under every method tab. The UI implies per-method; the data is panel-wide.</p>
+    <p>This is the worst-of-both shape, and both peers flagged it. It needs to pick a side. <strong>This is genuinely a lab-process question</strong>, not a code-design question — so no recommendation. Trade-offs:</p>
+    <div class="tradeoff">
+      <div class="side"><strong>If QC really is per-method in the lab:</strong> the data model needs to grow (each control row gets tied to a specific method). The Quality Controls editor stays inside each method tab and finally means what it looks like. More flexibility — TAB can have a different control plan than TYM. More admin overhead — controls have to be defined per method.</div>
+      <div class="side"><strong>If QC is panel-wide in the lab:</strong> the editor moves <em>out</em> of the method tabs and lives at the parent assay level (where the SOPs and identity fields are). One control plan applies to all methods on the panel. Less admin work; less flexibility per method.</div>
+    </div>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d3" value="per-method"><span class="opt-text"><strong>Per-method.</strong> Each method tab gets its own real Quality Controls editor; data model grows to support it.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="panel-wide"><span class="opt-text"><strong>Panel-wide.</strong> Pull the Quality Controls editor out of the method tabs; render it once at the parent assay level.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="defer"><span class="opt-text"><strong>Defer this call.</strong> Ship the new admin page with the current shape preserved; revisit after you've used it for a few weeks.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
+  </div>
+  <div class="notes-wrap">
+    <label>Notes (what does the lab actually do today?)</label>
+    <textarea placeholder=""></textarea>
+  </div>
+</section>
+
+<!-- ============ Decision 4 ============ -->
+<section class="decision" id="d4" data-decision-id="d4">
+  <div class="decision-head">
+    <span class="decision-num">Decision 4 of 8</span>
+    <h2>When does the dilution write-path land?</h2>
+  </div>
+  <div class="decision-body">
+    <p>Background: the prep runtime already reads dilution defaults from the new per-(assay × method × sample type) table when a row exists, falling back to the old sample-type-only field when it doesn't. But <em>no admin page writes to the new table yet</em>. The Limits tab on the current Assay Management page still writes to the old field. Until something writes to the new table, the per-method matrix stays empty and the runtime always uses the fallback.</p>
+    <p>WI 2679 (in your working tree right now) carries a punch-list item that says "rewire the Limits tab to write to the new table." That item could land on the old page as part of WI 2679, <em>or</em> it could land on the new Microbials Management page as part of this feature.</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d4" value="new-page"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Lands on the new Microbials Management page.</strong> WI 2679 commits as-is (schema + runtime read path); the Limits-tab-rewire item is removed from WI 2679's punch list and absorbed into this feature. No throwaway work on the page you're about to retire; the write path arrives on the surface that's going to host it long-term.</span></label>
+    <label class="opt"><input type="radio" name="d4" value="wi2679"><span class="opt-text"><strong>Lands on the current Assay Management page as part of WI 2679.</strong> Closes WI 2679 fully; the new Microbials Management page later inherits or replaces that wiring. Costs a chunk of throwaway work on a surface that's about to go read-only.</span></label>
+    <label class="opt"><input type="radio" name="d4" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
+  </div>
+  <div class="notes-wrap">
+    <label>Notes (optional)</label>
+    <textarea placeholder=""></textarea>
+  </div>
+</section>
+
+<!-- ============ Decision 5 ============ -->
+<section class="decision" id="d5" data-decision-id="d5">
+  <div class="decision-head">
+    <span class="decision-num">Decision 5 of 8</span>
+    <h2>How do we seed the per-method dilution matrix?</h2>
+  </div>
+  <div class="decision-body">
+    <p>The new per-(assay × method × sample type) table starts empty. Existing dilution defaults live in the old sample-type-only field. We need to decide what to copy over when the new write path goes live, so admins aren't staring at a blank matrix on day one.</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d5" value="non-default"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Lift only the sample types that have a real (non-default) value today.</strong> If a sample type currently says "10," seed one row per method on the affected micro assays. If a sample type was never touched, leave its rows empty — the runtime falls back to 1× exactly the way it does today. Smallest seed, easiest to audit, no fake "10" rows where no one made a call.</span></label>
+    <label class="opt"><input type="radio" name="d5" value="full-matrix"><span class="opt-text"><strong>Seed the full matrix.</strong> One row per (Ohio micro assay × method × sample type), pre-populated with whatever the old field said (or the default of 1× when blank). Admins see every cell filled; no implicit fallback in play.</span></label>
+    <label class="opt"><input type="radio" name="d5" value="empty"><span class="opt-text"><strong>Ship empty — let admins fill it as they go.</strong> The runtime keeps falling back to the old sample-type-only field until each (assay × method × sample type) gets explicitly set on the new page. Slow but deliberate; no migration assumptions baked in.</span></label>
+    <label class="opt"><input type="radio" name="d5" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
+  </div>
+  <div class="notes-wrap">
+    <label>Notes (optional)</label>
+    <textarea placeholder=""></textarea>
+  </div>
+</section>
+
+<!-- ============ Decision 6 ============ -->
+<section class="decision" id="d6" data-decision-id="d6">
+  <div class="decision-head">
+    <span class="decision-num">Decision 6 of 8</span>
+    <h2>Two small Petrifilm fields the system hardcodes today — promote them?</h2>
+  </div>
+  <div class="decision-body">
+    <p>Peer review caught two values the micro analysis screen treats as constants when they're really method properties:</p>
+    <div class="check-list">
+      <ol>
+        <li><strong>TNTC ("too numerous to count") sentinel.</strong> Hardcoded to <em>999999 CFU/g</em> in the analysis grid. When an analyst marks a plate TNTC, the system writes 999999, which always flags above the action limit. Fine in practice today, but it's a magic number sitting where a per-method "treat as &gt;= X" value should be.</li>
+        <li><strong>Valid plate count range.</strong> Petrifilm SOPs typically only count plates in a specific range (e.g., 25–250 CFU per plate). The system doesn't enforce or display this range anywhere — analysts know it by training, but there's no admin-set field for it.</li>
+      </ol>
+    </div>
+    <p>Adding these to the new admin page is a small extra lift while we're already there.</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d6" value="both"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Promote both</strong> — per-method TNTC threshold and per-method valid plate-count range, on the new Petrifilm admin surface.</span></label>
+    <label class="opt"><input type="radio" name="d6" value="tntc-only"><span class="opt-text"><strong>Promote TNTC only.</strong> Leave the valid-range field out of this feature.</span></label>
+    <label class="opt"><input type="radio" name="d6" value="range-only"><span class="opt-text"><strong>Promote valid-range only.</strong> Leave the TNTC sentinel as a hardcoded constant.</span></label>
+    <label class="opt"><input type="radio" name="d6" value="neither"><span class="opt-text"><strong>Promote neither</strong> — out of scope for this feature.</span></label>
+    <label class="opt"><input type="radio" name="d6" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
+  </div>
+  <div class="notes-wrap">
+    <label>Notes (optional)</label>
+    <textarea placeholder=""></textarea>
+  </div>
+</section>
+
+<!-- ============ Decision 7 ============ -->
+<section class="decision" id="d7" data-decision-id="d7">
+  <div class="decision-head">
+    <span class="decision-num">Decision 7 of 8 · needs your input</span>
+    <h2>What goes on the DNA confirmation admin surface (STEC / SAL)?</h2>
+  </div>
+  <div class="decision-body">
+    <p>STEC and SAL aren't Petrifilm — they're presence/absence DNA confirmation. The current Assay Management page treats them the same as Petrifilm methods (same Quality Controls + Limits structure), which probably isn't right for the new dedicated surface. What does the lab <em>actually</em> need to configure for these?</p>
+    <p>Candidate fields (informed guess, not a recommendation — pick what's real and add what's missing):</p>
+    <div class="check-list">
+      <ol>
+        <li>Method identity (name, code, SOP reference).</li>
+        <li>Per-sample-type weight ranges, like Petrifilm has today.</li>
+        <li>Per-sample-type incubation parameters if they differ from Petrifilm.</li>
+        <li>Quality Controls (which controls run, at what cadence).</li>
+        <li>Something else specific to DNA work — confirmation result categories, kit/lot tracking, threshold cycle settings, etc.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d7" value="petrifilm-shape"><span class="opt-text"><strong>Same shape as Petrifilm</strong>, just with presence/absence instead of CFU/g math. Identity + sample-type rows + quality controls.</span></label>
+    <label class="opt"><input type="radio" name="d7" value="minimal"><span class="opt-text"><strong>Minimal v1</strong> — just identity + SOP fields + Quality Controls. Defer everything else until DNA-specific friction surfaces.</span></label>
+    <label class="opt"><input type="radio" name="d7" value="specify"><span class="opt-text"><strong>I'll specify in notes</strong> — here's what the DNA confirmation admin actually needs.</span></label>
+    <label class="opt"><input type="radio" name="d7" value="defer"><span class="opt-text"><strong>Defer DNA family</strong> to a later pass. Ship Petrifilm only in this feature; STEC/SAL stays on the old admin surface for now.</span></label>
+    <label class="opt"><input type="radio" name="d7" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
+  </div>
+  <div class="notes-wrap">
+    <label>Notes (what does DNA confirmation admin actually need?)</label>
+    <textarea placeholder="e.g., 'need kit lot tracking on the method', 'cycle threshold per method', 'positive control library is per-method', 'no QC editor for STEC/SAL — controls are hardcoded'"></textarea>
+  </div>
+</section>
+
+<!-- ============ Decision 8 ============ -->
+<section class="decision" id="d8" data-decision-id="d8">
+  <div class="decision-head">
+    <span class="decision-num">Decision 8 of 8</span>
+    <h2>Plant Pathogens family — in this feature or later?</h2>
+  </div>
+  <div class="decision-body">
+    <p>Plant Pathogens is the third micro family. It's similar in shape to DNA confirmation but has its own analyte list and reporting conventions. Currently it shares the same Assay Management surface as everything else.</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d8" value="defer"><span class="opt-text"><span class="rec">★ Recommended</span><strong>Punt to a later pass.</strong> Plant Pathogens stays on the existing Assay Management surface; this feature ships with Petrifilm + DNA confirmation only. Keeps scope tight; we revisit Plant Pathogens once Petrifilm and DNA are live on the new page.</span></label>
+    <label class="opt"><input type="radio" name="d8" value="include"><span class="opt-text"><strong>Include in this feature.</strong> Build the Plant Pathogen family component alongside Petrifilm and DNA Confirmation. Bigger scope; one trip instead of two.</span></label>
+    <label class="opt"><input type="radio" name="d8" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
+  </div>
+  <div class="notes-wrap">
+    <label>Notes (optional)</label>
+    <textarea placeholder=""></textarea>
+  </div>
+</section>
+
+</main>
+
+<div class="floatbar">
+  <button class="ghost" id="btnReset" title="Clear all decisions (cannot undo)">Reset</button>
+  <button class="primary" id="btnCompileBottom">Compile decisions</button>
+</div>
+
+<div class="modal-backdrop" id="modal" data-open="false">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <h2 id="modalTitle">Decisions (paste into Claude Code)</h2>
+      <button class="close" id="modalClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-toolbar">
+        <button class="primary" id="btnCopy">Copy to clipboard</button>
+        <button class="ghost" id="btnDownload">Download .md</button>
+        <button class="ghost" id="btnCloseFooter">Close</button>
+      </div>
+      <div class="modal-output">
+        <pre id="modalOutput"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" data-show="false"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  const STORAGE_KEY = 'microbials-management-v1-decisions';
+
+  const DECISIONS = [
+    {
+      id: 'd1',
+      num: 1,
+      title: 'Page structure under the hood',
+      options: {
+        shell: 'Shared shell + three family components (Petrifilm / DNA Confirmation / Plant Pathogen).',
+        mega: 'One mega-template with feature flags inside.',
+        bespoke: 'Six fully bespoke pages, one per method.',
+        other: 'Other (see notes).'
+      }
+    },
+    {
+      id: 'd2',
+      num: 2,
+      title: 'Migration path from the existing micro section',
+      options: {
+        gated: 'Gated cutover, old becomes read-only for Ohio. Michigan stays editable on old surface until OH signs off.',
+        hard: 'Hard cutover. Day one, the old micro section is gone for Ohio.',
+        parallel: 'Keep both editable in parallel.',
+        other: 'Other (see notes).'
+      }
+    },
+    {
+      id: 'd3',
+      num: 3,
+      title: 'Quality Controls scope (per-method vs panel-wide)',
+      options: {
+        'per-method': 'Per-method. Data model grows so each control row ties to a specific method.',
+        'panel-wide': 'Panel-wide. QC editor moves out of method tabs to the parent assay level.',
+        defer: 'Defer the call. Ship with current shape preserved; revisit after using it.',
+        other: 'Other (see notes).'
+      }
+    },
+    {
+      id: 'd4',
+      num: 4,
+      title: 'When the dilution write-path lands',
+      options: {
+        'new-page': 'On the new Microbials Management page. WI 2679 commits as-is; the rewire item moves to this feature.',
+        wi2679: 'On the current Assay Management page as part of WI 2679. Closes WI 2679 fully; throwaway work on a retiring surface.',
+        other: 'Other (see notes).'
+      }
+    },
+    {
+      id: 'd5',
+      num: 5,
+      title: 'Seeding the per-method dilution matrix',
+      options: {
+        'non-default': 'Lift only sample types that have a real (non-default) value today. Smallest seed.',
+        'full-matrix': 'Seed the full matrix. One row per (Ohio micro assay × method × sample type).',
+        empty: 'Ship empty. Runtime keeps falling back to the old field until admins set each cell.',
+        other: 'Other (see notes).'
+      }
+    },
+    {
+      id: 'd6',
+      num: 6,
+      title: 'Promote TNTC threshold and valid plate-count range?',
+      options: {
+        both: 'Promote both. Per-method TNTC threshold + per-method valid plate-count range.',
+        'tntc-only': 'Promote TNTC only.',
+        'range-only': 'Promote valid plate-count range only.',
+        neither: 'Promote neither. Out of scope.',
+        other: 'Other (see notes).'
+      }
+    },
+    {
+      id: 'd7',
+      num: 7,
+      title: 'DNA confirmation admin surface (STEC / SAL)',
+      options: {
+        'petrifilm-shape': 'Same shape as Petrifilm — identity + sample-type rows + Quality Controls.',
+        minimal: 'Minimal v1 — identity + SOP + Quality Controls only.',
+        specify: 'Specify in notes.',
+        defer: 'Defer DNA family to a later pass; STEC/SAL stays on the old surface.',
+        other: 'Other (see notes).'
+      }
+    },
+    {
+      id: 'd8',
+      num: 8,
+      title: 'Plant Pathogens family — in this feature or later?',
+      options: {
+        defer: 'Punt to a later pass. Plant Pathogens stays on existing Assay Management.',
+        include: 'Include in this feature. Build the Plant Pathogen family component alongside the others.',
+        other: 'Other (see notes).'
+      }
+    }
+  ];
+
+  function loadState() {
+    try { const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : {}; }
+    catch (e) { return {}; }
+  }
+  function saveState(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  let state = loadState();
+
+  function applyDecisionState(dec) {
+    const sec = document.getElementById(dec.id);
+    if (!sec) return;
+    const s = state[dec.id] || {};
+    if (s.choice) {
+      const radio = sec.querySelector('input[type="radio"][value="' + s.choice + '"]');
+      if (radio && !radio.checked) radio.checked = true;
+    }
+    const ta = sec.querySelector('textarea');
+    if (ta && typeof s.notes === 'string' && ta.value !== s.notes) ta.value = s.notes;
+    sec.dataset.answered = s.choice ? 'true' : 'false';
+  }
+
+  DECISIONS.forEach(function (dec) {
+    const sec = document.getElementById(dec.id);
+    if (!sec) return;
+    sec.querySelectorAll('input[type="radio"][name="' + dec.id + '"]').forEach(function (r) {
+      r.addEventListener('change', function () {
+        state[dec.id] = state[dec.id] || {};
+        state[dec.id].choice = r.value;
+        saveState(state);
+        applyDecisionState(dec);
+        updateProgress();
+      });
+    });
+    const ta = sec.querySelector('textarea');
+    if (ta) {
+      ta.addEventListener('input', function () {
+        state[dec.id] = state[dec.id] || {};
+        state[dec.id].notes = ta.value;
+        saveState(state);
+      });
+    }
+    applyDecisionState(dec);
+  });
+
+  function updateProgress() {
+    let n = 0;
+    DECISIONS.forEach(function (dec) {
+      if ((state[dec.id] || {}).choice) n++;
+    });
+    document.getElementById('progressCount').textContent = n;
+  }
+  updateProgress();
+
+  function compileMarkdown() {
+    const lines = [];
+    lines.push('# Microbials Management — Decisions');
+    lines.push('');
+    lines.push('Reviewed: ' + new Date().toISOString());
+    lines.push('');
+
+    let answered = 0, pending = 0;
+    DECISIONS.forEach(function (dec) {
+      if ((state[dec.id] || {}).choice) answered++; else pending++;
+    });
+    lines.push('**Status:** ' + answered + ' of ' + DECISIONS.length + ' decided.');
+    lines.push('');
+
+    DECISIONS.forEach(function (dec) {
+      const s = state[dec.id] || {};
+      const choiceLabel = s.choice ? (dec.options[s.choice] || s.choice) : '_(not yet decided)_';
+      lines.push('## Decision ' + dec.num + ' — ' + dec.title);
+      lines.push('');
+      lines.push('**Chosen:** ' + choiceLabel);
+      if (s.notes && s.notes.trim()) {
+        lines.push('');
+        lines.push('**Notes:**');
+        lines.push('');
+        s.notes.trim().split(/\r?\n/).forEach(function (ln) { lines.push('> ' + ln); });
+      }
+      lines.push('');
+    });
+
+    if (pending > 0) {
+      lines.push('---');
+      lines.push('');
+      lines.push('**Outstanding:** ' + pending + ' decision' + (pending === 1 ? '' : 's') + ' not yet picked.');
+      lines.push('');
+    }
+
+    return lines.join('\n');
+  }
+
+  const modal = document.getElementById('modal');
+  const modalOutput = document.getElementById('modalOutput');
+
+  function openModal() {
+    modalOutput.textContent = compileMarkdown();
+    modal.dataset.open = 'true';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    modal.dataset.open = 'false';
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('btnCompile').addEventListener('click', openModal);
+  document.getElementById('btnCompileBottom').addEventListener('click', openModal);
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.getElementById('btnCloseFooter').addEventListener('click', closeModal);
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.dataset.open === 'true') closeModal();
+  });
+
+  const toast = document.getElementById('toast');
+  let toastTimer = null;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.dataset.show = 'true';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.dataset.show = 'false'; }, 2200);
+  }
+
+  document.getElementById('btnCopy').addEventListener('click', function () {
+    const text = modalOutput.textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        function () { showToast('Copied to clipboard'); },
+        function () { fallbackCopy(text); }
+      );
+    } else { fallbackCopy(text); }
+  });
+
+  function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); showToast('Copied to clipboard'); }
+    catch (e) { showToast('Copy failed — select manually'); }
+    document.body.removeChild(ta);
+  }
+
+  document.getElementById('btnDownload').addEventListener('click', function () {
+    const text = compileMarkdown();
+    const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const ts = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+    a.href = url; a.download = 'microbials-management-decisions-' + ts + '.md';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 500);
+    showToast('Downloaded');
+  });
+
+  document.getElementById('btnReset').addEventListener('click', function () {
+    if (!confirm('Clear all decisions? This cannot be undone.')) return;
+    state = {}; saveState(state);
+    DECISIONS.forEach(applyDecisionState);
+    document.querySelectorAll('input[type="radio"]').forEach(function (r) { r.checked = false; });
+    document.querySelectorAll('textarea').forEach(function (t) { t.value = ''; });
+    document.querySelectorAll('.decision').forEach(function (s) { s.dataset.answered = 'false'; });
+    updateProgress();
+    showToast('All decisions cleared');
+  });
+})();
+</script>
+
+</body>
+</html>
