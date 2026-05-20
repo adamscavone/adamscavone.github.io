@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="dark">
+<title>qPCR Import Review — Science Decisions</title>
+<style>
+  :root {
+    --bg: #0b0d10;
+    --bg-card: #14181d;
+    --bg-card-2: #1a1e24;
+    --bg-elev: #1f242b;
+    --fg: #e6e8eb;
+    --fg-dim: #9aa0a6;
+    --fg-muted: #6b7075;
+    --accent: #8ab4f8;
+    --accent-fg: #0b0d10;
+    --green: #6cc46c;
+    --amber: #e8b76a;
+    --red: #ef6f6f;
+    --border: #2d3239;
+    --border-strong: #3b4047;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header.app {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(11, 13, 16, 0.92);
+    backdrop-filter: saturate(180%) blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.85rem 1rem;
+  }
+  header.app .row {
+    max-width: 820px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  header.app h1 { margin: 0; font-size: 1.05rem; font-weight: 700; }
+  header.app .sub { color: var(--fg-dim); font-size: 0.82rem; margin: 0; }
+  header.app .spacer { flex: 1; }
+  header.app .progress { color: var(--fg-dim); font-size: 0.82rem; font-family: ui-monospace, monospace; }
+  header.app .progress strong { color: var(--fg); }
+
+  button.primary, button.ghost {
+    font: inherit;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 0.5rem 0.95rem;
+    transition: background 0.12s, border-color 0.12s, transform 0.08s;
+  }
+  button.primary { background: var(--accent); color: var(--accent-fg); border: 1px solid var(--accent); font-weight: 600; }
+  button.primary:hover { background: #a3c5fa; border-color: #a3c5fa; }
+  button.primary:active { transform: scale(0.985); }
+  button.ghost { background: transparent; color: var(--fg); border: 1px solid var(--border-strong); }
+  button.ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  main { max-width: 820px; margin: 0 auto; padding: 1.5rem 1rem 6rem; }
+
+  .settled {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.93rem;
+    color: var(--fg-dim);
+  }
+  .settled h3 {
+    margin: 0 0 0.55rem;
+    font-size: 0.95rem;
+    color: var(--fg);
+    font-weight: 700;
+  }
+  .settled p { margin: 0 0 0.6rem; }
+  .settled p:last-child { margin-bottom: 0; }
+  .settled strong { color: var(--fg); }
+  .settled ul { margin: 0.4rem 0 0.6rem; padding-left: 1.3rem; }
+  .settled li { margin-bottom: 0.2rem; }
+
+  .decision {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 1.2rem;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .decision[data-answered="true"] {
+    border-color: rgba(108, 196, 108, 0.5);
+  }
+
+  .decision-head {
+    padding: 1rem 1.25rem 0.4rem;
+  }
+  .decision-num {
+    display: inline-block;
+    color: var(--fg-muted);
+    font-size: 0.75rem;
+    font-family: ui-monospace, monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  .decision-head h2 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--fg);
+  }
+
+  .decision-body {
+    padding: 0 1.25rem 0.4rem;
+    color: var(--fg);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .decision-body p { margin: 0 0 0.6rem; }
+  .decision-body strong { color: var(--fg); }
+  .decision-body em { color: var(--fg-dim); }
+  .decision-body ul { margin: 0.3rem 0 0.7rem; padding-left: 1.4rem; }
+  .decision-body li { margin-bottom: 0.3rem; }
+
+  .options {
+    padding: 0.4rem 1.25rem 0.4rem;
+  }
+  .opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.6rem 0.8rem;
+    margin-bottom: 0.4rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    background: var(--bg-card-2);
+    transition: border-color 0.12s, background 0.12s;
+    line-height: 1.5;
+    font-size: 0.94rem;
+  }
+  .opt:hover { border-color: var(--accent); }
+  .opt input[type="radio"] {
+    margin-top: 0.25rem;
+    accent-color: var(--accent);
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+  }
+  .opt-text {
+    flex: 1;
+  }
+  .opt-text strong { color: var(--fg); }
+  .opt input[type="radio"]:checked + .opt-text strong { color: var(--accent); }
+  .opt:has(input[type="radio"]:checked) {
+    border-color: var(--accent);
+    background: rgba(138, 180, 248, 0.08);
+  }
+  .rec {
+    color: var(--green);
+    font-weight: 600;
+    font-size: 0.78rem;
+    margin-right: 0.45rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .notes-wrap {
+    padding: 0 1.25rem 1rem;
+  }
+  .notes-wrap label {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--fg-muted);
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .notes-wrap textarea {
+    width: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.6rem 0.75rem;
+    font: inherit;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    resize: vertical;
+    min-height: 56px;
+    transition: border-color 0.12s;
+  }
+  .notes-wrap textarea:focus { outline: none; border-color: var(--accent); }
+  .notes-wrap textarea::placeholder { color: var(--fg-muted); }
+
+  .check-list {
+    background: var(--bg-elev);
+    border-radius: 6px;
+    padding: 0.7rem 1rem;
+    margin: 0.4rem 0 0.7rem;
+  }
+  .check-list ol { margin: 0; padding-left: 1.4rem; }
+  .check-list li { margin-bottom: 0.35rem; font-size: 0.92rem; line-height: 1.5; }
+  .check-list .group {
+    color: var(--fg-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0.7rem 0 0.3rem;
+    font-weight: 600;
+  }
+  .check-list .group:first-child { margin-top: 0; }
+
+  /* Modal */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .modal-backdrop[data-open="true"] { display: flex; }
+  .modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 720px;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .modal-head { padding: 0.9rem 1.15rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.7rem; }
+  .modal-head h2 { margin: 0; font-size: 1.05rem; flex: 1; }
+  .modal-head .close { background: transparent; color: var(--fg-dim); border: none; font-size: 1.4rem; cursor: pointer; line-height: 1; padding: 0.2rem 0.45rem; border-radius: 4px; }
+  .modal-head .close:hover { color: var(--fg); background: var(--bg-elev); }
+  .modal-body { padding: 0; overflow: auto; flex: 1; display: flex; flex-direction: column; }
+  .modal-toolbar { padding: 0.7rem 1.15rem; border-bottom: 1px solid var(--border); display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .modal-output { flex: 1; overflow: auto; }
+  .modal-output pre { margin: 0; border-radius: 0; background: var(--bg); padding: 1rem 1.15rem; white-space: pre-wrap; word-wrap: break-word; font-size: 0.85rem; line-height: 1.55; color: var(--fg); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+  .toast {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--bg-elev);
+    border: 1px solid var(--border-strong);
+    color: var(--fg);
+    padding: 0.55rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    opacity: 0;
+    transition: all 0.2s;
+    pointer-events: none;
+    z-index: 200;
+  }
+  .toast[data-show="true"] { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .floatbar { position: fixed; bottom: 1rem; right: 1rem; display: flex; gap: 0.5rem; z-index: 40; }
+  .floatbar button { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5); }
+
+  @media (max-width: 600px) {
+    header.app h1 { font-size: 0.95rem; }
+    header.app .sub { display: none; }
+    .floatbar { bottom: 0.5rem; right: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="app">
+  <div class="row">
+    <div>
+      <h1>qPCR Instrument-File Import — Science Decisions</h1>
+      <p class="sub">3 SOP / quality-control calls · everything else is engineering</p>
+    </div>
+    <span class="spacer"></span>
+    <span class="progress">decided: <strong id="progressCount">0</strong> / <strong id="progressTotal">3</strong></span>
+    <button class="primary" id="btnCompile">Compile decisions</button>
+  </div>
+</header>
+
+<main>
+
+<div class="settled">
+  <h3>Context — what this review found</h3>
+  <p><strong>What was built:</strong> a feature to import GENE-UP qPCR instrument files straight into the LIMS — parse the export, auto-fill each sample's Presence / Absence / Inhibited result for Salmonella and STEC, and run the SOP-149 quality-control checks. A three-way independent review (one internal pass plus two external AI reviewers) found it well-built, but flagged gaps that only surface against <em>real</em> instrument files rather than the clean test data the demo used.</p>
+  <p><strong>Already being handled by engineering — no science input needed:</strong> making sample-to-well matching reliable when the instrument truncates sample IDs; confirming the three channel files (HEX / ROX / CY5) all came from the same run; checking that every sample in a batch actually received a result before the import is accepted; an access-control tightening; and a database-migration cleanup. These have clear technical fixes and are being scheduled separately.</p>
+  <p><strong>What needs you:</strong> three questions are scientific / SOP calls, not engineering ones — they belong to the Director of Science and the Senior Microbiologist. They gate the single biggest finding: the import tool currently treats SOP-149's quality-control cycle thresholds as advisory, because the real instrument data falls outside them. Until these three are answered, the tool is making a QC judgment the SOP has not authorized.</p>
+</div>
+
+<!-- ============ Decision 1 ============ -->
+<section class="decision" id="d1" data-decision-id="d1">
+  <div class="decision-head">
+    <span class="decision-num">Decision 1 of 3 · highest-stakes</span>
+    <h2>Is SOP-149's amplification-control window (cycles 22&ndash;27) still correct?</h2>
+  </div>
+  <div class="decision-body">
+    <p>SOP-149 (&sect;13.4.4, &sect;14.1) says the internal amplification control — the HEX channel that confirms the PCR reaction worked — should cross threshold at roughly <strong>cycle 22&ndash;27</strong>. In the actual GENE-UP export files from the lab, <strong>every well crosses at about 28&ndash;29</strong> — including the laboratory reagent blank.</p>
+    <p>Read strictly, the SOP would mark every sample on that plate <em>inhibited</em> and fail the whole batch. The new import tool currently lets those batches pass by treating 22&ndash;27 as advisory rather than a hard limit. That can't stay an unspoken software default — which is authoritative, the SOP number or the instrument's real behavior?</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d1" value="a"><span class="opt-text"><strong>The SOP window is out of date.</strong> Revise SOP-149 to the instrument's verified range. (The review's leading read: the 22&ndash;27 figure likely predates current color-compensation settings or a kit-lot change.)</span></label>
+    <label class="opt"><input type="radio" name="d1" value="b"><span class="opt-text"><strong>The instrument needs attention.</strong> A 28&ndash;29 control points to a GENE-UP setup or color-compensation issue; hold off importing these files until it is resolved.</span></label>
+    <label class="opt"><input type="radio" name="d1" value="c"><span class="opt-text"><strong>Re-test before deciding.</strong> Run a known-good control plate first; the current export files may not be representative.</span></label>
+    <label class="opt"><input type="radio" name="d1" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
+  </div>
+  <div class="notes-wrap">
+    <label>Notes (optional)</label>
+    <textarea placeholder="e.g. the verified range to adopt, or what to check on the instrument"></textarea>
+  </div>
+</section>
+
+<!-- ============ Decision 2 ============ -->
+<section class="decision" id="d2" data-decision-id="d2">
+  <div class="decision-head">
+    <span class="decision-num">Decision 2 of 3</span>
+    <h2>Should the LIMS enforce SOP-149's numeric cycle thresholds, or trust the instrument's own call?</h2>
+  </div>
+  <div class="decision-body">
+    <p>When a result is evaluated, the software can either independently check each cycle value against SOP-149's numeric windows (control 22&ndash;27; positive controls 5&ndash;39), or accept the GENE-UP software's own &ldquo;Presumed Presence / Presumed Absence&rdquo; verdict. Today's build does the latter.</p>
+    <p>This is partly downstream of Decision 1: if the SOP window is revised, enforcing it in the LIMS becomes straightforward.</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d2" value="a"><span class="opt-text"><strong>Enforce the numbers in the LIMS.</strong> The system independently checks every cycle value against the SOP windows and flags anything outside them as a QC failure.</span></label>
+    <label class="opt"><input type="radio" name="d2" value="b"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>Trust the instrument's verdict, but surface the numbers.</strong> The LIMS records the GENE-UP Presence / Absence call, displays every cycle value, and flags any out-of-SOP-range reading for the reviewer's attention without auto-failing it.</span></label>
+    <label class="opt"><input type="radio" name="d2" value="c"><span class="opt-text"><strong>Trust the instrument's verdict only.</strong> Record Presence / Absence as the instrument reports it; cycle values are reference-only.</span></label>
+    <label class="opt"><input type="radio" name="d2" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
+  </div>
+  <div class="notes-wrap">
+    <label>Notes (optional)</label>
+    <textarea placeholder="Anything to add or override?"></textarea>
+  </div>
+</section>
+
+<!-- ============ Decision 3 ============ -->
+<section class="decision" id="d3" data-decision-id="d3">
+  <div class="decision-head">
+    <span class="decision-num">Decision 3 of 3</span>
+    <h2>Should the failed-QC reporting exception live inside the LIMS?</h2>
+  </div>
+  <div class="decision-body">
+    <p>SOP-149 &sect;14.3.3 allows a failed-QC result to still be reported when there is an assignable cause and the Scientific Director (or QA) approves it. The current import tool has no such path — if QC fails for an organism, its results are simply not imported, and the analyst falls back to the manual process with the approval handled outside the system.</p>
+    <p>Should that approval be captured inside the LIMS instead?</p>
+  </div>
+  <div class="options">
+    <label class="opt"><input type="radio" name="d3" value="a"><span class="opt-text"><span class="rec">&#9733; Recommended</span><strong>Build the override into the LIMS.</strong> The Scientific Director's approval and the assignable-cause rationale are captured electronically, keeping the full record in one system.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="b"><span class="opt-text"><strong>Keep it out-of-band.</strong> Failed-QC organisms stay un-imported; the SD approval is handled on paper or e-signature as it is today.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="c"><span class="opt-text"><strong>Defer.</strong> Ship the import tool without an override path and revisit once it is in routine use.</span></label>
+    <label class="opt"><input type="radio" name="d3" value="other"><span class="opt-text"><strong>Other</strong> — describe in notes.</span></label>
+  </div>
+  <div class="notes-wrap">
+    <label>Notes (optional)</label>
+    <textarea placeholder="Anything to add or override?"></textarea>
+  </div>
+</section>
+
+</main>
+
+<div class="floatbar">
+  <button class="ghost" id="btnReset" title="Clear all decisions (cannot undo)">Reset</button>
+  <button class="primary" id="btnCompileBottom">Compile decisions</button>
+</div>
+
+<div class="modal-backdrop" id="modal" data-open="false">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <h2 id="modalTitle">Decisions (paste back into the conversation)</h2>
+      <button class="close" id="modalClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-toolbar">
+        <button class="primary" id="btnCopy">Copy to clipboard</button>
+        <button class="ghost" id="btnDownload">Download .md</button>
+        <button class="ghost" id="btnCloseFooter">Close</button>
+      </div>
+      <div class="modal-output">
+        <pre id="modalOutput"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" data-show="false"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  const STORAGE_KEY = 'qpcr-import-review-v1-decisions';
+
+  // Decision definitions — must match the radio names + option values in the HTML.
+  // The labels here are the human-readable strings used in the compiled output.
+  const DECISIONS = [
+    {
+      id: 'd1',
+      num: 1,
+      title: "Is SOP-149's amplification-control window (22-27) still correct?",
+      options: {
+        a: 'The SOP window is out of date — revise SOP-149 to the instrument\'s verified range.',
+        b: 'The instrument needs attention — hold off importing until the 28-29 control is resolved.',
+        c: 'Re-test before deciding — run a known-good control plate first.',
+        other: 'Other (see notes).'
+      }
+    },
+    {
+      id: 'd2',
+      num: 2,
+      title: 'Enforce SOP cycle thresholds in the LIMS, or trust the instrument?',
+      options: {
+        a: 'Enforce the numbers in the LIMS — auto-fail anything outside the SOP windows.',
+        b: 'Trust the instrument\'s verdict, but surface the numbers and flag out-of-range readings.',
+        c: 'Trust the instrument\'s verdict only — cycle values reference-only.',
+        other: 'Other (see notes).'
+      }
+    },
+    {
+      id: 'd3',
+      num: 3,
+      title: 'Should the failed-QC reporting exception live inside the LIMS?',
+      options: {
+        a: 'Build the override into the LIMS — SD approval + rationale captured electronically.',
+        b: 'Keep it out-of-band — failed-QC organisms stay un-imported; approval on paper / e-sign.',
+        c: 'Defer — ship without an override path and revisit later.',
+        other: 'Other (see notes).'
+      }
+    }
+  ];
+
+  function loadState() {
+    try { const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : {}; }
+    catch (e) { return {}; }
+  }
+  function saveState(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  let state = loadState();
+
+  function applyDecisionState(dec) {
+    const sec = document.getElementById(dec.id);
+    if (!sec) return;
+    const s = state[dec.id] || {};
+    if (s.choice) {
+      const radio = sec.querySelector('input[type="radio"][value="' + s.choice + '"]');
+      if (radio && !radio.checked) radio.checked = true;
+    }
+    const ta = sec.querySelector('textarea');
+    if (ta && typeof s.notes === 'string' && ta.value !== s.notes) ta.value = s.notes;
+    sec.dataset.answered = s.choice ? 'true' : 'false';
+  }
+
+  DECISIONS.forEach(function (dec) {
+    const sec = document.getElementById(dec.id);
+    if (!sec) return;
+    sec.querySelectorAll('input[type="radio"][name="' + dec.id + '"]').forEach(function (r) {
+      r.addEventListener('change', function () {
+        state[dec.id] = state[dec.id] || {};
+        state[dec.id].choice = r.value;
+        saveState(state);
+        applyDecisionState(dec);
+        updateProgress();
+      });
+    });
+    const ta = sec.querySelector('textarea');
+    if (ta) {
+      ta.addEventListener('input', function () {
+        state[dec.id] = state[dec.id] || {};
+        state[dec.id].notes = ta.value;
+        saveState(state);
+      });
+    }
+    applyDecisionState(dec);
+  });
+
+  function updateProgress() {
+    let n = 0;
+    DECISIONS.forEach(function (dec) {
+      if ((state[dec.id] || {}).choice) n++;
+    });
+    document.getElementById('progressCount').textContent = n;
+  }
+  updateProgress();
+
+  function compileMarkdown() {
+    const lines = [];
+    lines.push('# qPCR Instrument-File Import — Science Decisions');
+    lines.push('');
+    lines.push('Reviewed: ' + new Date().toISOString());
+    lines.push('');
+
+    let answered = 0, pending = 0;
+    DECISIONS.forEach(function (dec) {
+      if ((state[dec.id] || {}).choice) answered++; else pending++;
+    });
+    lines.push('**Status:** ' + answered + ' of ' + DECISIONS.length + ' decided.');
+    lines.push('');
+
+    DECISIONS.forEach(function (dec) {
+      const s = state[dec.id] || {};
+      const choiceLabel = s.choice ? (dec.options[s.choice] || s.choice) : '_(not yet decided)_';
+      lines.push('## Decision ' + dec.num + ' — ' + dec.title);
+      lines.push('');
+      lines.push('**Chosen:** ' + choiceLabel);
+      if (s.notes && s.notes.trim()) {
+        lines.push('');
+        lines.push('**Notes:**');
+        lines.push('');
+        s.notes.trim().split(/\r?\n/).forEach(function (ln) { lines.push('> ' + ln); });
+      }
+      lines.push('');
+    });
+
+    if (pending > 0) {
+      lines.push('---');
+      lines.push('');
+      lines.push('**Outstanding:** ' + pending + ' decision' + (pending === 1 ? '' : 's') + ' not yet picked.');
+      lines.push('');
+    }
+
+    return lines.join('\n');
+  }
+
+  const modal = document.getElementById('modal');
+  const modalOutput = document.getElementById('modalOutput');
+
+  function openModal() {
+    modalOutput.textContent = compileMarkdown();
+    modal.dataset.open = 'true';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    modal.dataset.open = 'false';
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('btnCompile').addEventListener('click', openModal);
+  document.getElementById('btnCompileBottom').addEventListener('click', openModal);
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.getElementById('btnCloseFooter').addEventListener('click', closeModal);
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.dataset.open === 'true') closeModal();
+  });
+
+  const toast = document.getElementById('toast');
+  let toastTimer = null;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.dataset.show = 'true';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.dataset.show = 'false'; }, 2200);
+  }
+
+  document.getElementById('btnCopy').addEventListener('click', function () {
+    const text = modalOutput.textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        function () { showToast('Copied to clipboard'); },
+        function () { fallbackCopy(text); }
+      );
+    } else { fallbackCopy(text); }
+  });
+
+  function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); showToast('Copied to clipboard'); }
+    catch (e) { showToast('Copy failed — select manually'); }
+    document.body.removeChild(ta);
+  }
+
+  document.getElementById('btnDownload').addEventListener('click', function () {
+    const text = compileMarkdown();
+    const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const ts = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+    a.href = url; a.download = 'qpcr-import-decisions-' + ts + '.md';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 500);
+    showToast('Downloaded');
+  });
+
+  document.getElementById('btnReset').addEventListener('click', function () {
+    if (!confirm('Clear all decisions? This cannot be undone.')) return;
+    state = {}; saveState(state);
+    DECISIONS.forEach(applyDecisionState);
+    document.querySelectorAll('input[type="radio"]').forEach(function (r) { r.checked = false; });
+    document.querySelectorAll('textarea').forEach(function (t) { t.value = ''; });
+    document.querySelectorAll('.decision').forEach(function (s) { s.dataset.answered = 'false'; });
+    updateProgress();
+    showToast('All decisions cleared');
+  });
+})();
+</script>
+
+</body>
+</html>
